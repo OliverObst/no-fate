@@ -1,0 +1,70 @@
+name: Hugo build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hugo-build-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    name: Hugo Extended ${{ matrix.hugo-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        hugo-version:
+          - "0.158.0"
+          - "0.164.0"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Install Hugo Extended
+        env:
+          HUGO_VERSION: ${{ matrix.hugo-version }}
+        run: |
+          package="hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
+          url="https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${package}"
+          wget --quiet --output-document="${RUNNER_TEMP}/${package}" "${url}"
+          sudo dpkg --install "${RUNNER_TEMP}/${package}"
+          hugo version
+
+      - name: Build drafts
+        run: |
+          hugo \
+            --source exampleSite \
+            --themesDir ../.. \
+            --buildDrafts \
+            --gc \
+            --cleanDestinationDir
+
+      - name: Build production site
+        run: |
+          hugo \
+            --source exampleSite \
+            --themesDir ../.. \
+            --minify \
+            --gc \
+            --cleanDestinationDir
+
+      - name: Check demonstration notice
+        run: |
+          tr '\n' ' ' < exampleSite/public/index.html |
+            grep --fixed-strings \
+              "All people, organisations, projects, publications, and events shown here are fictional."

@@ -1,0 +1,91 @@
+baseURL: https://example.invalid/
+title: The Unfixed Record
+locale: en-AU
+defaultContentLanguage: en
+theme: no-fate
+copyright: Fictional demonstration content for No Fate
+enableRobotsTXT: true
+
+pagination:
+  pagerSize: 12
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
+taxonomies:
+  tag: tags
+  category: categories
+
+menu:
+  main:
+    - identifier: essays
+      name: Essays
+      url: /essays/
+      weight: 10
+    - identifier: archives
+      name: Archives
+      url: /archives/
+      weight: 20
+    - identifier: projects
+      name: Projects
+      url: /projects/
+      weight: 30
+    - identifier: record
+      name: Record
+      url: /record/
+      weight: 40
+    - identifier: about
+      name: About
+      url: /about/
+      weight: 50
+    - identifier: search
+      name: Search
+      url: /search/
+      weight: 60
+
+params:
+  description: A wholly fictional publication used to demonstrate the No Fate Hugo theme.
+  defaultTheme: auto
+  disableThemeToggle: false
+  disableSpecial1stPost: true
+  mainSections:
+    - essays
+    - questions
+    - notes
+    - archives
+    - projects
+  ShowReadingTime: true
+  ShowBreadCrumbs: true
+  ShowPostNavLinks: true
+  ShowCodeCopyButtons: true
+  ShowShareButtons: false
+  hideAuthor: true
+  footer:
+    text: "All demonstration content is fictional and should be replaced or removed."
+  label:
+    text: The Unfixed Record
+  noFate:
+    defaultMode: editorial
+    defaultAccent: signal
+    showThemeToggle: true
+    showSearch: true
+    showReadingTime: true
+    showPropositions: true
+    enableImageProcessing: true
+    home:
+      showFormalRecord: true
+      showRecentNotes: true
+    archive:
+      showArtefactNumbers: true
+      showRights: true
+    record:
+      dataFile: record
+      enableClientFilters: true
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: false

@@ -1,0 +1,54 @@
+name: Feature proposal
+description: Propose a reusable capability or change for No Fate.
+title: "[Proposal]: "
+labels:
+  - enhancement
+  - triage
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Publishing problem
+      description: What generic publishing need is not currently met?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the smallest reusable change that could address the need.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives and downstream overrides
+      description: Could a downstream template, shortcode, or configuration override solve this?
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Primary area
+      options:
+        - Templates and semantics
+        - Page modes
+        - Editorial components
+        - Images and media
+        - Search, feeds, or metadata
+        - Accessibility
+        - Documentation
+        - Other theme infrastructure
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Submission checks
+      options:
+        - label: This proposal is generic and does not depend on a real person's or organisation's content.
+          required: true
+        - label: I searched existing issues and pull requests.
+          required: true

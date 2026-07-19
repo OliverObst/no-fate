@@ -1,5 +1,5 @@
 /*
-This is just a placeholder blank stylesheet so as to support adding custom styles budled with theme's default styles
-
-Read https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#bundling-custom-css-with-themes-assets for more info
+This placeholder keeps the extended stylesheet bundle available for downstream
+sites. Add site-specific styles in the downstream site's assets/css/extended
+directory rather than editing the theme.
 */

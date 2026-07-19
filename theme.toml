@@ -1,30 +1,24 @@
-# theme.toml template for a Hugo theme
-# See https://github.com/gohugoio/hugoThemes#themetoml for an example
-
-name = "PaperMod"
+name = "No Fate"
 license = "MIT"
-licenselink = "https://github.com/adityatelange/hugo-PaperMod/blob/master/LICENSE"
-description = "A fast, clean, responsive Hugo theme"
-homepage = "https://github.com/adityatelange/hugo-PaperMod/"
-demosite = "https://adityatelange.github.io/hugo-PaperMod/"
+licenselink = "https://github.com/OliverObst/no-fate/blob/main/LICENSE"
+description = "A rigorous, reusable Hugo publishing theme with strong editorial and archival behaviour"
+homepage = "https://github.com/OliverObst/no-fate"
 tags = [
   "responsive",
-  "blog",
-  "clean",
-  "minimal",
+  "editorial",
+  "publishing",
+  "archive",
+  "portfolio",
   "light",
   "dark",
-  "fast",
   "multilingual",
   "search",
   "seo",
-  "chroma",
-  "personal"
+  "accessible"
 ]
 features = [
   "responsive",
-  "single-column",
-  "blog",
+  "editorial-publishing",
   "cover-image",
   "table-of-contents",
   "opengraph",
@@ -54,15 +48,14 @@ features = [
   "multiple-authors",
   "post-nav-links"
 ]
-min_version = "0.146.0"
+min_version = "0.158.0"
 
 [author]
-  name = "Aditya Telange"
-  homepage = "https://github.com/adityatelange"
+  name = "No Fate contributors"
+  homepage = "https://github.com/OliverObst/no-fate/graphs/contributors"
 
-# If porting an existing theme
 [original]
-  name = "Paper"
-  author = "nanxiaobei"
-  homepage = "https://github.com/nanxiaobei"
-  repo = "https://github.com/nanxiaobei/hugo-paper/"
+  name = "PaperMod"
+  author = "Aditya Telange and contributors"
+  homepage = "https://github.com/adityatelange"
+  repo = "https://github.com/adityatelange/hugo-PaperMod"

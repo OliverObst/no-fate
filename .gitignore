@@ -1,0 +1,5 @@
+/exampleSite/public/
+/exampleSite/resources/_gen/
+/exampleSite/.hugo_build.lock
+/.hugo_build.lock
+.DS_Store

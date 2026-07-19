@@ -1,0 +1,10 @@
+propositions:
+  - id: example-question-the-premise
+    title: Good work begins by questioning the premise.
+    demo: true
+  - id: example-tools-reveal-assumptions
+    title: Tools should reveal their assumptions.
+    demo: true
+  - id: example-maintenance-is-design
+    title: Maintenance is part of design.
+    demo: true

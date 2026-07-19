@@ -1,3 +1,3 @@
-module github.com/adityatelange/hugo-PaperMod
+module github.com/OliverObst/no-fate
 
 go 1.16
