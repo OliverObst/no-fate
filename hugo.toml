@@ -23,6 +23,10 @@
   showArtefactNumbers = true
   showRights = true
 
+[params.noFate.images]
+  widths = [480, 800, 1200, 1600]
+  webpQuality = 82
+
 [params.noFate.record]
   dataFile = "record"
   enableClientFilters = true

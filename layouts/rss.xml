@@ -1,42 +1,49 @@
-{{- $authorEmail := "" }}
-{{- with site.Params.author }}
-  {{- if reflect.IsMap . }}
-    {{- with .email }}
-      {{- $authorEmail = . }}
-    {{- end }}
-  {{- end }}
-{{- end }}
+{{- $authorEmail := "" -}}
+{{- $authorName := "" -}}
+{{- with site.Params.author -}}
+  {{- if reflect.IsMap . -}}
+    {{- with .email }}{{ $authorEmail = . }}{{ end -}}
+    {{- with .name }}{{ $authorName = . }}{{ end -}}
+  {{- else -}}
+    {{- $authorName = . -}}
+  {{- end -}}
+{{- end -}}
 
-{{- $authorName := "" }}
-{{- with site.Params.author }}
-  {{- if reflect.IsMap . }}
-    {{- with .name }}
-      {{- $authorName = . }}
-    {{- end }}
-  {{- else }}
-    {{- $authorName  = . }}
-  {{- end }}
-{{- end }}
+{{- $context := . -}}
+{{- if .IsHome }}{{ $context = site }}{{ end -}}
+{{- $candidates := slice -}}
+{{- if or .IsHome .IsSection -}}
+  {{- $candidates = $context.RegularPages -}}
+{{- else -}}
+  {{- $candidates = $context.Pages -}}
+{{- end -}}
 
-{{- $pctx := . }}
-{{- if .IsHome }}{{ $pctx = site }}{{ end }}
-{{- $pages := slice }}
-{{- if or $.IsHome $.IsSection }}
-{{- $pages = $pctx.RegularPages }}
-{{- else }}
-{{- $pages = $pctx.Pages }}
-{{- end }}
-{{- $pages = where $pages "Params.hiddenInRss" "!=" true -}}
-{{- $limit := site.Config.Services.RSS.Limit }}
-{{- if ge $limit 1 }}
-{{- $pages = $pages | first $limit }}
-{{- end }}
+{{- $pages := slice -}}
+{{- range $candidates -}}
+  {{- $feed := .Params.feed | default dict -}}
+  {{- $exclude := or
+    .Draft
+    .Params.private
+    .Params.headless
+    .Params.utility
+    .Params.hiddenInRss
+    (eq .Layout "search")
+    (eq .Layout "archives")
+    (index $feed "exclude" | default false)
+  -}}
+  {{- if not $exclude }}{{ $pages = $pages | append . }}{{ end -}}
+{{- end -}}
+{{- $pages = sort $pages "PublishDate" "desc" -}}
+{{- $limit := site.Config.Services.RSS.Limit -}}
+{{- if ge $limit 1 }}{{ $pages = first $limit $pages }}{{ end -}}
+
+{{- $feedDescription := .Params.feed.description | default .Description | default (printf "Recent content on %s" site.Title) -}}
 {{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>{{ if eq .Title site.Title }}{{ site.Title }}{{ else }}{{ with .Title }}{{ . }} on {{ end }}{{ site.Title }}{{ end }}</title>
     <link>{{ .Permalink }}</link>
-    <description>Recent content {{ if ne .Title site.Title }}{{ with .Title }}in {{ . }} {{ end }}{{ end }}on {{ site.Title }}</description>
+    <description>{{ $feedDescription | plainify }}</description>
     {{- with site.Params.images }}
     <image>
       <title>{{ site.Title }}</title>
@@ -45,16 +52,22 @@
     </image>
     {{- end }}
     <generator>Hugo</generator>
-    <language>{{ site.Language.Locale }}</language>{{ with $authorEmail }}
-    <managingEditor>{{.}}{{ with $authorName }} ({{ . }}){{ end }}</managingEditor>{{ end }}{{ with $authorEmail }}
-    <webMaster>{{ . }}{{ with $authorName }} ({{ . }}){{ end }}</webMaster>{{ end }}{{ with site.Copyright }}
-    <copyright>{{ . | markdownify | plainify | strings.TrimPrefix "© " }}</copyright>{{ end }}{{ if not .Date.IsZero }}
-    <lastBuildDate>{{ (index $pages.ByLastmod.Reverse 0).Lastmod.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>{{ end }}
+    <language>{{ site.Language.Locale | default site.Language.Lang }}</language>
+    {{- with $authorEmail }}
+    <managingEditor>{{ . }}{{ with $authorName }} ({{ . }}){{ end }}</managingEditor>
+    <webMaster>{{ . }}{{ with $authorName }} ({{ . }}){{ end }}</webMaster>
+    {{- end }}
+    {{- with site.Copyright }}
+    <copyright>{{ . | markdownify | plainify | strings.TrimPrefix "© " }}</copyright>
+    {{- end }}
+    {{- if gt (len $pages) 0 }}
+    {{- $latest := index (sort $pages "Lastmod" "desc") 0 }}
+    <lastBuildDate>{{ $latest.Lastmod.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>
+    {{- end }}
     {{- with .OutputFormats.Get "RSS" }}
     {{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType | safeHTML }}
     {{- end }}
     {{- range $pages }}
-    {{- if and (ne .Layout `search`) (ne .Layout `archives`) }}
     <item>
       <title>{{ .Title }}</title>
       <link>{{ .Permalink }}</link>
@@ -66,7 +79,6 @@
       <content:encoded>{{ (printf "<![CDATA[%s]]>" .Content) | safeHTML }}</content:encoded>
       {{- end }}
     </item>
-    {{- end }}
     {{- end }}
   </channel>
 </rss>

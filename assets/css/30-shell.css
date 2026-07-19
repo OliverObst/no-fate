@@ -26,7 +26,26 @@
 .menu a {
     border-bottom: 2px solid transparent;
     font-size: 0.9rem;
+    min-height: 2.75rem;
     padding: var(--nf-space-2) 0;
+}
+
+.nf-menu__primary,
+.nf-menu__secondary {
+    display: block;
+}
+
+.nf-menu__secondary {
+    color: var(--nf-colour-muted);
+    font-family: var(--nf-font-meta);
+    font-size: 0.68rem;
+    line-height: 1.25;
+    margin-top: var(--nf-space-0);
+    white-space: normal;
+}
+
+.nf-menu__item--search .nf-menu__primary {
+    font-weight: 600;
 }
 
 .menu .active {
@@ -39,6 +58,12 @@
     min-height: 2.75rem;
     min-width: 2.75rem;
     padding: var(--nf-space-2) var(--nf-space-3);
+}
+
+@media (max-width: 48rem) {
+    .nf-menu__secondary {
+        display: none;
+    }
 }
 
 .main {

@@ -6,6 +6,10 @@
 {{- $source := "" -}}
 {{- $sourceURL := "" -}}
 {{- $figure := "" -}}
+{{- $licence := "" -}}
+{{- $rights := dict -}}
+{{- $treatment := "" -}}
+{{- $derivativeSrc := index .Attributes "derivative-src" | default "" -}}
 {{- $darkSrc := index .Attributes "dark-src" | default "" -}}
 {{- $lightSrc := index .Attributes "light-src" | default "" -}}
 {{- $decorative := eq (lower (printf "%v" (index .Attributes "decorative" | default false))) "true" -}}
@@ -16,6 +20,10 @@
     {{- $source = .Params.source | default "" -}}
     {{- $sourceURL = .Params.source_url | default "" -}}
     {{- $figure = .Params.figure | default "" -}}
+    {{- $licence = .Params.licence | default "" -}}
+    {{- $rights = .Params.rights | default dict -}}
+    {{- $treatment = .Params.treatment | default "" -}}
+    {{- if not $derivativeSrc }}{{ $derivativeSrc = .Params.derivative_src | default "" }}{{ end -}}
     {{- if not $darkSrc }}{{ $darkSrc = .Params.dark_src | default "" }}{{ end -}}
     {{- if not $lightSrc }}{{ $lightSrc = .Params.light_src | default "" }}{{ end -}}
 {{- end -}}
@@ -24,21 +32,31 @@
 {{- with index .Attributes "source" }}{{ $source = . }}{{ end -}}
 {{- with index .Attributes "source-url" }}{{ $sourceURL = . }}{{ end -}}
 {{- with index .Attributes "figure" }}{{ $figure = . }}{{ end -}}
+{{- with index .Attributes "licence" }}{{ $licence = . }}{{ end -}}
+{{- with index .Attributes "treatment" }}{{ $treatment = . }}{{ end -}}
 {{- if and (not $alt) (not $decorative) -}}
     {{- warnf "No Fate image: meaningful alt text or decorative=true is required for %q on %s" $src .PageInner.RelPermalink -}}
 {{- end -}}
 
-{{- $allowedClasses := slice "wide" "full" "raw" "mono" "high-contrast" "technical" -}}
+{{- $allowedClasses := slice "wide" "full" "raw" "mono" "monochrome" "high-contrast" "halftone" "photocopy" "technical" "duotone" -}}
+{{- $treatments := slice "raw" "monochrome" "high-contrast" "halftone" "photocopy" "technical" "duotone" -}}
 {{- $classes := slice "nf-content-image" -}}
 {{- with .Attributes.class -}}
     {{- range split . " " -}}
         {{- if in $allowedClasses . -}}
-            {{- $classes = $classes | append . -}}
+            {{- $class := cond (eq . "mono") "monochrome" . -}}
+            {{- $classes = $classes | append $class -}}
+            {{- if in $treatments $class }}{{ $treatment = $class }}{{ end -}}
         {{- end -}}
     {{- end -}}
 {{- end -}}
+{{- $treatment = lower ($treatment | default "raw") -}}
+{{- if in $treatments $treatment }}{{ $classes = $classes | append $treatment }}{{ end -}}
 {{- $className := delimit ($classes | collections.Uniq) " " -}}
-{{- $hasFigure := and .IsBlock (or $caption $credit $source $figure) -}}
+{{- $publicRights := partial "image-rights-data.html" (dict
+    "rights" $rights "credit" $credit "source" $source "sourceURL" $sourceURL "licence" $licence
+) -}}
+{{- $hasFigure := and .IsBlock (or $caption $publicRights.HasPublic $figure) -}}
 {{- if and $hasFigure (not $figure) -}}
     {{- $next := add (.PageInner.Store.Get "noFateFigureNumber" | default 0) 1 -}}
     {{- .PageInner.Store.Set "noFateFigureNumber" $next -}}
@@ -47,6 +65,10 @@
 
 {{- if $hasFigure -}}
 <figure class="nf-figure{{ range after 1 $classes }} {{ . }}{{ end }}"{{ with $figure }} data-figure="{{ . }}"{{ end }}>
+{{- end -}}
+{{- if $derivativeSrc -}}
+    {{- $src = $derivativeSrc -}}
+    {{- $resource = partial "image-resource.html" (dict "page" .PageInner "src" $src) -}}
 {{- end -}}
 {{- if or $darkSrc $lightSrc -}}
     {{- $lightSrc = $lightSrc | default $src -}}
@@ -75,13 +97,13 @@
     <figcaption class="nf-figure__caption">
         {{- with $figure }}<span class="nf-figure__number">{{ i18n "nf_figure" | default "Figure" }} {{ . }}</span>{{ end -}}
         {{- with $caption }}<span class="nf-figure__text">{{ . | markdownify }}</span>{{ end -}}
-        {{- with $credit }}<span class="nf-figure__credit">{{ i18n "nf_credit" | default "Credit" }}: {{ . }}</span>{{ end -}}
-        {{- with $source }}
-        <span class="nf-figure__source">
-            {{- i18n "nf_source" | default "Source" }}:
-            {{- if $sourceURL }} <a href="{{ $sourceURL | safeURL }}">{{ . }}</a>{{ else }} {{ . }}{{ end -}}
-        </span>
-        {{- end }}
+        {{- partial "image-rights.html" (dict
+            "rights" $rights
+            "credit" $credit
+            "source" $source
+            "sourceURL" $sourceURL
+            "licence" $licence
+        ) -}}
     </figcaption>
 </figure>
 {{- end -}}

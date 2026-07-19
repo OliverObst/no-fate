@@ -1,3 +1,4 @@
+{{- .Page.Store.Set "noFateHasCodeBlock" true -}}
 {{- if or (not .Type) (transform.CanHighlight .Type) -}}
     {{- $result := transform.HighlightCodeBlock . -}}
     {{- $result.Wrapped -}}

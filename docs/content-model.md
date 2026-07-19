@@ -159,7 +159,9 @@ Supported `visual.hero_treatment` values:
 - `duotone`
 
 The treatment name describes presentation intent. Prepared source derivatives
-are normally preferable for true halftone and photocopy effects.
+are required for true halftone and photocopy effects. See
+[Images and rights](images-and-rights.md) for responsive-width configuration,
+resource derivatives and structured public rights metadata.
 
 ## Editorial propositions
 

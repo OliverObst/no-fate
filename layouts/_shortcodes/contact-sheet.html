@@ -40,28 +40,39 @@
     {{- end }}
     {{- with $items }}
     <ol class="nf-contact-sheet__items{{ if not $numbers }} nf-contact-sheet__items--unnumbered{{ end }}">
-        {{- range . }}
-            {{- if ne .ResourceType "image" -}}
-                {{- errorf "No Fate contact-sheet: %q is not an image at %s" .Name $.Position -}}
+        {{- range $index, $item := . }}
+            {{- if ne $item.ResourceType "image" -}}
+                {{- errorf "No Fate contact-sheet: %q is not an image at %s" $item.Name $.Position -}}
             {{- end -}}
-            {{- $alt := .Params.alt | default "" -}}
+            {{- $alt := $item.Params.alt | default "" -}}
             {{- if not $alt -}}
-                {{- errorf "No Fate contact-sheet: image resource %q requires params.alt at %s" .Name $.Position -}}
+                {{- errorf "No Fate contact-sheet: image resource %q requires params.alt at %s" $item.Name $.Position -}}
             {{- end -}}
-            {{- $caption := .Params.caption | default "" -}}
+            {{- $caption := $item.Params.caption | default "" -}}
+            {{- $rights := $item.Params.rights | default dict -}}
+            {{- $publicRights := partial "image-rights-data.html" (dict "rights" $rights) -}}
         <li class="nf-contact-sheet__item">
+            {{- if $numbers }}<span class="nf-contact-sheet__number" aria-hidden="true">{{ printf "%02d" (add $index 1) }}</span>{{ end -}}
             {{- partial "responsive-image.html" (dict
-                "page" $.Page "src" .Name "resource" . "alt" $alt
+                "page" $.Page "src" $item.Name "resource" $item "alt" $alt
                 "class" "nf-contact-sheet__image"
                 "sizes" "(min-width: 64rem) 30vw, 50vw"
             ) -}}
             {{- if eq $captions "visible" -}}
-                {{- with $caption }}<p class="nf-contact-sheet__caption">{{ . | markdownify }}</p>{{ end -}}
+                {{- if or $caption $publicRights.HasPublic }}
+                <p class="nf-contact-sheet__caption">
+                    {{- with $caption }}<span>{{ . | markdownify }}</span>{{ end -}}
+                    {{- partial "image-rights.html" (dict "rights" $rights) -}}
+                </p>
+                {{- end -}}
             {{- else if eq $captions "alt" -}}
-                <p class="nf-contact-sheet__caption">{{ $alt }}</p>
+                <p class="nf-contact-sheet__caption">
+                    <span>{{ $alt }}</span>
+                    {{- partial "image-rights.html" (dict "rights" $rights) -}}
+                </p>
             {{- end -}}
             {{- if $download }}
-            <a class="nf-contact-sheet__download" href="{{ .RelPermalink }}" download>
+            <a class="nf-contact-sheet__download" href="{{ $item.RelPermalink }}" download>
                 {{- i18n "nf_download_original" | default "Download original" -}}
             </a>
             {{- end }}

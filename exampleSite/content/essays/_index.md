@@ -2,6 +2,12 @@
 title: "Essays"
 description: "Long arguments for people who have already tried the short answer."
 demo: true
+outputs:
+  - HTML
+  - RSS
+
+feed:
+  description: "Arguments, questions, and notes from the workshop."
 
 content:
   format: "section"

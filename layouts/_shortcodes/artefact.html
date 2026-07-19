@@ -1,4 +1,7 @@
 {{- $title := .Get "title" | default (i18n "nf_artefact" | default "Artefact") -}}
+{{- $sequence := add (.Page.Store.Get "noFateArtefactNumber" | default 0) 1 -}}
+{{- .Page.Store.Set "noFateArtefactNumber" $sequence -}}
+{{- $number := .Get "number" | default (printf "%02d" $sequence) -}}
 {{- $href := .Get "href" | default (.Get "file") -}}
 {{- $image := .Get "image" -}}
 {{- $imageAlt := .Get "image_alt" -}}
@@ -9,7 +12,7 @@
     <header class="nf-artefact__header">
         <p class="nf-component__label">
             {{- i18n "nf_artefact" | default "Artefact" -}}
-            {{- with .Get "number" }} <span class="nf-artefact__number">{{ . }}</span>{{ end -}}
+            <span class="nf-artefact__number">{{ $number }}</span>
         </p>
         {{- if $href }}
         <h3><a href="{{ $href | safeURL }}">{{ $title }}</a></h3>

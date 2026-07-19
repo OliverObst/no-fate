@@ -79,6 +79,10 @@ alt text remains mandatory in every mode. `fit` preserves the complete image,
 while `fill` uses a consistent crop. Arrow-key navigation is an optional
 enhancement and all links remain usable without JavaScript.
 
+Page-resource captions may also display the public `creator`, `source` and
+`licence` fields from structured rights metadata. Administrative `permission`
+notes are deliberately private and never render.
+
 ### Artefact and timeline
 
 `artefact` supports number, title, date, location, creator, source,
@@ -99,10 +103,13 @@ does not turn them into title-side badges.
 - Standalone images resolve page resources before global assets, emit
   dimensions, responsive native and WebP source sets, and preserve GIFs
   without conversion. Titles become captions. Resource metadata or Markdown
-  attributes may provide figure numbers, credit and source.
-- Image classes are `wide`, `full`, `raw`, `mono`, `high-contrast` and
-  `technical`. Set `dark-src` and `light-src` attributes, or the equivalent
-  resource parameters, for deliberate theme variants.
+  attributes may provide figure numbers, credit, source and structured rights.
+- Layout classes are `wide` and `full`. Treatment classes are `raw`,
+  `monochrome` (or `mono`), `high-contrast`, `halftone`, `photocopy`,
+  `technical` and `duotone`. True halftone and photocopy effects use a prepared
+  derivative instead of destructively simulating evidence in CSS. Set
+  `dark-src` and `light-src` attributes, or the equivalent resource
+  parameters, for deliberate theme variants.
 - Empty image descriptions require `decorative=true`; otherwise validation
   warns and `--panicOnWarning` fails the build.
 - Block quotes accept `kind`, `cite` and `cite-url` attributes. Normal long
@@ -119,3 +126,5 @@ does not turn them into title-side badges.
 The example page at
 `exampleSite/content/fixtures/structural-components/index.md` exercises every
 component and render hook in clean, wild, dark, mobile and print contexts.
+See [Images and rights](images-and-rights.md) for image configuration,
+derivative metadata and the public/private attribution contract.

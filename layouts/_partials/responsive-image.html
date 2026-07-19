@@ -4,14 +4,21 @@
 {{- $loading := .loading | default "lazy" -}}
 {{- $class := .class | default "" -}}
 {{- $sizes := .sizes | default "(min-width: 86rem) 68rem, calc(100vw - 2rem)" -}}
+{{- $fetchPriority := .fetchpriority | default "" -}}
 {{- $resource := .resource | default false -}}
 {{- if and (not $resource) $src -}}
     {{- $resource = partial "image-resource.html" (dict "page" $page "src" $src) -}}
 {{- end -}}
 {{- $processing := true -}}
+{{- $widthCandidates := slice 480 800 1200 1600 -}}
+{{- $webpQuality := 82 -}}
 {{- with site.Params.noFate -}}
     {{- if isset . "enableimageprocessing" -}}
         {{- $processing = index . "enableimageprocessing" -}}
+    {{- end -}}
+    {{- with .images -}}
+        {{- with .widths }}{{ $widthCandidates = . }}{{ end -}}
+        {{- with .webpQuality }}{{ $webpQuality = int . }}{{ end -}}
     {{- end -}}
 {{- end -}}
 
@@ -21,7 +28,7 @@
     {{- $canResize := and $processing (in (slice "jpeg" "jpg" "png" "webp") $subtype) -}}
     {{- if $canResize -}}
         {{- $widths := slice -}}
-        {{- range (slice 480 800 1200 1600) -}}
+        {{- range $widthCandidates -}}
             {{- if le . $resource.Width -}}
                 {{- $widths = $widths | append . -}}
             {{- end -}}
@@ -31,7 +38,7 @@
         {{- $webpSet := slice -}}
         {{- range $widths -}}
             {{- $native := $resource.Resize (printf "%dx" .) -}}
-            {{- $webp := $resource.Resize (printf "%dx webp q82" .) -}}
+            {{- $webp := $resource.Resize (printf "%dx webp q%d" . $webpQuality) -}}
             {{- $nativeSet = $nativeSet | append (printf "%s %dw" $native.RelPermalink $native.Width) -}}
             {{- $webpSet = $webpSet | append (printf "%s %dw" $webp.RelPermalink $webp.Width) -}}
         {{- end -}}
@@ -41,17 +48,21 @@
                 srcset="{{ delimit $nativeSet ", " }}" sizes="{{ $sizes }}"
                 width="{{ $resource.Width }}" height="{{ $resource.Height }}"
                 alt="{{ $alt }}" loading="{{ $loading }}" decoding="async"
+                {{- with $fetchPriority }} fetchpriority="{{ . }}"{{ end }}
                 {{- with $class }} class="{{ . }}"{{ end }}>
         </picture>
     {{- else if $isRaster -}}
         <img src="{{ $resource.RelPermalink }}" width="{{ $resource.Width }}" height="{{ $resource.Height }}"
             alt="{{ $alt }}" loading="{{ $loading }}" decoding="async"
+            {{- with $fetchPriority }} fetchpriority="{{ . }}"{{ end }}
             {{- with $class }} class="{{ . }}"{{ end }}>
     {{- else -}}
         <img src="{{ $resource.RelPermalink }}" alt="{{ $alt }}" loading="{{ $loading }}" decoding="async"
+            {{- with $fetchPriority }} fetchpriority="{{ . }}"{{ end }}
             {{- with $class }} class="{{ . }}"{{ end }}>
     {{- end -}}
 {{- else -}}
     <img src="{{ $src | safeURL }}" alt="{{ $alt }}" loading="{{ $loading }}" decoding="async"
+        {{- with $fetchPriority }} fetchpriority="{{ . }}"{{ end }}
         {{- with $class }} class="{{ . }}"{{ end }}>
 {{- end -}}

@@ -5,6 +5,7 @@ date: 2026-03-12
 lastmod: 2026-06-05
 summary: "Posters, questions, side notes, loose quotations, and other useful interruptions."
 hiddenInHomeList: true
+utility: true
 demo: true
 
 resources:
@@ -12,17 +13,31 @@ resources:
     params:
       alt: "Red spanner silhouette crossing a numbered cream field"
       caption: "Plate A: leverage, approximately."
-      credit: "North Quay duplication room"
-      source: "Drawer 3"
       figure: "A"
+      treatment: "duotone"
+      rights:
+        creator: "North Quay duplication room"
+        source: "Drawer 3"
+        licence: "Open workshop copy licence"
+        permission: "Internal clearance note: cupboard seven"
   - src: "plates/plate-b.png"
     params:
       alt: "Black circles and arrows arranged like an improvised circuit diagram"
       caption: "Plate B: current taking the scenic route."
+      rights:
+        creator: "Night-shift diagram club"
+        source: "Switchboard envelope 12"
+        licence: "Copy and annotate"
+        permission: "Private accession note: blue pencil"
   - src: "plates/plate-c.png"
     params:
       alt: "Cream labels interrupting a red and black diagonal grid"
       caption: "Plate C: labels winning an argument with geometry."
+      rights:
+        creator: "Department of Loose Ends"
+        source: "Label drawer"
+        licence: "Use with unreasonable confidence"
+        permission: "Administrative note: do not publish"
 
 content:
   format: "cabinet"
@@ -40,9 +55,9 @@ visual:
   accent: "signal"
   headline_scale: "medium"
   opening_alignment: "left"
-  hero: ""
-  hero_alt: ""
-  hero_treatment: "raw"
+  hero: "plates/plate-a.png"
+  hero_alt: "Red spanner silhouette crossing a numbered cream field"
+  hero_treatment: "duotone"
   invert_opening: false
 
 archive:

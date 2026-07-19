@@ -84,3 +84,6 @@ jobs:
 
       - name: Check structured records
         run: bash .github/scripts/check-structured-records.sh exampleSite/public
+
+      - name: Check release hardening
+        run: bash .github/scripts/check-release-hardening.sh exampleSite/public

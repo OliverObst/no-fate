@@ -1,0 +1,22 @@
+{{- $rights := .rights | default dict -}}
+{{- $creator := .credit | default "" -}}
+{{- $source := .source | default "" -}}
+{{- $sourceURL := .sourceURL | default "" -}}
+{{- $licence := .licence | default "" -}}
+
+{{- if reflect.IsMap $rights -}}
+    {{- with index $rights "creator" }}{{ $creator = . }}{{ end -}}
+    {{- with index $rights "source" }}{{ $source = . }}{{ end -}}
+    {{- with index $rights "source_url" }}{{ $sourceURL = . }}{{ end -}}
+    {{- with index $rights "licence" }}{{ $licence = . }}{{ end -}}
+{{- else -}}
+    {{- with $rights }}{{ $licence = . }}{{ end -}}
+{{- end -}}
+
+{{- return (dict
+    "Creator" $creator
+    "Source" $source
+    "SourceURL" $sourceURL
+    "Licence" $licence
+    "HasPublic" (or $creator $source $licence)
+) -}}

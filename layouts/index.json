@@ -1,7 +1,33 @@
-{{- $.Scratch.Add "index" slice -}}
+{{- $index := slice -}}
 {{- range site.RegularPages -}}
-    {{- if and (not .Params.searchHidden) (ne .Layout `archives`) (ne .Layout `search`) }}
-    {{- $.Scratch.Add "index" (dict "title" .Title "content" .Plain "permalink" .Permalink "summary" .Summary) -}}
-    {{- end }}
+    {{- $search := .Params.search | default dict -}}
+    {{- $contentModel := .Params.content | default dict -}}
+    {{- $exclude := or
+        .Draft
+        .Params.private
+        .Params.headless
+        .Params.utility
+        .Params.robotsNoIndex
+        .Params.searchHidden
+        (eq .Layout "archives")
+        (eq .Layout "search")
+        (index $search "exclude" | default false)
+    -}}
+    {{- if not $exclude -}}
+        {{- $includeContent := ne (index $contentModel "format" | default "") "record" -}}
+        {{- if isset $search "include_content" -}}
+            {{- $includeContent = index $search "include_content" -}}
+        {{- end -}}
+        {{- $plainContent := "" -}}
+        {{- if $includeContent }}{{ $plainContent = .Plain }}{{ end -}}
+        {{- $index = $index | append (dict
+            "title" .Title
+            "content" $plainContent
+            "permalink" .Permalink
+            "summary" (.Summary | plainify)
+            "type" (index $contentModel "format" | default .Type)
+            "topics" (.Params.topics | default .Params.tags | default slice)
+        ) -}}
+    {{- end -}}
 {{- end -}}
-{{- $.Scratch.Get "index" | jsonify -}}
+{{- $index | jsonify -}}

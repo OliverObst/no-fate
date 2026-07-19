@@ -1,0 +1,13 @@
+{{- $public := partial "image-rights-data.html" . -}}
+{{- with $public.Creator }}
+<span class="nf-figure__creator">{{ i18n "nf_creator" | default "Creator" }}: {{ . }}</span>
+{{- end -}}
+{{- with $public.Source }}
+<span class="nf-figure__source">
+    {{- i18n "nf_source" | default "Source" }}:
+    {{- if $public.SourceURL }} <a href="{{ $public.SourceURL | safeURL }}">{{ . }}</a>{{ else }} {{ . }}{{ end -}}
+</span>
+{{- end -}}
+{{- with $public.Licence }}
+<span class="nf-figure__licence">{{ i18n "nf_licence" | default "Licence" }}: {{ . }}</span>
+{{- end -}}

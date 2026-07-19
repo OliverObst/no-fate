@@ -34,4 +34,14 @@
         {{- end }}
     </div>
     {{- partial "article-meta.html" $page }}
+    {{- $canonical := $model.SEO.Canonical | default $page.Permalink -}}
+    <dl class="nf-print-only nf-print-metadata">
+        {{- with partial "author.html" $page }}
+        <div><dt>{{ i18n "nf_author" | default "Author" }}</dt><dd>{{ . }}</dd></div>
+        {{- end }}
+        {{- if not $page.Date.IsZero }}
+        <div><dt>{{ i18n "nf_date" | default "Date" }}</dt><dd>{{ $page.Date | time.Format (default ":date_long" site.Params.DateFormat) }}</dd></div>
+        {{- end }}
+        <div><dt>{{ i18n "nf_canonical_url" | default "Canonical URL" }}</dt><dd><a href="{{ $canonical }}">{{ $canonical }}</a></dd></div>
+    </dl>
 </header>

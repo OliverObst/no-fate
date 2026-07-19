@@ -143,6 +143,15 @@
     margin: var(--nf-space-6) 0;
 }
 
+.nf-article__hero {
+    margin-top: 0;
+    max-width: none;
+}
+
+.nf-article__hero :is(.nf-picture, .nf-article__hero-image) {
+    width: 100%;
+}
+
 .nf-figure figcaption {
     border-top: var(--nf-rule);
     color: var(--nf-colour-muted);
@@ -189,6 +198,10 @@
         transform: none !important;
     }
 
+    .nf-article__opening[data-opening-inverted="true"] {
+        background: transparent !important;
+    }
+
     .nf-article__opening :is(
         .breadcrumbs,
         .nf-article__meta,
@@ -212,6 +225,10 @@
     table,
     pre {
         break-inside: avoid;
+    }
+
+    .nf-article__hero {
+        max-height: 220mm;
     }
 
     .nf-article__body,

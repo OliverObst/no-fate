@@ -1,2 +1,9 @@
-{{ $src := (.Get "src") }}
-<audio src="{{ $src }}" controls muted loading="lazy"></audio>
+{{- $src := .Get "src" -}}
+{{- $title := .Get "title" | default (i18n "nf_audio" | default "Audio") -}}
+<figure class="nf-embedded-media nf-embedded-media--audio">
+    <audio src="{{ $src }}" controls preload="metadata" aria-label="{{ $title }}">
+        <a href="{{ $src | safeURL }}">{{ i18n "nf_download_audio" | default "Download audio" }}</a>
+    </audio>
+    {{- with .Get "caption" }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+    <p class="nf-print-only nf-media-print-link">{{ i18n "nf_audio" | default "Audio" }}: <a href="{{ $src | safeURL }}">{{ $src }}</a></p>
+</figure>

@@ -3,8 +3,13 @@
 <div
     class="nf-article__body nf-article__body--{{ $mode }}{{ if eq $mode "record" }} nf-record{{ end }}"
     data-mode-body="{{ $mode }}">
-    {{- $isHidden := ($page.Param "cover.hiddenInSingle") | default ($page.Param "cover.hidden") | default false }}
-    {{- partial "cover.html" (dict "cxt" $page "IsSingle" true "isHidden" $isHidden) }}
+    {{- $model := partial "content-model.html" $page -}}
+    {{- if $model.Visual.Hero -}}
+        {{- partial "article-hero.html" $page -}}
+    {{- else -}}
+        {{- $isHidden := ($page.Param "cover.hiddenInSingle") | default ($page.Param "cover.hidden") | default false }}
+        {{- partial "cover.html" (dict "cxt" $page "IsSingle" true "isHidden" $isHidden) }}
+    {{- end }}
     {{- if $page.Param "ShowToc" }}
         {{- partial "toc.html" $page }}
     {{- end }}

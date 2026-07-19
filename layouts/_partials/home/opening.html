@@ -34,6 +34,7 @@
     <figure class="nf-home__opening-image">
         {{- partial "responsive-image.html" (dict
             "page" $ "src" . "alt" $imageAlt "loading" "eager"
+            "fetchpriority" "high"
             "class" "nf-content-image raw"
             "sizes" "(min-width: 64rem) 44vw, calc(100vw - 2rem)"
         ) -}}

@@ -31,6 +31,7 @@
 
 {{- $records = sort (sort $records "title") "year" "desc" -}}
 {{- $labels := $config.Labels -}}
+{{- if $config.EnableFilters }}{{ $page.Store.Set "noFateHasSectionFilters" true }}{{ end -}}
 <div class="nf-list nf-record nf-structured-record" data-page-mode="record" data-nf-record-count="{{ len $records }}">
     <header class="page-header">
         {{- partial "breadcrumbs.html" . }}
@@ -38,6 +39,10 @@
         {{- with .Description }}
         <p class="post-description">{{ . | markdownify }}</p>
         {{- end }}
+        <p class="nf-print-only nf-print-canonical">
+            {{- i18n "nf_canonical_url" | default "Canonical URL" }}:
+            <a href="{{ .Permalink }}">{{ .Permalink }}</a>
+        </p>
     </header>
 
     {{- with .Content }}

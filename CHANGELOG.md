@@ -9,6 +9,22 @@ and releases use [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- A responsive image pipeline with configurable widths and WebP quality,
+  intrinsic dimensions, deliberate hero priority, seven documented treatment
+  intents, prepared derivative support and structured public rights metadata
+  that never exposes administrative permission notes.
+- Configurable secondary navigation labels that preserve short accessible
+  names, descendant section states and a compact mobile-first header.
+- Static local search with explicit exclusion rules, topic taxonomies,
+  configurable section RSS, canonical and robots metadata, valid JSON-LD,
+  sitemap discovery and deliberate utility-page handling.
+- Release hardening for keyboard use, focus, reduced motion, 200 per cent zoom,
+  semantic numbering, labelled controls and rendered HTML auditing.
+- Page-specific fingerprinted JavaScript bundles, optional favicons, no remote
+  runtime dependencies, conservative media loading and explicit performance
+  budgets.
+- An A4 print contract for essays, figures, media, links and long structured
+  records, including canonical metadata and usable source destinations.
 - A complete optional structured-record subsystem with a documented JSON
   Schema, data-driven selected and chronological renderers, progressive
   year/type/topic filters, creator highlighting, bibliographic and download

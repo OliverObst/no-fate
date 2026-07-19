@@ -11,6 +11,7 @@ this maintainer note records the formal boundary.
 
 The rendered publication is titled *What we make for ourselves*. Its public
 copy stays in character; this README carries the maintainer-facing explanation.
+The credited Night Shift Committee is fictional too.
 It selects the `wild` visual style so both the bolder presentation and its
 responsive behaviour are exercised by the standard smoke test. Set
 `params.noFate.style` to `clean` to inspect the default presentation.
@@ -34,6 +35,10 @@ Published single-page fixtures exercise all four page modes: the maintenance
 essay uses `editorial`, the optimisation question uses `poster`, the tide-room
 history uses `archive`, and the useful-misplacements register uses `record`.
 CI checks the resolved mode and shared semantic article shell for each page.
+The structural fixture additionally verifies responsive hero output and the
+boundary between public attribution and private permission notes. The search
+index omits utility fixtures and duplicate record abstracts; the Essays and
+Archives sections exercise configurable RSS output and the topic taxonomy.
 
 From the theme repository root, run:
 

@@ -29,53 +29,49 @@
 
 {{- partial "extend_footer.html" . }}
 
-{{- $scripts := slice
-    (resources.Get "js/theme-toggle.js")
-    (resources.Get "js/navigation.js")
-    (resources.Get "js/gallery.js")
-    (resources.Get "js/table-sort.js")
-    (resources.Get "js/section-filter.js")
-}}
-{{- $script := $scripts | resources.Concat "assets/js/no-fate.js" | resources.Minify }}
-{{- if not site.Params.assets.disableFingerprinting }}
-    {{- $script = $script | fingerprint }}
-    <script defer crossorigin="anonymous" src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}"></script>
-{{- else }}
-    <script defer src="{{ $script.RelPermalink }}"></script>
-{{- end }}
+{{- $scripts := slice -}}
+{{- $features := slice -}}
+{{- $showThemeToggle := not site.Params.disableThemeToggle -}}
+{{- with site.Params.noFate -}}
+    {{- if isset . "showthemetoggle" }}{{ $showThemeToggle = index . "showthemetoggle" }}{{ end -}}
+{{- end -}}
 
-{{- if and (eq .Kind "page") (ne .Layout "archives") (ne .Layout "search") (.Param "ShowCodeCopyButtons") }}
-<script>
-    document.querySelectorAll('pre > code').forEach((codeblock) => {
-        const container = codeblock.parentNode.parentNode;
-        const copybutton = document.createElement('button');
-        copybutton.classList.add('copy-code');
-        copybutton.type = 'button';
-        copybutton.innerHTML = '{{- i18n "code_copy" | default "copy" }}';
+{{- if $showThemeToggle -}}
+    {{- $scripts = $scripts | append (resources.Get "js/theme-toggle.js") -}}
+    {{- $features = $features | append "theme" -}}
+{{- end -}}
 
-        copybutton.addEventListener('click', async () => {
-            if (navigator.clipboard) {
-                await navigator.clipboard.writeText(codeblock.textContent);
-            } else {
-                const selection = window.getSelection();
-                const range = document.createRange();
-                range.selectNodeContents(codeblock);
-                selection.removeAllRanges();
-                selection.addRange(range);
-                document.execCommand('copy');
-                selection.removeAllRanges();
-            }
-            copybutton.innerHTML = '{{- i18n "code_copied" | default "copied!" }}';
-            setTimeout(() => {
-                copybutton.innerHTML = '{{- i18n "code_copy" | default "copy" }}';
-            }, 2000);
-        });
+{{- $scripts = $scripts | append (resources.Get "js/navigation.js") -}}
+{{- $features = $features | append "navigation" -}}
 
-        if (container.classList.contains('highlight')) {
-            container.appendChild(copybutton);
-        } else {
-            codeblock.parentNode.appendChild(copybutton);
-        }
-    });
-</script>
-{{- end }}
+{{- if .Store.Get "noFateHasGallery" -}}
+    {{- $scripts = $scripts | append (resources.Get "js/gallery.js") -}}
+    {{- $features = $features | append "gallery" -}}
+{{- end -}}
+{{- if .Store.Get "noFateHasSortableTable" -}}
+    {{- $scripts = $scripts | append (resources.Get "js/table-sort.js") -}}
+    {{- $features = $features | append "table" -}}
+{{- end -}}
+{{- if .Store.Get "noFateHasSectionFilters" -}}
+    {{- $scripts = $scripts | append (resources.Get "js/section-filter.js") -}}
+    {{- $features = $features | append "filters" -}}
+{{- end -}}
+{{- if and (.Store.Get "noFateHasCodeBlock") (.Param "ShowCodeCopyButtons") -}}
+    {{- $copyScript := resources.Get "js/code-copy.js" | js.Build (dict "params" (dict
+        "copy" (i18n "code_copy" | default "Copy")
+        "copied" (i18n "code_copied" | default "Copied")
+    )) -}}
+    {{- $scripts = $scripts | append $copyScript -}}
+    {{- $features = $features | append "copy" -}}
+{{- end -}}
+
+{{- with $scripts -}}
+    {{- $target := printf "assets/js/no-fate-%s.js" (delimit $features "-") -}}
+    {{- $script := . | resources.Concat $target | resources.Minify -}}
+    {{- if not site.Params.assets.disableFingerprinting -}}
+        {{- $script = $script | fingerprint -}}
+        <script defer crossorigin="anonymous" src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}"></script>
+    {{- else }}
+        <script defer src="{{ $script.RelPermalink }}"></script>
+    {{- end }}
+{{- end -}}

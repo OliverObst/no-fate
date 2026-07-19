@@ -1,2 +1,9 @@
-{{ $src := (.Get "src") }}
-<video src="{{ $src }}" controls muted></video>
+{{- $src := .Get "src" -}}
+{{- $title := .Get "title" | default (i18n "nf_video" | default "Video") -}}
+<figure class="nf-embedded-media nf-embedded-media--video">
+    <video src="{{ $src }}" controls muted playsinline preload="metadata" aria-label="{{ $title }}">
+        <a href="{{ $src | safeURL }}">{{ i18n "nf_download_video" | default "Download video" }}</a>
+    </video>
+    {{- with .Get "caption" }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+    <p class="nf-print-only nf-media-print-link">{{ i18n "nf_video" | default "Video" }}: <a href="{{ $src | safeURL }}">{{ $src }}</a></p>
+</figure>

@@ -50,13 +50,24 @@
         <ul id="menu" class="menu">
             {{- range . }}
             {{- $target := .URL | absLangURL -}}
-            {{- $current := eq ($.Permalink | absURL) $target -}}
+            {{- $current := or ($.IsMenuCurrent "main" .) (eq ($.Permalink | absURL) $target) -}}
             {{- $parsedURL := urls.Parse .URL -}}
-            <li>
+            {{- $targetURL := urls.Parse $target -}}
+            {{- $pageURL := urls.Parse $.Permalink -}}
+            {{- $pathActive := and
+                (eq $targetURL.Host $pageURL.Host)
+                (ne $targetURL.Path "/")
+                (hasPrefix $pageURL.Path $targetURL.Path)
+            -}}
+            {{- $active := or $current ($.HasMenuCurrent "main" .) $pathActive -}}
+            <li class="nf-menu__item{{ if eq .Identifier "search" }} nf-menu__item--search{{ end }}">
                 <a href="{{ $target }}"
                     {{- if $current }} aria-current="page"{{ end }}
                     {{- with .Title }} title="{{ . }}"{{ end }}>
-                    <span{{ if $current }} class="active"{{ end }}>{{ .Name }}</span>
+                    <span class="nf-menu__primary{{ if $active }} active{{ end }}">{{ .Name }}</span>
+                    {{- with .Params.secondary }}
+                    <span class="nf-menu__secondary" aria-hidden="true">{{ . }}</span>
+                    {{- end }}
                     {{- if $parsedURL.IsAbs }}
                     <span class="nf-external-mark" aria-hidden="true">↗</span>
                     <span class="nf-visually-hidden">{{ i18n "nf_external_link" | default "External link" }}</span>

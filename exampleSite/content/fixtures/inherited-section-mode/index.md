@@ -5,6 +5,7 @@ date: 2026-03-13
 lastmod: 2026-06-06
 summary: "A brief notice concerning bells, buzzers, and the limits of attention."
 hiddenInHomeList: true
+utility: true
 demo: true
 
 content:

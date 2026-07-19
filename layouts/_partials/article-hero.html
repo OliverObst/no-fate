@@ -1,0 +1,40 @@
+{{- $page := . -}}
+{{- $model := partial "content-model.html" $page -}}
+{{- $src := $model.Visual.Hero -}}
+{{- $resource := partial "image-resource.html" (dict "page" $page "src" $src) -}}
+{{- $displaySrc := $src -}}
+{{- $displayResource := $resource -}}
+{{- $caption := "" -}}
+{{- $rights := dict -}}
+{{- with $resource -}}
+    {{- $caption = .Params.caption | default "" -}}
+    {{- $rights = .Params.rights | default dict -}}
+    {{- with .Params.derivative_src -}}
+        {{- $candidate := partial "image-resource.html" (dict "page" $page "src" .) -}}
+        {{- if $candidate -}}
+            {{- $displaySrc = . -}}
+            {{- $displayResource = $candidate -}}
+        {{- else -}}
+            {{- warnf "No Fate article hero: prepared derivative %q was not found for %s" . $page.RelPermalink -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+{{- $publicRights := partial "image-rights-data.html" (dict "rights" $rights) -}}
+<figure class="nf-article__hero nf-figure nf-figure--hero">
+    {{- partial "responsive-image.html" (dict
+        "page" $page
+        "src" $displaySrc
+        "resource" $displayResource
+        "alt" $model.Visual.HeroAlt
+        "class" (printf "nf-content-image nf-article__hero-image %s" $model.Visual.HeroTreatment)
+        "loading" "eager"
+        "fetchpriority" "high"
+        "sizes" "(min-width: 86rem) 78rem, calc(100vw - 2rem)"
+    ) -}}
+    {{- if or $caption $publicRights.HasPublic }}
+    <figcaption class="nf-figure__caption">
+        {{- with $caption }}<span class="nf-figure__text">{{ . | markdownify }}</span>{{ end -}}
+        {{- partial "image-rights.html" (dict "rights" $rights) -}}
+    </figcaption>
+    {{- end }}
+</figure>

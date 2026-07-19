@@ -17,6 +17,7 @@ outputs:
 
 taxonomies:
   tag: tags
+  topic: topics
   category: categories
 
 menu:
@@ -25,28 +26,39 @@ menu:
       name: Essays
       url: /essays/
       weight: 10
+      params:
+        secondary: arguments, questions, notes
     - identifier: archives
       name: Archives
       url: /archives/
       weight: 20
+      params:
+        secondary: documents, images, histories
     - identifier: projects
       name: Projects
       url: /projects/
       weight: 30
+      params:
+        secondary: systems, objects, experiments
     - identifier: record
       name: Record
       url: /record/
       weight: 40
+      params:
+        secondary: publications, talks, selected work
     - identifier: about
       name: About
       url: /about/
       weight: 50
+      params:
+        secondary: biography, contact, policies
     - identifier: search
       name: Search
       url: /search/
       weight: 60
 
 params:
+  author: The Night Shift Committee
   description: Notes on tools, rituals, records, and the beautiful trouble of doing it ourselves.
   defaultTheme: auto
   disableThemeToggle: false
@@ -88,6 +100,13 @@ params:
     archive:
       showArtefactNumbers: true
       showRights: true
+    images:
+      widths:
+        - 480
+        - 800
+        - 1200
+        - 1600
+      webpQuality: 82
     record:
       dataFile: record
       enableClientFilters: true

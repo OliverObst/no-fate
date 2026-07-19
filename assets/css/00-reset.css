@@ -3,7 +3,7 @@ html {
 }
 
 body {
-    min-width: 20rem;
+    min-width: 0;
 }
 
 [hidden] {
@@ -20,6 +20,13 @@ input,
 select,
 textarea {
     color: inherit;
+}
+
+button,
+input:not([type="hidden"]),
+select {
+    min-height: 2.75rem;
+    touch-action: manipulation;
 }
 
 img,

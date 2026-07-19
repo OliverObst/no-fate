@@ -15,6 +15,9 @@
       if (!target) return;
 
       event.preventDefault();
+      if (anchor.classList.contains("nf-skip-link")) {
+        target.focus({ preventScroll: true });
+      }
       target.scrollIntoView({
         behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
       });

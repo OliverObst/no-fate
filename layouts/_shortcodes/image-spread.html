@@ -9,7 +9,12 @@
         {{- if not $alt -}}
             {{- errorf "No Fate image-spread: %s requires %s at %s" $srcKey $altKey $.Position -}}
         {{- end -}}
-        {{- $images = $images | append (dict "src" . "alt" $alt "caption" ($.Get $captionKey)) -}}
+        {{- $resource := partial "image-resource.html" (dict "page" $.Page "src" .) -}}
+        {{- $rights := dict -}}
+        {{- with $resource }}{{ $rights = .Params.rights | default dict }}{{ end -}}
+        {{- $images = $images | append (dict
+            "src" . "alt" $alt "caption" ($.Get $captionKey) "rights" $rights
+        ) -}}
     {{- end -}}
 {{- end -}}
 {{- if not $images -}}
@@ -36,7 +41,13 @@
                 "page" $.Page "src" .src "alt" .alt "class" "nf-image-spread__image"
                 "sizes" "(min-width: 64rem) 45vw, calc(100vw - 2rem)"
             ) -}}
-            {{- with .caption }}<p class="nf-image-spread__item-caption">{{ . | markdownify }}</p>{{ end }}
+            {{- $publicRights := partial "image-rights-data.html" (dict "rights" .rights) -}}
+            {{- if or .caption $publicRights.HasPublic }}
+            <p class="nf-image-spread__item-caption">
+                {{- with .caption }}<span>{{ . | markdownify }}</span>{{ end -}}
+                {{- partial "image-rights.html" (dict "rights" .rights) -}}
+            </p>
+            {{- end }}
         </div>
         {{- end }}
     </div>

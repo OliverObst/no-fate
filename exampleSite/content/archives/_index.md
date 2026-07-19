@@ -2,6 +2,12 @@
 title: "Archives"
 description: "Ledgers, instruments, weather, errors, and things found in the wrong drawer."
 demo: true
+outputs:
+  - HTML
+  - RSS
+
+feed:
+  description: "Documents, images, histories, and stubborn evidence."
 
 content:
   format: "section"

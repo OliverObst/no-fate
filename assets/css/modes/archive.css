@@ -12,26 +12,6 @@
     font-family: var(--nf-font-meta);
 }
 
-.nf-article[data-page-mode="archive"] .nf-article__body {
-    counter-reset: nf-artefact;
-}
-
-.nf-article[data-page-mode="archive"] .nf-artefact {
-    counter-increment: nf-artefact;
-    position: relative;
-}
-
-.nf-article[data-page-mode="archive"] .nf-artefact::before {
-    color: var(--nf-colour-signal);
-    content: counter(nf-artefact, decimal-leading-zero);
-    font-family: var(--nf-font-meta);
-    font-size: 0.75rem;
-    font-weight: 800;
-    inset: var(--nf-space-3) var(--nf-space-3) auto auto;
-    letter-spacing: 0.08em;
-    position: absolute;
-}
-
 .nf-article[data-page-mode="archive"] :is(
     .nf-contact-sheet,
     .nf-image-spread,

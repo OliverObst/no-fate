@@ -119,6 +119,9 @@
 - id: nf_canonical
   translation: "Canonical"
 
+- id: nf_canonical_url
+  translation: "Canonical URL"
+
 - id: nf_download
   translation: "Download"
 
@@ -151,6 +154,24 @@
 
 - id: nf_search_results
   translation: "Search results"
+
+- id: nf_search_result_count
+  translation: "%d results"
+
+- id: nf_search_one_result
+  translation: "1 result"
+
+- id: nf_search_no_results
+  translation: "No results"
+
+- id: nf_search_ready
+  translation: "Search is ready"
+
+- id: nf_search_unavailable
+  translation: "Search is temporarily unavailable"
+
+- id: nf_search_requires_js
+  translation: "Search requires JavaScript; the rest of the site does not."
 
 - id: nf_not_found
   translation: "Page not found"
@@ -188,8 +209,14 @@
 - id: nf_creator
   translation: "Creator"
 
+- id: nf_author
+  translation: "Author"
+
 - id: nf_rights
   translation: "Rights"
+
+- id: nf_licence
+  translation: "Licence"
 
 - id: nf_significance
   translation: "Significance"
@@ -202,6 +229,18 @@
 
 - id: nf_download_original
   translation: "Download original"
+
+- id: nf_video
+  translation: "Video"
+
+- id: nf_audio
+  translation: "Audio"
+
+- id: nf_download_video
+  translation: "Download video"
+
+- id: nf_download_audio
+  translation: "Download audio"
 
 - id: nf_scrollable_table
   translation: "Scrollable table"

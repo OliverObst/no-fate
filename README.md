@@ -145,6 +145,10 @@ title = "Example publication"
   showArtefactNumbers = true
   showRights = true
 
+[params.noFate.images]
+  widths = [480, 800, 1200, 1600]
+  webpQuality = 82
+
 [params.noFate.record]
   dataFile = "record"
   enableClientFilters = true
@@ -313,9 +317,16 @@ artefacts and timelines are documented in
 typed quotations, anchored headings, external links and sortable tables are
 implemented as Markdown render hooks or progressive enhancements.
 
+The image pipeline, prepared treatment derivatives and public/private rights
+boundary are documented in [Images and rights](docs/images-and-rights.md).
+
 Homepage order, selected-content validation, section densities and generic
 front matter-driven filters are documented in
 [Homepage and sections](docs/homepage-and-sections.md).
+
+Primary and secondary menu labels, local search-index rules, section RSS and
+discovery metadata are documented in
+[Navigation, search and feeds](docs/navigation-search-and-feeds.md).
 
 The optional data-driven publications, talks, exhibitions, releases, datasets,
 and other outputs system is documented in
@@ -323,6 +334,10 @@ and other outputs system is documented in
 a complete chronological list, progressive year/type/topic filters, creator
 highlighting, source and export links, machine-readable entries, and
 print-specific behaviour without requiring JavaScript.
+
+The release standards for keyboard and assistive-technology use, static-first
+asset delivery, Lighthouse budgets and A4 output are documented in
+[Accessibility, performance and print](docs/accessibility-performance-and-print.md).
 
 ## Demonstration site
 

@@ -8,13 +8,24 @@
     {{- end }}
 </header>
 
-<div id="searchbox" class="searchbox">
+{{- $indexURL := "index.json" | relLangURL -}}
+{{- with site.Home.OutputFormats.Get "json" }}{{ $indexURL = .RelPermalink }}{{ end -}}
+<div id="searchbox" class="searchbox"
+    data-index-url="{{ $indexURL }}"
+    data-label-results="{{ i18n "nf_search_result_count" | default "%d results" }}"
+    data-label-result="{{ i18n "nf_search_one_result" | default "1 result" }}"
+    data-label-empty="{{ i18n "nf_search_no_results" | default "No results" }}"
+    data-label-ready="{{ i18n "nf_search_ready" | default "Search is ready" }}"
+    data-label-error="{{ i18n "nf_search_unavailable" | default "Search is temporarily unavailable" }}">
     <label class="nf-visually-hidden" for="searchInput">{{ i18n "nf_search" | default "Search" }}</label>
     <input id="searchInput" disabled
         placeholder="{{ .Params.placeholder | default (i18n "nf_search_placeholder" | default "Search") }}"
-        type="search" autocomplete="off" maxlength="64">
-    <ul id="searchResults" class="searchResults" aria-live="polite"
+        type="search" autocomplete="off" maxlength="64"
+        aria-controls="searchResults" aria-describedby="searchStatus">
+    <p id="searchStatus" class="nf-search-status" role="status" aria-live="polite"></p>
+    <ul id="searchResults" class="searchResults"
         aria-label="{{ i18n "nf_search_results" | default "Search results" }}"></ul>
+    <noscript><p>{{ i18n "nf_search_requires_js" | default "Search requires JavaScript; the rest of the site does not." }}</p></noscript>
 </div>
 </div>
 {{- end }}

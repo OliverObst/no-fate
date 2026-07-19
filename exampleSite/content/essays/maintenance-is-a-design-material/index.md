@@ -7,6 +7,9 @@ summary: "A repair queue is a design document written in real time."
 tags:
   - maintenance
   - systems
+topics:
+  - maintenance
+  - public systems
 demo: true
 
 content:
