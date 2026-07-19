@@ -196,9 +196,9 @@ visual:
 ## Page modes
 
 Every substantive page selects one of four modes. These names form the public
-content contract. The repository now includes a shared resolver, semantic
-article shell, and mode-specific opening and body partials. Full mode behaviour
-and final presentation remain later implementation work.
+content contract. A shared resolver and semantic article shell preserve the
+same document structure while mode-specific openings, metadata, width rules,
+components and print behaviour change the presentation.
 
 | Mode | Intended use |
 | --- | --- |
@@ -227,7 +227,9 @@ visual:
 
 Resolution order is page `visual.mode`, then the current section's
 `visual.mode`, then `params.noFate.defaultMode`. The current section may have
-any name and may be nested.
+any name and may be nested. Unsupported values produce a build warning and
+fall back to the configured default. See [Page modes](docs/page-modes.md) for
+the complete behaviour, front matter options and authoring constraints.
 
 ## Repository architecture
 

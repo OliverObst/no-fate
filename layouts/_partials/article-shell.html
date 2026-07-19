@@ -1,6 +1,8 @@
 {{- $page := .page -}}
 {{- $mode := .mode -}}
-<div class="nf-article__body{{ if eq $mode "record" }} nf-record{{ end }}">
+<div
+    class="nf-article__body nf-article__body--{{ $mode }}{{ if eq $mode "record" }} nf-record{{ end }}"
+    data-mode-body="{{ $mode }}">
     {{- $isHidden := ($page.Param "cover.hiddenInSingle") | default ($page.Param "cover.hidden") | default false }}
     {{- partial "cover.html" (dict "cxt" $page "IsSingle" true "isHidden" $isHidden) }}
     {{- if $page.Param "ShowToc" }}

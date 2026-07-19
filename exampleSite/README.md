@@ -25,6 +25,11 @@ The archive fixture is a leaf bundle containing a fictional plain-text source
 resource. The essay and note share a demonstration proposition so the rendered
 site can verify related-content behaviour.
 
+Published single-page fixtures exercise all four page modes: the maintenance
+essay uses `editorial`, the optimisation question uses `poster`, the tide-room
+history uses `archive`, and the useful-misplacements register uses `record`.
+CI checks the resolved mode and shared semantic article shell for each page.
+
 From the theme repository root, run:
 
 ```sh

@@ -42,6 +42,11 @@ and releases use [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   Extended.
 - Documented No Fate's substantial architectural, content-model and visual
   differences from its PaperMod foundation.
+- Completed the four page modes with distinct openings, metadata, reading
+  measures, component treatments, responsive behaviour and print rules.
+- Added a record-mode archetype and a complete single-page record fixture.
+- Replaced the rendered-copy CI assertion with structural demonstration and
+  page-mode checks.
 - Replaced upstream-facing documentation with reusable No Fate documentation.
 - Removed upstream screenshots and the PaperMod credit from the generated site footer.
 - Moved navigation and theme interactions from inline templates to progressive

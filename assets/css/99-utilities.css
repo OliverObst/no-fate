@@ -41,3 +41,36 @@
         min-height: auto;
     }
 }
+
+@media print {
+    @page {
+        margin: 16mm;
+    }
+
+    :root,
+    :root[data-theme],
+    body {
+        background: #fff !important;
+        color: #000 !important;
+    }
+
+    :is(
+        .header,
+        .nf-site-header,
+        .footer,
+        .nf-site-footer,
+        .top-link,
+        .nf-skip-link
+    ) {
+        display: none !important;
+    }
+
+    .main {
+        border: 0 !important;
+        margin: 0 !important;
+        max-width: none !important;
+        min-height: 0;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+}

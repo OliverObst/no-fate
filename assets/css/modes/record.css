@@ -1,7 +1,90 @@
 .nf-article[data-page-mode="record"] {
+    --nf-article-width: 100%;
+    --nf-opening-gap: 2.5rem;
     --nf-reading-measure: 90ch;
+    --nf-section-gap: 2.5rem;
+    --nf-title-measure: 22ch;
+    --nf-title-size: clamp(2rem, 4vw, 3.8rem);
 }
 
-.nf-article[data-page-mode="record"] .nf-article__title {
-    font-size: clamp(2rem, 5vw, 4rem);
+.nf-article[data-page-mode="record"] .nf-article__opening-grid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+}
+
+.nf-article[data-page-mode="record"] :is(
+    .nf-article__kicker,
+    .nf-article__meta,
+    .nf-article__facts,
+    table
+) {
+    font-variant-numeric: tabular-nums;
+}
+
+.nf-article[data-page-mode="record"] :is(
+    .nf-article__meta,
+    .nf-article__facts
+) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.82rem;
+}
+
+.nf-article[data-page-mode="record"] .nf-article__body {
+    gap: var(--nf-space-4);
+}
+
+.nf-article[data-page-mode="record"] .nf-prose {
+    font-size: 1rem;
+    max-width: 90ch;
+}
+
+.nf-article[data-page-mode="record"] table {
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+.nf-article[data-page-mode="record"] :is(th, td) {
+    border-bottom: var(--nf-rule);
+    padding: 0.6rem 0.75rem;
+    text-align: start;
+    vertical-align: top;
+}
+
+.nf-article[data-page-mode="record"] th {
+    border-bottom: var(--nf-rule-strong);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.nf-article[data-page-mode="record"] .nf-poster {
+    border: var(--nf-rule);
+    font-size: 1rem;
+    font-weight: inherit;
+    padding: var(--nf-space-4);
+}
+
+@media (max-width: 48rem) {
+    .nf-article[data-page-mode="record"] .nf-article__opening-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media print {
+    .nf-article[data-page-mode="record"] {
+        --nf-reading-measure: none;
+        font-size: 9.5pt;
+    }
+
+    .nf-article[data-page-mode="record"] table {
+        font-size: 8.5pt;
+    }
+
+    .nf-article[data-page-mode="record"] thead {
+        display: table-header-group;
+    }
+
+    .nf-article[data-page-mode="record"] tr {
+        break-inside: avoid;
+    }
 }

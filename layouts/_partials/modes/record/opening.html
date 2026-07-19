@@ -1,1 +1,27 @@
-{{- partial "article-opening.html" (dict "page" . "mode" "record") -}}
+{{- $model := partial "content-model.html" . -}}
+{{- $facts := slice -}}
+{{- with $model.Content.Status -}}
+    {{- $facts = $facts | append (dict
+        "label" (i18n "nf_record_status" | default "Status")
+        "value" (. | humanize)
+    ) -}}
+{{- end -}}
+{{- with $model.Content.OriginalDate -}}
+    {{- $facts = $facts | append (dict
+        "label" (i18n "nf_record_original_date" | default "Original date")
+        "value" (time.Format ":date_long" .)
+    ) -}}
+{{- end -}}
+{{- with $model.Editorial.Series -}}
+    {{- $facts = $facts | append (dict
+        "label" (i18n "nf_record_series" | default "Series")
+        "value" .
+    ) -}}
+{{- end -}}
+{{- with $model.Editorial.Issue -}}
+    {{- $facts = $facts | append (dict
+        "label" (i18n "nf_record_issue" | default "Issue")
+        "value" .
+    ) -}}
+{{- end -}}
+{{- partial "article-opening.html" (dict "page" . "mode" "record" "facts" $facts) -}}

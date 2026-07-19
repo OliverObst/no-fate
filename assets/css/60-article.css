@@ -1,11 +1,31 @@
 .nf-article {
+    --nf-article-width: 78rem;
+    --nf-opening-gap: var(--nf-space-6);
     --nf-reading-measure: 70ch;
+    --nf-section-gap: var(--nf-space-7);
+    --nf-title-measure: 18ch;
+    --nf-title-size: clamp(2.8rem, 6vw, 5.75rem);
+}
+
+.nf-article[data-accent="quiet"] {
+    --nf-colour-signal: var(--nf-colour-muted);
 }
 
 .nf-article__opening {
     border-bottom: var(--nf-rule-strong);
-    margin-bottom: var(--nf-space-6);
-    padding-bottom: var(--nf-space-6);
+    margin-bottom: var(--nf-opening-gap);
+    padding-bottom: var(--nf-opening-gap);
+}
+
+.nf-article__opening-grid {
+    align-items: end;
+    display: grid;
+    gap: var(--nf-space-6);
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.nf-article__heading {
+    min-width: 0;
 }
 
 .nf-article__kicker {
@@ -18,7 +38,87 @@
 }
 
 .nf-article__title {
-    max-width: 18ch;
+    font-size: var(--nf-title-size);
+    max-width: var(--nf-title-measure);
+}
+
+.nf-article__opening[data-headline-scale="small"] {
+    --nf-title-size: clamp(2.2rem, 4.5vw, 3.9rem);
+}
+
+.nf-article__opening[data-headline-scale="medium"] {
+    --nf-title-size: clamp(2.8rem, 6vw, 5.75rem);
+}
+
+.nf-article__opening[data-headline-scale="large"] {
+    --nf-title-size: clamp(3.8rem, 9vw, 8.5rem);
+    --nf-title-measure: 13ch;
+}
+
+.nf-article__opening[data-opening-alignment="centre"] .nf-article__heading {
+    margin-inline: auto;
+    text-align: center;
+}
+
+.nf-article__opening[data-opening-alignment="centre"] :is(
+    .nf-article__title,
+    .nf-deck
+) {
+    margin-inline: auto;
+}
+
+.nf-article__opening[data-opening-inverted="true"] {
+    background: var(--nf-colour-ink);
+    border: 0;
+    color: var(--nf-colour-paper);
+    padding: clamp(var(--nf-space-5), 5vw, var(--nf-space-8));
+}
+
+.nf-article__opening[data-opening-inverted="true"] :is(
+    .breadcrumbs,
+    .nf-article__meta,
+    .nf-deck
+) {
+    color: inherit;
+}
+
+.nf-article__opening[data-opening-inverted="true"] :is(
+    .nf-article__title,
+    .breadcrumbs a,
+    .nf-article__meta a
+) {
+    color: inherit;
+}
+
+.nf-article__facts {
+    border-block: var(--nf-rule);
+    display: grid;
+    font-variant-numeric: tabular-nums;
+    gap: 0;
+    margin: 0;
+}
+
+.nf-article__facts > div {
+    display: grid;
+    gap: var(--nf-space-3);
+    grid-template-columns: minmax(7rem, 0.4fr) minmax(0, 1fr);
+    padding-block: var(--nf-space-3);
+}
+
+.nf-article__facts > div + div {
+    border-top: var(--nf-rule);
+}
+
+.nf-article__facts dt {
+    color: var(--nf-colour-muted);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.nf-article__facts dd {
+    margin: 0;
 }
 
 .nf-article__meta {
@@ -28,11 +128,18 @@
 .nf-article__body {
     display: grid;
     gap: var(--nf-space-5);
+    margin-inline: auto;
+    max-width: var(--nf-article-width);
+    width: 100%;
+}
+
+.nf-article__body .post-content {
+    width: 100%;
 }
 
 .nf-article__footer {
     border-top: var(--nf-rule-strong);
-    margin-top: var(--nf-space-8);
+    margin-top: var(--nf-section-gap);
     padding-top: var(--nf-space-5);
 }
 
@@ -46,4 +153,66 @@
     font-size: 0.85rem;
     margin-top: var(--nf-space-2);
     padding-top: var(--nf-space-2);
+}
+
+@media (max-width: 48rem) {
+    .nf-article__facts > div {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media print {
+    .nf-article {
+        --nf-article-width: none;
+        --nf-opening-gap: 1.25rem;
+        --nf-section-gap: 2rem;
+        --nf-title-size: 30pt;
+        --nf-title-measure: none;
+        color: #000;
+        font-size: 11pt;
+    }
+
+    .nf-article__opening {
+        background: transparent !important;
+        border: 0;
+        border-bottom: 1pt solid #000;
+        color: #000 !important;
+        min-height: 0 !important;
+        padding: 0 0 1.25rem !important;
+        transform: none !important;
+    }
+
+    .nf-article__opening :is(
+        .breadcrumbs,
+        .nf-article__meta,
+        .nf-deck,
+        .nf-article__facts dt
+    ) {
+        color: #222 !important;
+    }
+
+    .nf-article__facts,
+    .nf-article__facts > div,
+    .nf-article__footer,
+    .nf-component {
+        border-color: #000 !important;
+    }
+
+    .nf-article__facts,
+    .nf-component,
+    .nf-figure,
+    .nf-artefact,
+    table,
+    pre {
+        break-inside: avoid;
+    }
+
+    .nf-article__body,
+    .nf-article__body .post-content {
+        max-width: none;
+    }
+
+    .nf-article__footer {
+        break-before: auto;
+    }
 }

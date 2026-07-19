@@ -1,3 +1,28 @@
 .nf-article[data-page-mode="editorial"] {
-    --nf-reading-measure: 70ch;
+    --nf-article-width: 78rem;
+    --nf-opening-gap: clamp(2.5rem, 6vw, 5rem);
+    --nf-reading-measure: 68ch;
+    --nf-section-gap: clamp(3rem, 6vw, 5rem);
+    --nf-title-measure: 16ch;
+}
+
+.nf-article[data-page-mode="editorial"] .nf-article__opening-grid {
+    max-width: 76rem;
+}
+
+.nf-article[data-page-mode="editorial"] .nf-article__body .post-content {
+    margin-inline-end: auto;
+}
+
+.nf-article[data-page-mode="editorial"] :is(
+    .nf-pullquote,
+    .nf-poster
+) {
+    margin-inline: clamp(0rem, 6vw, 6rem) clamp(-4rem, -4vw, 0rem);
+}
+
+@media print {
+    .nf-article[data-page-mode="editorial"] {
+        --nf-reading-measure: 72ch;
+    }
 }

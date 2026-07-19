@@ -137,6 +137,9 @@ Supported page modes:
 - `archive`
 - `record`
 
+See [Page modes](page-modes.md) for resolution, presentation, accessibility,
+print behaviour and mode-specific authoring constraints.
+
 Supported `visual.hero_treatment` values:
 
 - `raw`
@@ -199,8 +202,11 @@ Warnings cover:
 
 - missing required fields
 - unsupported page modes
+- unsupported accents, headline scales, or opening alignments
 - missing hero alternative text
 - unsupported hero treatments
+- missing archive period or location metadata
+- excessive poster interruptions or poster components in record mode
 - substantive content outside leaf bundles
 - malformed or unknown proposition references
 

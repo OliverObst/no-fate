@@ -387,10 +387,10 @@
 }
 
 :root[data-nf-style="wild"] :is(.page-header h1, .nf-article__title) {
-    font-size: clamp(3rem, 8vw, 8rem);
+    font-size: var(--nf-title-size, clamp(3rem, 8vw, 8rem));
     letter-spacing: -0.075em;
     line-height: 0.8;
-    max-width: 13ch;
+    max-width: var(--nf-title-measure, 13ch);
 }
 
 :root[data-nf-style="wild"] .nf-article[data-page-mode="poster"] .nf-article__opening {
@@ -623,7 +623,7 @@
     }
 
     :root[data-nf-style="wild"] :is(.page-header h1, .nf-article__title) {
-        font-size: clamp(2.75rem, 15vw, 5rem);
+        font-size: var(--nf-title-size, clamp(2.75rem, 15vw, 5rem));
     }
 }
 

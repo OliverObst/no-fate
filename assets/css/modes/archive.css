@@ -1,7 +1,60 @@
 .nf-article[data-page-mode="archive"] {
-    --nf-reading-measure: 76ch;
+    --nf-article-width: 90rem;
+    --nf-opening-gap: clamp(2.5rem, 6vw, 5rem);
+    --nf-reading-measure: 72ch;
+    --nf-section-gap: clamp(3.5rem, 7vw, 6rem);
+    --nf-title-measure: 15ch;
+}
+
+.nf-article[data-page-mode="archive"] .nf-article__opening-grid {
+    grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.65fr);
+}
+
+.nf-article[data-page-mode="archive"] .nf-article__facts {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
 .nf-article[data-page-mode="archive"] .nf-article__body {
-    max-width: 84rem;
+    counter-reset: nf-artefact;
+}
+
+.nf-article[data-page-mode="archive"] .nf-artefact {
+    counter-increment: nf-artefact;
+    position: relative;
+}
+
+.nf-article[data-page-mode="archive"] .nf-artefact::before {
+    color: var(--nf-colour-signal);
+    content: counter(nf-artefact, decimal-leading-zero);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.75rem;
+    font-weight: 800;
+    inset: var(--nf-space-3) var(--nf-space-3) auto auto;
+    letter-spacing: 0.08em;
+    position: absolute;
+}
+
+.nf-article[data-page-mode="archive"] :is(
+    .nf-contact-sheet,
+    .nf-image-spread,
+    .nf-timeline
+) {
+    max-width: none;
+}
+
+.nf-article[data-page-mode="archive"] figcaption {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 48rem) {
+    .nf-article[data-page-mode="archive"] .nf-article__opening-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media print {
+    .nf-article[data-page-mode="archive"] {
+        --nf-reading-measure: 76ch;
+    }
 }

@@ -73,8 +73,8 @@ jobs:
             --gc \
             --cleanDestinationDir
 
-      - name: Check fictional boundary
-        run: |
-          tr '\n' ' ' < exampleSite/public/index.html |
-            grep --fixed-strings \
-              "North Quay does not exist. Neither do its people, projects, publications, events, or magnificent administrative crises."
+      - name: Check demonstration boundary
+        run: bash .github/scripts/check-demo-boundary.sh
+
+      - name: Check page modes
+        run: bash .github/scripts/check-page-modes.sh exampleSite/public

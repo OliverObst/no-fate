@@ -1,1 +1,33 @@
-{{- partial "article-opening.html" (dict "page" . "mode" "archive") -}}
+{{- $model := partial "content-model.html" . -}}
+{{- $facts := slice -}}
+{{- $start := $model.Archive.StartYear -}}
+{{- $end := $model.Archive.EndYear -}}
+{{- if or $start $end -}}
+    {{- $period := "" -}}
+    {{- if and $start $end -}}
+        {{- if eq $start $end -}}
+            {{- $period = printf "%v" $start -}}
+        {{- else -}}
+            {{- $period = printf "%v–%v" $start $end -}}
+        {{- end -}}
+    {{- else -}}
+        {{- $period = printf "%v" ($start | default $end) -}}
+    {{- end -}}
+    {{- $facts = $facts | append (dict
+        "label" (i18n "nf_archive_period" | default "Period")
+        "value" $period
+    ) -}}
+{{- end -}}
+{{- with $model.Archive.Locations -}}
+    {{- $facts = $facts | append (dict
+        "label" (i18n "nf_archive_locations" | default "Locations")
+        "value" (delimit . ", ")
+    ) -}}
+{{- end -}}
+{{- with $model.Archive.People -}}
+    {{- $facts = $facts | append (dict
+        "label" (i18n "nf_archive_people" | default "People")
+        "value" (delimit . ", ")
+    ) -}}
+{{- end -}}
+{{- partial "article-opening.html" (dict "page" . "mode" "archive" "facts" $facts) -}}

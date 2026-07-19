@@ -43,11 +43,23 @@
     {{- end -}}
 
     {{- $allowedTreatments := slice "raw" "monochrome" "high-contrast" "halftone" "photocopy" "technical" "duotone" -}}
+    {{- $allowedAccents := slice "signal" "quiet" -}}
+    {{- $headlineScales := slice "small" "medium" "large" -}}
+    {{- $openingAlignments := slice "left" "centre" -}}
     {{- $bundleFormats := slice "artefact" "essay" "history" "note" "project" "question" -}}
     {{- with index hugo.Data "no-fate" -}}
         {{- with .defaults -}}
             {{- with .allowed_hero_treatments -}}
                 {{- $allowedTreatments = . -}}
+            {{- end -}}
+            {{- with .allowed_accents -}}
+                {{- $allowedAccents = . -}}
+            {{- end -}}
+            {{- with .headline_scales -}}
+                {{- $headlineScales = . -}}
+            {{- end -}}
+            {{- with .opening_alignments -}}
+                {{- $openingAlignments = . -}}
             {{- end -}}
             {{- with .bundle_formats -}}
                 {{- $bundleFormats = . -}}
@@ -56,6 +68,24 @@
     {{- end -}}
 
     {{- with $page.Params.visual -}}
+        {{- with .accent -}}
+            {{- $accent := printf "%v" . | lower -}}
+            {{- if not (in $allowedAccents $accent) -}}
+                {{- warnf "No Fate content model: unsupported visual.accent %q on %s; expected one of %s" $accent $location (delimit $allowedAccents ", ") -}}
+            {{- end -}}
+        {{- end -}}
+        {{- with .headline_scale -}}
+            {{- $scale := printf "%v" . | lower -}}
+            {{- if not (in $headlineScales $scale) -}}
+                {{- warnf "No Fate content model: unsupported visual.headline_scale %q on %s; expected one of %s" $scale $location (delimit $headlineScales ", ") -}}
+            {{- end -}}
+        {{- end -}}
+        {{- with .opening_alignment -}}
+            {{- $alignment := printf "%v" . | lower -}}
+            {{- if not (in $openingAlignments $alignment) -}}
+                {{- warnf "No Fate content model: unsupported visual.opening_alignment %q on %s; expected one of %s" $alignment $location (delimit $openingAlignments ", ") -}}
+            {{- end -}}
+        {{- end -}}
         {{- if and .hero (not .hero_alt) -}}
             {{- warnf "No Fate content model: visual.hero_alt is required when visual.hero is set on %s" $location -}}
         {{- end -}}
@@ -65,6 +95,26 @@
                 {{- warnf "No Fate content model: unsupported visual.hero_treatment %q on %s" $treatment $location -}}
             {{- end -}}
         {{- end -}}
+    {{- end -}}
+
+    {{- if eq $model.Visual.Mode "archive" -}}
+        {{- if not (or $model.Archive.StartYear $model.Archive.EndYear) -}}
+            {{- warnf "No Fate content model: archive mode requires archive.start_year or archive.end_year on %s" $location -}}
+        {{- end -}}
+        {{- if not $model.Archive.Locations -}}
+            {{- warnf "No Fate content model: archive mode requires at least one archive.locations value on %s" $location -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- $posterInterruptions := add
+        (strings.Count "{{< poster" $page.RawContent)
+        (strings.Count "{{% poster" $page.RawContent)
+    -}}
+    {{- if gt $posterInterruptions 3 -}}
+        {{- warnf "No Fate content model: poster interruptions should not exceed three on %s; found %d" $location $posterInterruptions -}}
+    {{- end -}}
+    {{- if and (eq $model.Visual.Mode "record") (gt $posterInterruptions 0) -}}
+        {{- warnf "No Fate content model: record mode does not permit poster interruptions on %s" $location -}}
     {{- end -}}
 
     {{- if in $bundleFormats $model.Content.Format -}}

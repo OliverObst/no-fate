@@ -27,6 +27,9 @@
 {{- with site.Params.noFate.defaultAccent -}}
     {{- $defaultAccent = . -}}
 {{- end -}}
+{{- $accent := printf "%v" (index $visual "accent" | default $defaultAccent) | lower -}}
+{{- $headlineScale := printf "%v" (index $visual "headline_scale" | default "medium") | lower -}}
+{{- $openingAlignment := printf "%v" (index $visual "opening_alignment" | default "left") | lower -}}
 
 {{- $description := index $seo "description" | default "" -}}
 {{- $canonical := index $seo "canonical" | default $page.Params.canonicalURL | default "" -}}
@@ -46,9 +49,9 @@
     )
     "Visual" (dict
         "Mode" (partial "mode-resolver.html" $page)
-        "Accent" (index $visual "accent" | default $defaultAccent)
-        "HeadlineScale" (index $visual "headline_scale" | default "medium")
-        "OpeningAlignment" (index $visual "opening_alignment" | default "left")
+        "Accent" $accent
+        "HeadlineScale" $headlineScale
+        "OpeningAlignment" $openingAlignment
         "Hero" (index $visual "hero" | default "")
         "HeroAlt" (index $visual "hero_alt" | default "")
         "HeroTreatment" (index $visual "hero_treatment" | default "raw")

@@ -9,7 +9,7 @@
 {{- $default := site.Params.noFate.defaultMode | default "editorial" -}}
 {{- $default = printf "%v" $default | lower -}}
 {{- if not (in $allowed $default) -}}
-    {{- warnf "No Fate: unsupported params.noFate.defaultMode %q; using %q" $default "editorial" -}}
+    {{- warnf "No Fate: unsupported params.noFate.defaultMode %q; expected one of %s; using %q" $default (delimit $allowed ", ") "editorial" -}}
     {{- $default = "editorial" -}}
 {{- end -}}
 {{- $mode := "" -}}
@@ -32,7 +32,7 @@
 
 {{- $mode = printf "%v" ($mode | default $default) | lower -}}
 {{- if not (in $allowed $mode) -}}
-    {{- warnf "No Fate: unsupported visual.mode %q on %s; using %q" $mode .RelPermalink $default -}}
+    {{- warnf "No Fate: unsupported visual.mode %q on %s; expected one of %s; using %q" $mode .RelPermalink (delimit $allowed ", ") $default -}}
     {{- $mode = $default -}}
 {{- end -}}
 

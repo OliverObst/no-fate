@@ -1,18 +1,37 @@
 {{- $page := .page -}}
 {{- $mode := .mode -}}
+{{- $facts := .facts | default slice -}}
 {{- $model := partial "content-model.html" $page -}}
-<header class="post-header nf-article__opening nf-article__opening--{{ $mode }}">
+<header
+    class="post-header nf-article__opening nf-article__opening--{{ $mode }}"
+    data-headline-scale="{{ $model.Visual.HeadlineScale }}"
+    data-opening-alignment="{{ $model.Visual.OpeningAlignment }}"
+    data-opening-inverted="{{ $model.Visual.InvertOpening }}">
     {{- partial "breadcrumbs.html" $page }}
-    <p class="nf-article__kicker">
-        {{- with $model.Content.Format -}}
-            {{- . | humanize -}}
-        {{- else -}}
-            {{- $mode | humanize -}}
-        {{- end -}}
-    </p>
-    <h1 class="post-title nf-article__title">{{ $page.Title }}</h1>
-    {{- with or $page.Params.subtitle $page.Description }}
-    <p class="post-description nf-deck">{{ . | markdownify }}</p>
-    {{- end }}
+    <div class="nf-article__opening-grid">
+        <div class="nf-article__heading">
+            <p class="nf-article__kicker">
+                {{- with $model.Content.Format -}}
+                    {{- . | humanize -}}
+                {{- else -}}
+                    {{- $mode | humanize -}}
+                {{- end -}}
+            </p>
+            <h1 class="post-title nf-article__title">{{ $page.Title }}</h1>
+            {{- with or $page.Params.subtitle $page.Description }}
+            <p class="post-description nf-deck">{{ . | markdownify }}</p>
+            {{- end }}
+        </div>
+        {{- with $facts }}
+        <dl class="nf-article__facts nf-article__facts--{{ $mode }}">
+            {{- range . }}
+            <div>
+                <dt>{{ .label }}</dt>
+                <dd>{{ .value }}</dd>
+            </div>
+            {{- end }}
+        </dl>
+        {{- end }}
+    </div>
     {{- partial "article-meta.html" $page }}
 </header>
