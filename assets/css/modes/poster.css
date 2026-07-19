@@ -1,10 +1,7 @@
 .nf-article[data-page-mode="poster"] {
     --nf-article-width: 76rem;
-    --nf-opening-gap: clamp(3rem, 8vw, 7rem);
     --nf-reading-measure: 68ch;
-    --nf-section-gap: clamp(3.5rem, 7vw, 6rem);
     --nf-title-measure: 12ch;
-    --nf-title-size: clamp(4rem, 10vw, 9rem);
 }
 
 .nf-article[data-page-mode="poster"] .nf-article__opening {

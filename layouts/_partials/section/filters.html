@@ -1,0 +1,31 @@
+{{- with .links }}
+<nav class="nf-section-links" aria-label="{{ i18n "nf_browse_writing" | default "Browse writing" }}">
+    <ul>
+        {{- range . }}
+        <li><a href="{{ .url | relLangURL }}">{{ .label }}</a></li>
+        {{- end }}
+    </ul>
+</nav>
+{{- end }}
+{{- with .definitions }}
+{{- $.section.Store.Set "noFateHasSectionFilters" true -}}
+<form class="nf-section-filters" data-nf-section-filters
+    data-label-one="{{ i18n "nf_item" | default "item" }}"
+    data-label-many="{{ i18n "nf_items" | default "items" }}" hidden>
+    <div class="nf-section-filters__fields">
+        {{- range . }}
+        <label>
+            <span>{{ .label }}</span>
+            <select data-nf-filter-field="{{ .id }}">
+                <option value="">{{ i18n "nf_all" | default "All" }}</option>
+                {{- range .options }}
+                <option value="{{ . }}">{{ . }}</option>
+                {{- end }}
+            </select>
+        </label>
+        {{- end }}
+    </div>
+    <button type="reset">{{ i18n "nf_clear_filters" | default "Clear filters" }}</button>
+    <p class="nf-section-filters__status" aria-live="polite"></p>
+</form>
+{{- end }}

@@ -1,8 +1,6 @@
 .nf-article[data-page-mode="editorial"] {
     --nf-article-width: 78rem;
-    --nf-opening-gap: clamp(2.5rem, 6vw, 5rem);
     --nf-reading-measure: 68ch;
-    --nf-section-gap: clamp(3rem, 6vw, 5rem);
     --nf-title-measure: 16ch;
 }
 

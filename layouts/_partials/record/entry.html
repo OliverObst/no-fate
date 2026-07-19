@@ -1,18 +1,53 @@
-<article class="post-entry nf-entry">
+{{- $page := . -}}
+{{- $density := "standard" -}}
+{{- $headingLevel := 2 -}}
+{{- $filters := slice -}}
+{{- if reflect.IsMap . -}}
+    {{- $page = .page -}}
+    {{- $density = .density | default "standard" -}}
+    {{- $headingLevel = .headingLevel | default 2 -}}
+    {{- $filters = .filters | default slice -}}
+{{- end -}}
+{{- with $page.Params.editorial.density }}{{ $density = . }}{{ end -}}
+{{- if not (in (slice "lead" "standard" "compact") $density) -}}
+    {{- $density = "standard" -}}
+{{- end -}}
+{{- $model := partial "content-model.html" $page -}}
+<article class="post-entry nf-entry nf-entry--{{ $density }}" data-density="{{ $density }}" data-nf-filter-entry
+    {{- range $filters -}}
+        {{- $values := partial "param-values.html" (dict "page" $page "path" .param) -}}
+        {{- printf " data-nf-filter-%s=%q" .id (delimit $values "|") | safeHTMLAttr -}}
+    {{- end -}}>
     <header class="entry-header">
-        <h2 class="entry-hint-parent nf-entry__title">
-            <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
-            {{- if .Draft }}
+        {{- printf "<h%d class=\"entry-hint-parent nf-entry__title\">" $headingLevel | safeHTML -}}
+            <a href="{{ $page.RelPermalink }}">{{ $page.LinkTitle }}</a>
+            {{- if $page.Draft }}
             <span class="entry-hint">{{ i18n "nf_draft" | default "Draft" }}</span>
             {{- end }}
-        </h2>
+        {{- printf "</h%d>" $headingLevel | safeHTML -}}
     </header>
-    {{- if ne (.Param "hideSummary") true }}
+    {{- if and (ne ($page.Param "hideSummary") true) (ne $density "compact") }}
     <div class="entry-content">
-        <p>{{ .Summary | plainify | htmlUnescape }}</p>
+        <p>{{ $page.Summary | plainify | htmlUnescape }}</p>
     </div>
     {{- end }}
-    {{- if not (.Param "hideMeta") }}
-    <footer class="entry-footer">{{ partial "post_meta.html" . }}</footer>
+    <dl class="nf-entry__facts">
+        {{- with $model.Content.Format }}<div><dt>{{ i18n "nf_type" | default "Type" }}</dt><dd>{{ . | humanize }}</dd></div>{{ end }}
+        {{- if or $model.Archive.StartYear $model.Archive.EndYear }}
+        <div><dt>{{ i18n "nf_period" | default "Period" }}</dt><dd>
+            {{- if and $model.Archive.StartYear $model.Archive.EndYear -}}
+                {{- if eq $model.Archive.StartYear $model.Archive.EndYear }}{{ $model.Archive.StartYear }}{{ else }}{{ $model.Archive.StartYear }}–{{ $model.Archive.EndYear }}{{ end -}}
+            {{- else -}}
+                {{- $model.Archive.StartYear | default $model.Archive.EndYear -}}
+            {{- end -}}
+        </dd></div>
+        {{- end }}
+        {{- with $model.Archive.Locations }}<div><dt>{{ i18n "nf_location" | default "Location" }}</dt><dd>{{ delimit . ", " }}</dd></div>{{ end }}
+        {{- with $model.Archive.Source }}<div><dt>{{ i18n "nf_source" | default "Source" }}</dt><dd>{{ . }}</dd></div>{{ end }}
+        {{- with $model.Archive.Rights }}<div><dt>{{ i18n "nf_rights" | default "Rights" }}</dt><dd>{{ . }}</dd></div>{{ end }}
+        {{- with $model.Content.Status }}<div><dt>{{ i18n "nf_status" | default "Status" }}</dt><dd>{{ . | humanize }}</dd></div>{{ end }}
+    </dl>
+    {{- if not ($page.Param "hideMeta") }}
+    <footer class="entry-footer">{{ partial "post_meta.html" $page }}</footer>
     {{- end }}
 </article>

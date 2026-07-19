@@ -1,28 +1,48 @@
 components:
   - id: poster
     purpose: Declarative interruption or opening statement.
+    element: aside
+    parameters:
+      tone: [signal, alert, inverse, quiet]
+      size: [small, medium, large]
+      level: [none, 2, 3, 4, 5, 6]
     interactive: false
   - id: question
     purpose: A prominent editorial question.
+    element: [aside, section]
     interactive: false
   - id: aside
     purpose: Supporting context outside the main argument.
+    element: aside
+    parameters:
+      kind: [context, memory, technical, source]
     interactive: false
   - id: pullquote
     purpose: A selected quotation from the surrounding work.
+    element: figure
     interactive: false
   - id: image-spread
-    purpose: A wide figure with caption and rights metadata.
+    purpose: One to three related images with a shared caption.
+    element: figure
+    parameters:
+      layout: [single-wide, pair, triptych, asymmetric]
     interactive: false
   - id: contact-sheet
-    purpose: A group of related figures with a stable reading order.
-    interactive: true
+    purpose: A numbered or unnumbered sequence of page-resource images.
+    element: section
+    parameters:
+      captions: [visible, alt, none]
+      crop: [fit, fill]
+    interactive: progressive
   - id: artefact
-    purpose: A source object or downloadable record.
+    purpose: A source object or downloadable record with provenance.
+    element: article
     interactive: false
   - id: timeline
-    purpose: A chronological sequence.
+    purpose: A chronological sequence expressed as an ordered list.
+    element: section
     interactive: false
   - id: proposition
-    purpose: A user-defined editorial proposition.
+    purpose: A user-defined editorial proposition near an article ending.
+    element: aside
     interactive: false

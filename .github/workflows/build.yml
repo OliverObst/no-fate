@@ -78,3 +78,6 @@ jobs:
 
       - name: Check page modes
         run: bash .github/scripts/check-page-modes.sh exampleSite/public
+
+      - name: Check editorial framework
+        run: bash .github/scripts/check-editorial-framework.sh exampleSite/public

@@ -135,10 +135,10 @@ title = "Example publication"
   showPropositions = true
   enableImageProcessing = true
   validateContentModel = true
+  strictHomeSelections = false
 
 [params.noFate.home]
-  showFormalRecord = true
-  showRecentNotes = true
+  modules = ["opening", "featured_argument", "questions", "featured_archive", "selected_writing", "visual_interruption", "current_work", "formal_record"]
   featuredProposition = ""
 
 [params.noFate.archive]
@@ -152,6 +152,11 @@ title = "Example publication"
 
 The namespace is deliberately compact. Prefer consistent defaults and page
 front matter to large collections of one-off switches.
+
+`strictHomeSelections` makes a production build fail when an explicitly
+selected homepage path is missing or unpublished. Development builds omit the
+missing item so drafts can move around without replacing sections with
+placeholder cards.
 
 ## Visual styles
 
@@ -297,6 +302,16 @@ structure, and proposition references. See
 [Content model](docs/content-model.md) for the complete schema, inheritance
 rules, supported values, proposition behaviour, and migration fallbacks.
 
+Reusable posters, questions, asides, quotations, image groups, contact sheets,
+artefacts and timelines are documented in
+[Editorial components](docs/editorial-components.md). Responsive images,
+typed quotations, anchored headings, external links and sortable tables are
+implemented as Markdown render hooks or progressive enhancements.
+
+Homepage order, selected-content validation, section densities and generic
+front matter-driven filters are documented in
+[Homepage and sections](docs/homepage-and-sections.md).
+
 ## Demonstration site
 
 The material in `exampleSite/` is a removable publication fixture rather than
@@ -323,7 +338,7 @@ hugo \
 
 The unpublished example uses `https://example.invalid/` as its base URL.
 
-The hidden `fixtures/structural-components/` page exercises the Section 5
+The hidden `fixtures/structural-components/` page exercises the Sections 10–11
 render hooks and baseline shortcodes without adding those fixtures to the
 demonstration navigation.
 

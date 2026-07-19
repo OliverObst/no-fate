@@ -1,10 +1,6 @@
 .nf-article {
-    --nf-article-width: 78rem;
-    --nf-opening-gap: var(--nf-space-6);
-    --nf-reading-measure: 70ch;
-    --nf-section-gap: var(--nf-space-7);
-    --nf-title-measure: 18ch;
-    --nf-title-size: clamp(2.8rem, 6vw, 5.75rem);
+    --nf-article-width: min(78rem, var(--nf-page));
+    --nf-reading-measure: var(--nf-reading);
 }
 
 .nf-article[data-accent="quiet"] {
@@ -155,6 +151,17 @@
     padding-top: var(--nf-space-2);
 }
 
+.nf-figure__caption {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--nf-space-1) var(--nf-space-3);
+}
+
+.nf-figure__number {
+    color: var(--nf-signal);
+    font-weight: 800;
+}
+
 @media (max-width: 48rem) {
     .nf-article__facts > div {
         grid-template-columns: 1fr;
@@ -168,15 +175,15 @@
         --nf-section-gap: 2rem;
         --nf-title-size: 30pt;
         --nf-title-measure: none;
-        color: #000;
+        color: var(--nf-print-ink);
         font-size: 11pt;
     }
 
     .nf-article__opening {
         background: transparent !important;
         border: 0;
-        border-bottom: 1pt solid #000;
-        color: #000 !important;
+        border-bottom: 1pt solid var(--nf-print-ink);
+        color: var(--nf-print-ink) !important;
         min-height: 0 !important;
         padding: 0 0 1.25rem !important;
         transform: none !important;
@@ -188,14 +195,14 @@
         .nf-deck,
         .nf-article__facts dt
     ) {
-        color: #222 !important;
+        color: var(--nf-print-muted) !important;
     }
 
     .nf-article__facts,
     .nf-article__facts > div,
     .nf-article__footer,
     .nf-component {
-        border-color: #000 !important;
+        border-color: var(--nf-print-ink) !important;
     }
 
     .nf-article__facts,

@@ -1,0 +1,17 @@
+{{- $page := .page -}}
+{{- $src := .src | default "" -}}
+{{- $resource := false -}}
+{{- if $src -}}
+    {{- $url := urls.Parse $src -}}
+    {{- if not $url.IsAbs -}}
+        {{- $path := strings.TrimPrefix "./" $url.Path -}}
+        {{- with $page.Resources.GetMatch $path -}}
+            {{- $resource = . -}}
+        {{- else -}}
+            {{- with resources.GetMatch $path -}}
+                {{- $resource = . -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+{{- return $resource -}}

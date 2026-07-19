@@ -1,8 +1,6 @@
 .nf-article[data-page-mode="archive"] {
     --nf-article-width: 90rem;
-    --nf-opening-gap: clamp(2.5rem, 6vw, 5rem);
     --nf-reading-measure: 72ch;
-    --nf-section-gap: clamp(3.5rem, 7vw, 6rem);
     --nf-title-measure: 15ch;
 }
 
@@ -11,7 +9,7 @@
 }
 
 .nf-article[data-page-mode="archive"] .nf-article__facts {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-family: var(--nf-font-meta);
 }
 
 .nf-article[data-page-mode="archive"] .nf-article__body {
@@ -26,7 +24,7 @@
 .nf-article[data-page-mode="archive"] .nf-artefact::before {
     color: var(--nf-colour-signal);
     content: counter(nf-artefact, decimal-leading-zero);
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-family: var(--nf-font-meta);
     font-size: 0.75rem;
     font-weight: 800;
     inset: var(--nf-space-3) var(--nf-space-3) auto auto;
@@ -43,7 +41,7 @@
 }
 
 .nf-article[data-page-mode="archive"] figcaption {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-family: var(--nf-font-meta);
     font-variant-numeric: tabular-nums;
 }
 

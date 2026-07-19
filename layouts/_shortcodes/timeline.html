@@ -1,4 +1,10 @@
-<section class="nf-component nf-timeline">
-    {{- with .Get "title" }}<h2>{{ . }}</h2>{{ end }}
-    <div>{{ .Page.RenderString .Inner }}</div>
+{{- $title := .Get "title" | default (i18n "nf_timeline" | default "Timeline") -}}
+{{- $id := printf "nf-timeline-%d" .Ordinal -}}
+{{- $body := .Page.RenderString .Inner -}}
+{{- if not (strings.Contains (printf "%s" $body) "<ol") -}}
+    {{- warnf "No Fate timeline: use an ordered Markdown list at %s" .Position -}}
+{{- end -}}
+<section class="nf-component nf-timeline" aria-labelledby="{{ $id }}" data-nf-timeline>
+    <h2 id="{{ $id }}">{{ $title }}</h2>
+    <div class="nf-timeline__body">{{ $body }}</div>
 </section>

@@ -1,0 +1,12 @@
+{{- $paths := .paths | default slice -}}
+{{- if not (reflect.IsSlice $paths) -}}
+    {{- $paths = slice $paths -}}
+{{- end -}}
+{{- $pages := slice -}}
+{{- range $paths -}}
+    {{- $page := partial "home/selected-page.html" (dict "path" . "context" $.context) -}}
+    {{- with $page -}}
+        {{- $pages = $pages | append . -}}
+    {{- end -}}
+{{- end -}}
+{{- return $pages -}}

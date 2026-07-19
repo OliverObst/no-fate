@@ -37,7 +37,7 @@ archive:
   people: []
 
 seo:
-  description: "A compact fictional register demonstrating No Fate's record page mode."
+  description: "A compact register for six objects found precisely where nobody expected them."
   image: ""
   canonical: ""
 ---
@@ -53,6 +53,7 @@ location and the place where it was eventually found.
 | R-04.04 | Small bell | Front counter | Archive box 7 | Left ringing |
 | R-04.05 | Cupboard plan | Plan cupboard | Noticeboard | Annotated |
 | R-04.06 | Noticeboard pin | Noticeboard | Cupboard plan | Reunited |
+{sortable=true}
 
 ## Method
 

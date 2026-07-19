@@ -1,12 +1,49 @@
 {{- $title := .Get "title" | default (i18n "nf_artefact" | default "Artefact") -}}
-{{- $href := .Get "href" -}}
-<aside class="nf-component nf-artefact">
-    <span class="nf-component__label">{{ i18n "nf_artefact" | default "Artefact" }}</span>
-    {{- if $href }}
-    <h3><a href="{{ $href | safeURL }}">{{ $title }}</a></h3>
-    {{- else }}
-    <h3>{{ $title }}</h3>
+{{- $href := .Get "href" | default (.Get "file") -}}
+{{- $image := .Get "image" -}}
+{{- $imageAlt := .Get "image_alt" -}}
+{{- if and $image (not $imageAlt) -}}
+    {{- errorf "No Fate artefact: image_alt is required when image is set at %s" .Position -}}
+{{- end -}}
+<article class="nf-component nf-artefact">
+    <header class="nf-artefact__header">
+        <p class="nf-component__label">
+            {{- i18n "nf_artefact" | default "Artefact" -}}
+            {{- with .Get "number" }} <span class="nf-artefact__number">{{ . }}</span>{{ end -}}
+        </p>
+        {{- if $href }}
+        <h3><a href="{{ $href | safeURL }}">{{ $title }}</a></h3>
+        {{- else }}
+        <h3>{{ $title }}</h3>
+        {{- end }}
+    </header>
+    {{- with $image }}
+    <div class="nf-artefact__image">
+        {{- partial "responsive-image.html" (dict
+            "page" $.Page "src" . "alt" $imageAlt "class" "technical"
+            "sizes" "(min-width: 64rem) 32rem, calc(100vw - 2rem)"
+        ) -}}
+    </div>
     {{- end }}
-    {{- with .Get "meta" }}<p class="nf-muted">{{ . }}</p>{{ end }}
-    {{- with .Inner }}<div>{{ $.Page.RenderString . }}</div>{{ end }}
-</aside>
+    <dl class="nf-artefact__facts">
+        {{- with .Get "date" }}<div><dt>{{ i18n "nf_date" | default "Date" }}</dt><dd>{{ . }}</dd></div>{{ end }}
+        {{- with .Get "location" }}<div><dt>{{ i18n "nf_location" | default "Location" }}</dt><dd>{{ . }}</dd></div>{{ end }}
+        {{- with .Get "creator" }}<div><dt>{{ i18n "nf_creator" | default "Creator" }}</dt><dd>{{ . }}</dd></div>{{ end }}
+        {{- with .Get "source" }}<div><dt>{{ i18n "nf_source" | default "Source" }}</dt><dd>{{ . }}</dd></div>{{ end }}
+        {{- with or (.Get "rights") (.Get "licence") }}<div><dt>{{ i18n "nf_rights" | default "Rights" }}</dt><dd>{{ . }}</dd></div>{{ end }}
+    </dl>
+    {{- with .Get "description" }}<div class="nf-artefact__description">{{ . | markdownify }}</div>{{ end }}
+    {{- with .Inner }}<div class="nf-artefact__description">{{ $.Page.RenderString . }}</div>{{ end }}
+    {{- with .Get "significance" }}
+    <section class="nf-artefact__note">
+        <h4>{{ i18n "nf_significance" | default "Significance" }}</h4>
+        {{ . | markdownify }}
+    </section>
+    {{- end }}
+    {{- with .Get "transcription" }}
+    <details class="nf-artefact__transcription">
+        <summary>{{ i18n "nf_transcription" | default "Transcription" }}</summary>
+        {{ . | markdownify }}
+    </details>
+    {{- end }}
+</article>

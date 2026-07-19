@@ -1,6 +1,10 @@
-<aside class="nf-component nf-aside">
-    {{- with .Get "label" }}
-    <span class="nf-component__label">{{ . }}</span>
-    {{- end }}
-    <div>{{ .Page.RenderString .Inner }}</div>
+{{- $kind := lower (.Get "kind" | default "context") -}}
+{{- if not (in (slice "context" "memory" "technical" "source") $kind) -}}
+    {{- errorf "No Fate aside: unsupported kind %q at %s" $kind .Position -}}
+{{- end -}}
+{{- $label := .Get "label" | default ($kind | humanize) -}}
+{{- $id := printf "nf-aside-%d" .Ordinal -}}
+<aside class="nf-component nf-aside nf-aside--{{ $kind }}" aria-labelledby="{{ $id }}">
+    <p class="nf-component__label" id="{{ $id }}">{{ $label }}</p>
+    <div class="nf-aside__body">{{ .Page.RenderString .Inner }}</div>
 </aside>

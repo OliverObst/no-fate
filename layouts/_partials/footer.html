@@ -29,10 +29,13 @@
 
 {{- partial "extend_footer.html" . }}
 
-{{- $scripts := slice (resources.Get "js/theme-toggle.js") (resources.Get "js/navigation.js") }}
-{{- if .Store.Get "noFateHasGallery" }}
-    {{- $scripts = $scripts | append (resources.Get "js/gallery.js") }}
-{{- end }}
+{{- $scripts := slice
+    (resources.Get "js/theme-toggle.js")
+    (resources.Get "js/navigation.js")
+    (resources.Get "js/gallery.js")
+    (resources.Get "js/table-sort.js")
+    (resources.Get "js/section-filter.js")
+}}
 {{- $script := $scripts | resources.Concat "assets/js/no-fate.js" | resources.Minify }}
 {{- if not site.Params.assets.disableFingerprinting }}
     {{- $script = $script | fingerprint }}

@@ -1,5 +1,5 @@
-<figure class="nf-component">
-    <blockquote class="nf-pullquote">{{ .Page.RenderString .Inner }}</blockquote>
+<figure class="nf-component nf-pullquote">
+    <blockquote>{{ .Page.RenderString .Inner }}</blockquote>
     {{- with .Get "cite" }}
     <figcaption>{{ . }}</figcaption>
     {{- end }}

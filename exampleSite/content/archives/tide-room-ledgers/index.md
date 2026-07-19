@@ -13,6 +13,8 @@ content:
   format: "history"
   status: "published"
   original_date: null
+  media_type: "ledgers"
+  collection: "Weather records"
 
 editorial:
   proposition:
@@ -36,7 +38,10 @@ archive:
   end_year: 1986
   locations:
     - "North Quay"
-  people: []
+  people:
+    - "Mara Bell"
+  source: "Tide-room cabinet B"
+  rights: "North Quay open miscellany licence"
 
 seo:
   description: "Nine years of calibration, corrosion, weather, and increasingly emphatic handwriting."

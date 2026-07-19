@@ -4,24 +4,185 @@
 }
 
 .nf-home__opening {
-    border-bottom: var(--nf-rule-strong);
+    border-bottom: var(--nf-border-strong);
+    display: grid;
+    gap: var(--nf-space-6);
+    grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+    min-height: min(76vh, 48rem);
     padding-bottom: var(--nf-space-7);
 }
 
-.nf-home-module {
+.nf-home__opening-copy {
+    align-content: start;
     display: grid;
     gap: var(--nf-space-4);
 }
 
+.nf-home__opening h1,
+.nf-home__opening .nf-deck,
+.nf-home__opening .nf-prose {
+    margin-block: 0;
+}
+
+.nf-home__opening h1 {
+    max-width: 13ch;
+}
+
+.nf-home__opening-image {
+    align-self: stretch;
+    margin: 0;
+    min-height: 22rem;
+}
+
+.nf-home__opening-image :is(.nf-picture, img) {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+}
+
+.nf-home-module {
+    border-top: var(--nf-border-strong);
+    display: grid;
+    gap: var(--nf-space-4);
+    padding-top: var(--nf-space-3);
+}
+
 .nf-home-module__heading {
     align-items: baseline;
-    border-bottom: var(--nf-rule-strong);
     display: flex;
     justify-content: space-between;
-    padding-bottom: var(--nf-space-3);
+}
+
+.nf-home-module__heading h2 {
+    font-family: var(--nf-font-meta);
+    font-size: var(--nf-meta-size);
+    letter-spacing: 0.08em;
+    margin: 0;
+    text-transform: uppercase;
 }
 
 .nf-home-module__items {
     display: grid;
     gap: 0;
+}
+
+.nf-home-module--argument,
+.nf-home-module--archive {
+    grid-template-columns: minmax(10rem, 0.32fr) minmax(0, 1fr);
+}
+
+.nf-home-module--argument .nf-home-module__items,
+.nf-home-module--archive .nf-home-module__items {
+    border-inline-start: var(--nf-border);
+    padding-inline-start: var(--nf-space-5);
+}
+
+.nf-home-module--questions[data-count="1"] .nf-entry {
+    border-top: 0;
+    max-width: 62rem;
+}
+
+.nf-home-module--questions[data-count="1"] .nf-entry__title {
+    font-size: clamp(2.6rem, 7vw, 6.5rem);
+    max-width: 15ch;
+}
+
+.nf-home-module--questions:not([data-count="1"]) .nf-home-module__items,
+.nf-home-module--writing .nf-home-module__items,
+.nf-home-module--work .nf-home-module__items {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.nf-home-module--questions:not([data-count="1"]) .nf-entry:nth-child(even),
+.nf-home-module--writing .nf-entry:nth-child(even),
+.nf-home-module--work .nf-entry:nth-child(even) {
+    border-inline-start: var(--nf-border);
+    padding-inline-start: var(--nf-space-4);
+}
+
+.nf-home-module--visual {
+    border: 0;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.nf-home-module--visual :is(.nf-picture, img) {
+    display: block;
+    max-height: 70vh;
+    object-fit: cover;
+    width: 100%;
+}
+
+.nf-home-module--visual figcaption {
+    color: var(--nf-muted);
+    font-family: var(--nf-font-meta);
+    font-size: var(--nf-meta-size);
+    margin-top: var(--nf-space-2);
+}
+
+.nf-home-module--record {
+    grid-template-columns: minmax(10rem, 0.32fr) minmax(0, 1fr);
+}
+
+.nf-home-module--record .nf-home-module__items {
+    border-inline-start: var(--nf-border);
+    padding-inline-start: var(--nf-space-5);
+}
+
+@media (max-width: 48rem) {
+    .nf-home {
+        gap: var(--nf-space-7);
+    }
+
+    .nf-home__opening,
+    .nf-home-module--argument,
+    .nf-home-module--archive,
+    .nf-home-module--record {
+        grid-template-columns: 1fr;
+    }
+
+    .nf-home__opening {
+        min-height: 0;
+    }
+
+    .nf-home__opening-image {
+        min-height: 16rem;
+    }
+
+    .nf-home-module--argument .nf-home-module__items,
+    .nf-home-module--archive .nf-home-module__items,
+    .nf-home-module--record .nf-home-module__items {
+        border-inline-start: 0;
+        padding-inline-start: 0;
+    }
+
+    .nf-home-module--questions:not([data-count="1"]) .nf-home-module__items,
+    .nf-home-module--writing .nf-home-module__items,
+    .nf-home-module--work .nf-home-module__items {
+        grid-template-columns: 1fr;
+    }
+
+    .nf-home-module--questions:not([data-count="1"]) .nf-entry:nth-child(even),
+    .nf-home-module--writing .nf-entry:nth-child(even),
+    .nf-home-module--work .nf-entry:nth-child(even) {
+        border-inline-start: 0;
+        padding-inline-start: 0;
+    }
+}
+
+@media print {
+    .nf-home {
+        gap: 2rem;
+    }
+
+    .nf-home__opening {
+        grid-template-columns: 1fr;
+        min-height: 0;
+    }
+
+    .nf-home__opening-image,
+    .nf-home-module--visual {
+        max-height: 10cm;
+    }
 }

@@ -50,8 +50,8 @@
     :root,
     :root[data-theme],
     body {
-        background: #fff !important;
-        color: #000 !important;
+        background: var(--nf-print-paper) !important;
+        color: var(--nf-print-ink) !important;
     }
 
     :is(
@@ -72,5 +72,13 @@
         min-height: 0;
         padding: 0 !important;
         width: 100% !important;
+    }
+}
+
+@media (forced-colors: active) {
+    .nf-poster,
+    .nf-aside,
+    .nf-content-image.technical {
+        border: 2px solid CanvasText;
     }
 }

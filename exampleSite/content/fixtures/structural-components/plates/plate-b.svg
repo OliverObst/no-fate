@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600">
+  <rect width="900" height="600" fill="#c93623"/>
+  <g fill="none" stroke="#151410" stroke-width="22">
+    <circle cx="210" cy="190" r="90"/><circle cx="650" cy="170" r="110"/><circle cx="480" cy="440" r="100"/>
+    <path d="M300 190H540M590 270L520 350M395 400L270 270"/>
+  </g>
+  <g fill="#f3f0e8" font-family="monospace" font-size="32"><text x="150" y="205">IN</text><text x="610" y="185">OUT?</text><text x="420" y="455">LUNCH</text></g>
+</svg>

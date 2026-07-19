@@ -1,0 +1,17 @@
+{{- $page := .page -}}
+{{- $key := .key -}}
+{{- $value := .default -}}
+{{- with site.Params.noFate.home -}}
+    {{- if isset . $key -}}
+        {{- $value = index . $key -}}
+    {{- end -}}
+{{- end -}}
+{{- with $page.Params.home -}}
+    {{- if isset . $key -}}
+        {{- $value = index . $key -}}
+    {{- end -}}
+{{- end -}}
+{{- if isset $page.Params $key -}}
+    {{- $value = index $page.Params $key -}}
+{{- end -}}
+{{- return $value -}}

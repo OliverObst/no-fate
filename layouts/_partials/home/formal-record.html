@@ -1,6 +1,14 @@
-{{- $sections := where site.Sections "Params.content.format" "record" -}}
-{{- with first 1 $sections }}
-<section class="nf-home-module nf-record" aria-labelledby="nf-record-heading">
+{{- $path := partial "home/value.html" (dict "page" . "key" "formal_record" "default" "") -}}
+{{- $pages := slice -}}
+{{- with $path -}}
+    {{- with partial "home/selected-page.html" (dict "path" . "context" "formal_record") -}}
+        {{- $pages = $pages | append . -}}
+    {{- end -}}
+{{- else -}}
+    {{- $pages = first 1 (where site.Sections "Params.content.format" "record") -}}
+{{- end -}}
+{{- with $pages }}
+<section class="nf-home-module nf-home-module--record nf-record" aria-labelledby="nf-record-heading">
     <div class="nf-home-module__heading">
         <h2 id="nf-record-heading">{{ i18n "nf_formal_record" | default "Formal record" }}</h2>
     </div>

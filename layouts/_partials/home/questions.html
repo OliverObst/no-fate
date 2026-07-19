@@ -1,11 +1,15 @@
-{{- $pages := where site.RegularPages "Params.content.format" "question" -}}
-{{- with first 3 $pages.ByDate.Reverse }}
-<section class="nf-home-module" aria-labelledby="nf-questions-heading">
+{{- $paths := partial "home/value.html" (dict "page" . "key" "questions" "default" slice) -}}
+{{- $pages := partial "home/selected-pages.html" (dict "paths" $paths "context" "questions") -}}
+{{- if not $paths -}}
+    {{- $pages = first 3 (where site.RegularPages "Params.content.format" "question").ByDate.Reverse -}}
+{{- end -}}
+{{- with $pages }}
+<section class="nf-home-module nf-home-module--questions" data-count="{{ len . }}" aria-labelledby="nf-questions-heading">
     <div class="nf-home-module__heading">
-        <h2 id="nf-questions-heading">{{ i18n "nf_questions" | default "Questions" }}</h2>
+        <h2 id="nf-questions-heading">{{ i18n "nf_questions_worth_asking" | default "Questions worth asking" }}</h2>
     </div>
     <div class="nf-home-module__items">
-        {{- range . }}{{ partial "record/entry.html" . }}{{ end }}
+        {{- range . }}{{ partial "record/entry.html" (dict "page" . "density" (cond (eq (len $pages) 1) "lead" "standard") "headingLevel" 3) }}{{ end }}
     </div>
 </section>
 {{- end }}

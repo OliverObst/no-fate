@@ -1,0 +1,12 @@
+{{- $paths := partial "home/value.html" (dict "page" . "key" "selected_writing" "default" slice) -}}
+{{- $pages := partial "home/selected-pages.html" (dict "paths" $paths "context" "selected_writing") -}}
+{{- with $pages }}
+<section class="nf-home-module nf-home-module--writing" aria-labelledby="nf-writing-heading">
+    <div class="nf-home-module__heading">
+        <h2 id="nf-writing-heading">{{ i18n "nf_selected_writing" | default "Selected writing" }}</h2>
+    </div>
+    <div class="nf-home-module__items">
+        {{- range . }}{{ partial "record/entry.html" (dict "page" . "density" "standard" "headingLevel" 3) }}{{ end }}
+    </div>
+</section>
+{{- end }}

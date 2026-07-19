@@ -1,22 +1,88 @@
-{{- $u := urls.Parse .Destination -}}
-{{- $src := $u.String -}}
-{{- if not $u.IsAbs -}}
-  {{- $path := strings.TrimPrefix "./" $u.Path }}
-  {{- with or (.PageInner.Resources.Get $path) (resources.Get $path) -}}
-    {{- $src = .RelPermalink -}}
-    {{- with $u.RawQuery -}}
-      {{- $src = printf "%s?%s" $src . -}}
-    {{- end -}}
-    {{- with $u.Fragment -}}
-      {{- $src = printf "%s#%s" $src . -}}
-    {{- end -}}
-  {{- end -}}
+{{- $src := .Destination -}}
+{{- $resource := partial "image-resource.html" (dict "page" .PageInner "src" $src) -}}
+{{- $alt := strings.TrimSpace .Text -}}
+{{- $caption := .Title -}}
+{{- $credit := "" -}}
+{{- $source := "" -}}
+{{- $sourceURL := "" -}}
+{{- $figure := "" -}}
+{{- $darkSrc := index .Attributes "dark-src" | default "" -}}
+{{- $lightSrc := index .Attributes "light-src" | default "" -}}
+{{- $decorative := eq (lower (printf "%v" (index .Attributes "decorative" | default false))) "true" -}}
+{{- with $resource -}}
+    {{- if not $alt }}{{ $alt = .Params.alt | default "" }}{{ end -}}
+    {{- if not $caption }}{{ $caption = .Params.caption | default "" }}{{ end -}}
+    {{- $credit = .Params.credit | default "" -}}
+    {{- $source = .Params.source | default "" -}}
+    {{- $sourceURL = .Params.source_url | default "" -}}
+    {{- $figure = .Params.figure | default "" -}}
+    {{- if not $darkSrc }}{{ $darkSrc = .Params.dark_src | default "" }}{{ end -}}
+    {{- if not $lightSrc }}{{ $lightSrc = .Params.light_src | default "" }}{{ end -}}
 {{- end -}}
-{{- $attributes := merge .Attributes (dict "alt" .Text "src" $src "title" (.Title | transform.HTMLEscape) "loading" "lazy") -}}
-<img class="nf-content-image"
-  {{- range $k, $v := $attributes -}}
-    {{- if $v -}}
-      {{- printf " %s=%q" $k $v | safeHTMLAttr -}}
+{{- with index .Attributes "caption" }}{{ $caption = . }}{{ end -}}
+{{- with index .Attributes "credit" }}{{ $credit = . }}{{ end -}}
+{{- with index .Attributes "source" }}{{ $source = . }}{{ end -}}
+{{- with index .Attributes "source-url" }}{{ $sourceURL = . }}{{ end -}}
+{{- with index .Attributes "figure" }}{{ $figure = . }}{{ end -}}
+{{- if and (not $alt) (not $decorative) -}}
+    {{- warnf "No Fate image: meaningful alt text or decorative=true is required for %q on %s" $src .PageInner.RelPermalink -}}
+{{- end -}}
+
+{{- $allowedClasses := slice "wide" "full" "raw" "mono" "high-contrast" "technical" -}}
+{{- $classes := slice "nf-content-image" -}}
+{{- with .Attributes.class -}}
+    {{- range split . " " -}}
+        {{- if in $allowedClasses . -}}
+            {{- $classes = $classes | append . -}}
+        {{- end -}}
     {{- end -}}
-  {{- end -}}>
+{{- end -}}
+{{- $className := delimit ($classes | collections.Uniq) " " -}}
+{{- $hasFigure := and .IsBlock (or $caption $credit $source $figure) -}}
+{{- if and $hasFigure (not $figure) -}}
+    {{- $next := add (.PageInner.Store.Get "noFateFigureNumber" | default 0) 1 -}}
+    {{- .PageInner.Store.Set "noFateFigureNumber" $next -}}
+    {{- $figure = printf "%02d" $next -}}
+{{- end -}}
+
+{{- if $hasFigure -}}
+<figure class="nf-figure{{ range after 1 $classes }} {{ . }}{{ end }}"{{ with $figure }} data-figure="{{ . }}"{{ end }}>
+{{- end -}}
+{{- if or $darkSrc $lightSrc -}}
+    {{- $lightSrc = $lightSrc | default $src -}}
+    {{- $darkSrc = $darkSrc | default $src -}}
+    <span class="nf-theme-image">
+        <span class="nf-theme-image__light">
+            {{- partial "responsive-image.html" (dict
+                "page" .PageInner "src" $lightSrc "alt" $alt "class" $className
+                "loading" "lazy"
+            ) -}}
+        </span>
+        <span class="nf-theme-image__dark">
+            {{- partial "responsive-image.html" (dict
+                "page" .PageInner "src" $darkSrc "alt" $alt "class" $className
+                "loading" "lazy"
+            ) -}}
+        </span>
+    </span>
+{{- else -}}
+    {{- partial "responsive-image.html" (dict
+        "page" .PageInner "src" $src "resource" $resource "alt" $alt
+        "class" $className "loading" "lazy"
+    ) -}}
+{{- end -}}
+{{- if $hasFigure }}
+    <figcaption class="nf-figure__caption">
+        {{- with $figure }}<span class="nf-figure__number">{{ i18n "nf_figure" | default "Figure" }} {{ . }}</span>{{ end -}}
+        {{- with $caption }}<span class="nf-figure__text">{{ . | markdownify }}</span>{{ end -}}
+        {{- with $credit }}<span class="nf-figure__credit">{{ i18n "nf_credit" | default "Credit" }}: {{ . }}</span>{{ end -}}
+        {{- with $source }}
+        <span class="nf-figure__source">
+            {{- i18n "nf_source" | default "Source" }}:
+            {{- if $sourceURL }} <a href="{{ $sourceURL | safeURL }}">{{ . }}</a>{{ else }} {{ . }}{{ end -}}
+        </span>
+        {{- end }}
+    </figcaption>
+</figure>
+{{- end -}}
 {{- /**/ -}}

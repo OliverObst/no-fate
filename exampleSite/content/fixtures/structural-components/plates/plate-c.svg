@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600">
+  <rect width="900" height="600" fill="#151410"/>
+  <g stroke="#c93623" stroke-width="34"><path d="M-80 160L260-40M80 400L700-40M250 650L980 110M650 650L980 430"/></g>
+  <g fill="#f3f0e8">
+    <rect x="90" y="90" width="320" height="95"/><rect x="470" y="230" width="330" height="95"/><rect x="180" y="420" width="390" height="95"/>
+  </g>
+  <g fill="#151410" font-family="monospace" font-size="30" font-weight="700"><text x="120" y="148">WRONG DRAWER</text><text x="500" y="288">RIGHT PROBLEM</text><text x="210" y="478">KEEP BOTH LABELS</text></g>
+</svg>

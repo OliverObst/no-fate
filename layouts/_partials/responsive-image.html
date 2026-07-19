@@ -3,24 +3,55 @@
 {{- $alt := .alt | default "" -}}
 {{- $loading := .loading | default "lazy" -}}
 {{- $class := .class | default "" -}}
-{{- $resource := false -}}
-{{- $path := strings.TrimPrefix "./" $src -}}
-{{- with $page.Resources.GetMatch $path -}}
-    {{- $resource = . -}}
-{{- else -}}
-    {{- with resources.GetMatch $path -}}
-        {{- $resource = . -}}
+{{- $sizes := .sizes | default "(min-width: 86rem) 68rem, calc(100vw - 2rem)" -}}
+{{- $resource := .resource | default false -}}
+{{- if and (not $resource) $src -}}
+    {{- $resource = partial "image-resource.html" (dict "page" $page "src" $src) -}}
+{{- end -}}
+{{- $processing := true -}}
+{{- with site.Params.noFate -}}
+    {{- if isset . "enableimageprocessing" -}}
+        {{- $processing = index . "enableimageprocessing" -}}
     {{- end -}}
 {{- end -}}
 
 {{- if $resource -}}
-{{- $processable := in (slice "jpeg" "jpg" "png" "gif" "tiff" "bmp" "webp") $resource.MediaType.SubType -}}
-{{- if $processable -}}
-<img src="{{ $resource.RelPermalink }}" width="{{ $resource.Width }}" height="{{ $resource.Height }}"
-    alt="{{ $alt }}" loading="{{ $loading }}"{{ with $class }} class="{{ . }}"{{ end }}>
+    {{- $subtype := lower $resource.MediaType.SubType -}}
+    {{- $isRaster := in (slice "jpeg" "jpg" "png" "gif" "webp") $subtype -}}
+    {{- $canResize := and $processing (in (slice "jpeg" "jpg" "png" "webp") $subtype) -}}
+    {{- if $canResize -}}
+        {{- $widths := slice -}}
+        {{- range (slice 480 800 1200 1600) -}}
+            {{- if le . $resource.Width -}}
+                {{- $widths = $widths | append . -}}
+            {{- end -}}
+        {{- end -}}
+        {{- $widths = $widths | append $resource.Width | collections.Uniq | sort -}}
+        {{- $nativeSet := slice -}}
+        {{- $webpSet := slice -}}
+        {{- range $widths -}}
+            {{- $native := $resource.Resize (printf "%dx" .) -}}
+            {{- $webp := $resource.Resize (printf "%dx webp q82" .) -}}
+            {{- $nativeSet = $nativeSet | append (printf "%s %dw" $native.RelPermalink $native.Width) -}}
+            {{- $webpSet = $webpSet | append (printf "%s %dw" $webp.RelPermalink $webp.Width) -}}
+        {{- end -}}
+        <picture class="nf-picture">
+            <source type="image/webp" srcset="{{ delimit $webpSet ", " }}" sizes="{{ $sizes }}">
+            <img src="{{ $resource.RelPermalink }}"
+                srcset="{{ delimit $nativeSet ", " }}" sizes="{{ $sizes }}"
+                width="{{ $resource.Width }}" height="{{ $resource.Height }}"
+                alt="{{ $alt }}" loading="{{ $loading }}" decoding="async"
+                {{- with $class }} class="{{ . }}"{{ end }}>
+        </picture>
+    {{- else if $isRaster -}}
+        <img src="{{ $resource.RelPermalink }}" width="{{ $resource.Width }}" height="{{ $resource.Height }}"
+            alt="{{ $alt }}" loading="{{ $loading }}" decoding="async"
+            {{- with $class }} class="{{ . }}"{{ end }}>
+    {{- else -}}
+        <img src="{{ $resource.RelPermalink }}" alt="{{ $alt }}" loading="{{ $loading }}" decoding="async"
+            {{- with $class }} class="{{ . }}"{{ end }}>
+    {{- end -}}
 {{- else -}}
-<img src="{{ $resource.RelPermalink }}" alt="{{ $alt }}" loading="{{ $loading }}"{{ with $class }} class="{{ . }}"{{ end }}>
-{{- end -}}
-{{- else -}}
-<img src="{{ $src | safeURL }}" alt="{{ $alt }}" loading="{{ $loading }}"{{ with $class }} class="{{ . }}"{{ end }}>
+    <img src="{{ $src | safeURL }}" alt="{{ $alt }}" loading="{{ $loading }}" decoding="async"
+        {{- with $class }} class="{{ . }}"{{ end }}>
 {{- end -}}

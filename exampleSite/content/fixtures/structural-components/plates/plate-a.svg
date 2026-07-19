@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600">
+  <rect width="900" height="600" fill="#f3f0e8"/>
+  <g stroke="#151410" stroke-width="5"><path d="M40 100H860M40 300H860M40 500H860M180 40V560M450 40V560M720 40V560"/></g>
+  <path d="M210 470L610 150" stroke="#c93623" stroke-width="60"/>
+  <circle cx="190" cy="490" r="65" fill="none" stroke="#c93623" stroke-width="45"/>
+  <text x="55" y="85" fill="#151410" font-family="monospace" font-size="34">PLATE A / LEVERAGE</text>
+</svg>

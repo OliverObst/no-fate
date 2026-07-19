@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img">
+  <rect width="1200" height="900" fill="#efe9d9"/>
+  <g stroke="#161410" stroke-width="8" opacity=".9">
+    <path d="M80 130H1120M80 300H1120M80 470H1120M80 640H1120M260 70V830M540 70V830M820 70V830"/>
+  </g>
+  <g fill="#161410" font-family="monospace" font-size="34" font-weight="700">
+    <text x="94" y="116">01 / KEEP THE SEAM</text>
+    <text x="836" y="285">HANDLE?</text>
+    <text x="94" y="625">RETURN WITH NOTES</text>
+  </g>
+  <path d="M220 710L780 150" stroke="#c93623" stroke-width="92" stroke-linecap="square"/>
+  <path d="M735 142c75-70 180-46 232 19l-118 43 6 100 119 28c-45 84-163 103-235 31-61-61-63-156-4-221Z" fill="#c93623"/>
+  <circle cx="210" cy="720" r="104" fill="none" stroke="#c93623" stroke-width="66"/>
+  <path d="M140 790L60 870" stroke="#c93623" stroke-width="66"/>
+</svg>

@@ -1,20 +1,43 @@
+{{- $opening := partial "home/value.html" (dict "page" . "key" "opening" "default" dict) -}}
+{{- $headline := $opening.headline | default .Title -}}
+{{- $deck := $opening.deck | default .Description -}}
+{{- $image := $opening.image | default "" -}}
+{{- $imageAlt := $opening.image_alt | default "" -}}
+{{- if and $image (not $imageAlt) -}}
+    {{- errorf "No Fate homepage: opening.image_alt is required when opening.image is set" -}}
+{{- end -}}
+{{- if or $headline $deck $image .Content -}}
 <header class="nf-home__opening">
-    {{- $wildTitleLines := .Params.visual.wild_title_lines | default (slice .Title) -}}
-    <h1>
-        <span class="nf-home__title-standard">{{ .Title }}</span>
-        <span class="nf-home__title-wild nf-wild-only" aria-hidden="true">
-            {{- range $wildTitleLines }}
-            <span class="nf-home__title-line">{{ . }}</span>
-            {{- end }}
-        </span>
-    </h1>
-    {{- with .Params.visual.wild_reference }}
-    <p class="nf-wild-reference nf-wild-only">{{ . }}</p>
-    {{- end }}
-    {{- with .Description }}
-    <p class="post-description nf-deck">{{ . | markdownify }}</p>
-    {{- end }}
-    {{- with .Content }}
-    <div class="post-content md-content nf-prose">{{ . }}</div>
+    {{- $wildTitleLines := .Params.visual.wild_title_lines | default (slice $headline) -}}
+    <div class="nf-home__opening-copy">
+        {{- with $headline }}
+        <h1>
+            <span class="nf-home__title-standard">{{ . }}</span>
+            <span class="nf-home__title-wild nf-wild-only" aria-hidden="true">
+                {{- range $wildTitleLines }}
+                <span class="nf-home__title-line">{{ . }}</span>
+                {{- end }}
+            </span>
+        </h1>
+        {{- end }}
+        {{- with $.Params.visual.wild_reference }}
+        <p class="nf-wild-reference nf-wild-only">{{ . }}</p>
+        {{- end }}
+        {{- with $deck }}
+        <p class="post-description nf-deck">{{ . | markdownify }}</p>
+        {{- end }}
+        {{- with $.Content }}
+        <div class="post-content md-content nf-prose">{{ . }}</div>
+        {{- end }}
+    </div>
+    {{- with $image }}
+    <figure class="nf-home__opening-image">
+        {{- partial "responsive-image.html" (dict
+            "page" $ "src" . "alt" $imageAlt "loading" "eager"
+            "class" "nf-content-image raw"
+            "sizes" "(min-width: 64rem) 44vw, calc(100vw - 2rem)"
+        ) -}}
+    </figure>
     {{- end }}
 </header>
+{{- end -}}

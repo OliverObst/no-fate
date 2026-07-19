@@ -9,6 +9,15 @@ and releases use [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Canonical design tokens, explicit warm dark-mode roles and display, body and
+  metadata typography roles.
+- Complete editorial shortcodes and Markdown hooks with responsive image
+  processing, dark/light variants, provenance, sortable tables and print-safe
+  behaviour.
+- A reorderable editorial homepage with strict selected-content validation,
+  graceful empty states and single-question treatment.
+- Generic section densities, configurable navigation and front matter-driven
+  archive and project filters without fixed section names.
 - Exact PaperMod provenance and maintenance policy in `UPSTREAM.md`.
 - A self-contained fictional demonstration site.
 - CI builds using the minimum and current standard Hugo versions, plus the

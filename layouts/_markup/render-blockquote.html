@@ -1,8 +1,17 @@
-<figure class="nf-quotation">
-    <blockquote{{ with .Attributes.cite }} cite="{{ . }}"{{ end }}>
+{{- $kind := lower (.Attributes.kind | default "quotation") -}}
+{{- if not (in (slice "quotation" "epigraph" "testimony" "note") $kind) -}}
+    {{- warnf "No Fate block quote: unsupported kind %q on %s" $kind .PageInner.RelPermalink -}}
+    {{- $kind = "quotation" -}}
+{{- end -}}
+{{- $source := .Attributes.cite | default .Attributes.caption | default "" -}}
+{{- $citeURL := index .Attributes "cite-url" | default "" -}}
+<figure class="nf-quotation nf-quotation--{{ $kind }}">
+    <blockquote{{ with $citeURL }} cite="{{ . | safeURL }}"{{ end }}>
         {{- .Text -}}
     </blockquote>
-    {{- with .Attributes.caption }}
-    <figcaption>{{ . | safeHTML }}</figcaption>
+    {{- with $source }}
+    <figcaption>
+        {{- if $citeURL }}<a href="{{ $citeURL | safeURL }}">{{ . }}</a>{{ else }}{{ . }}{{ end -}}
+    </figcaption>
     {{- end }}
 </figure>

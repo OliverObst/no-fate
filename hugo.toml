@@ -13,10 +13,10 @@
   showPropositions = true
   enableImageProcessing = true
   validateContentModel = true
+  strictHomeSelections = false
 
 [params.noFate.home]
-  showFormalRecord = true
-  showRecentNotes = true
+  modules = ["opening", "featured_argument", "questions", "featured_archive", "selected_writing", "visual_interruption", "current_work", "formal_record"]
   featuredProposition = ""
 
 [params.noFate.archive]
@@ -30,6 +30,7 @@
 [markup]
   [markup.goldmark]
     [markup.goldmark.parser]
+      wrapStandAloneImageWithinParagraph = false
       [markup.goldmark.parser.attribute]
         block = true
         title = true

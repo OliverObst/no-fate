@@ -1,5 +1,7 @@
 {{- define "main" }}
+<div class="nf-list nf-record" data-page-mode="record">
 <header class="page-header">
+    {{- partial "breadcrumbs.html" . }}
     <h1>{{ .Title }}</h1>
     {{- with .Description }}<p class="post-description">{{ . | markdownify }}</p>{{ end }}
 </header>
@@ -34,5 +36,6 @@
     </section>
     {{- end }}
 {{- end }}
+</div>
 </div>
 {{- end }}

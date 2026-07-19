@@ -79,12 +79,11 @@ params:
     showPropositions: true
     enableImageProcessing: true
     validateContentModel: true
+    strictHomeSelections: true
     wild:
       masthead: "Independent notes / practical disturbances"
       issue: "Issue 01 / keep the receipt"
     home:
-      showFormalRecord: true
-      showRecentNotes: true
       featuredProposition: example-maintenance-is-design
     archive:
       showArtefactNumbers: true
@@ -95,5 +94,10 @@ params:
 
 markup:
   goldmark:
+    parser:
+      wrapStandAloneImageWithinParagraph: false
+      attribute:
+        block: true
+        title: true
     renderer:
       unsafe: false

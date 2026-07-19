@@ -1,10 +1,7 @@
 .nf-article[data-page-mode="record"] {
     --nf-article-width: 100%;
-    --nf-opening-gap: 2.5rem;
     --nf-reading-measure: 90ch;
-    --nf-section-gap: 2.5rem;
     --nf-title-measure: 22ch;
-    --nf-title-size: clamp(2rem, 4vw, 3.8rem);
 }
 
 .nf-article[data-page-mode="record"] .nf-article__opening-grid {
@@ -24,7 +21,7 @@
     .nf-article__meta,
     .nf-article__facts
 ) {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-family: var(--nf-font-meta);
     font-size: 0.82rem;
 }
 

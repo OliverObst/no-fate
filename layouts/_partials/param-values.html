@@ -1,0 +1,20 @@
+{{- $value := .page.Params -}}
+{{- $found := true -}}
+{{- range split .path "." -}}
+    {{- if and $found (reflect.IsMap $value) (isset $value .) -}}
+        {{- $value = index $value . -}}
+    {{- else -}}
+        {{- $found = false -}}
+    {{- end -}}
+{{- end -}}
+{{- $values := slice -}}
+{{- if $found -}}
+    {{- if reflect.IsSlice $value -}}
+        {{- range $value -}}
+            {{- $values = $values | append (printf "%v" .) -}}
+        {{- end -}}
+    {{- else if ne (printf "%v" $value) "" -}}
+        {{- $values = $values | append (printf "%v" $value) -}}
+    {{- end -}}
+{{- end -}}
+{{- return $values -}}

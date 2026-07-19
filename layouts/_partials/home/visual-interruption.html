@@ -1,0 +1,13 @@
+{{- $visual := partial "home/value.html" (dict "page" . "key" "visual_interruption" "default" dict) -}}
+{{- with $visual.image }}
+    {{- if not $visual.image_alt -}}
+        {{- errorf "No Fate homepage: visual_interruption.image_alt is required when an image is set" -}}
+    {{- end -}}
+<figure class="nf-home-module nf-home-module--visual">
+    {{- partial "responsive-image.html" (dict
+        "page" $ "src" . "alt" $visual.image_alt "class" "nf-content-image raw"
+        "sizes" "(min-width: 100rem) 100rem, 100vw"
+    ) -}}
+    {{- with $visual.caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+</figure>
+{{- end }}

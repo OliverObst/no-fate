@@ -1,21 +1,36 @@
 {{- define "main" }}
-{{- $showRecentNotes := true -}}
-{{- $showFormalRecord := true -}}
-{{- with site.Params.noFate.home -}}
-    {{- if isset . "showrecentnotes" -}}
-        {{- $showRecentNotes = index . "showrecentnotes" -}}
-    {{- end -}}
-    {{- if isset . "showformalrecord" -}}
-        {{- $showFormalRecord = index . "showformalrecord" -}}
-    {{- end -}}
-{{- end -}}
-<div class="nf-home">
-    {{- partial "home/opening.html" . }}
-    {{- partial "home/featured-argument.html" . }}
-    {{- partial "home/questions.html" . }}
-    {{- partial "home/archive-feature.html" . }}
-    {{- if $showRecentNotes }}{{ partial "home/recent-notes.html" . }}{{ end }}
-    {{- partial "home/current-work.html" . }}
-    {{- if $showFormalRecord }}{{ partial "home/formal-record.html" . }}{{ end }}
+{{- $defaultModules := slice
+    "opening"
+    "featured_argument"
+    "questions"
+    "featured_archive"
+    "selected_writing"
+    "visual_interruption"
+    "current_work"
+    "formal_record"
+-}}
+{{- $modules := partial "home/value.html" (dict "page" . "key" "modules" "default" $defaultModules) -}}
+{{- $partials := dict
+    "opening" "home/opening.html"
+    "featured_argument" "home/featured-argument.html"
+    "current_argument" "home/featured-argument.html"
+    "questions" "home/questions.html"
+    "featured_archive" "home/archive-feature.html"
+    "archive" "home/archive-feature.html"
+    "selected_writing" "home/selected-writing.html"
+    "visual_interruption" "home/visual-interruption.html"
+    "current_work" "home/current-work.html"
+    "current_projects" "home/current-work.html"
+    "formal_record" "home/formal-record.html"
+-}}
+<div class="nf-home" data-page-mode="editorial">
+    {{- range $modules -}}
+        {{- $id := lower (printf "%v" .) -}}
+        {{- with index $partials $id -}}
+            {{- partial . $ -}}
+        {{- else -}}
+            {{- warnf "No Fate homepage: unsupported module %q; expected opening, featured_argument, questions, featured_archive, selected_writing, visual_interruption, current_work, or formal_record" $id -}}
+        {{- end -}}
+    {{- end }}
 </div>
 {{- end }}

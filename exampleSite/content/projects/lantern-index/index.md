@@ -11,8 +11,10 @@ demo: true
 
 content:
   format: "project"
-  status: "published"
+  status: "active"
   original_date: null
+  media_type: "dataset"
+  collection: "Classification systems"
 
 editorial:
   proposition:
@@ -56,3 +58,5 @@ sources. It treats disagreement as useful information.
 
 Version 0.7 has labels, pencils, and a robust policy for admitting uncertainty.
 The drawer handles remain under review.
+
+[Open the longer project ledger](https://example.invalid/projects/lantern-index/).

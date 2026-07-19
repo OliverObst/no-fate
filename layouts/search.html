@@ -1,4 +1,5 @@
 {{- define "main" }}
+<div class="nf-list nf-record" data-page-mode="record">
 <header class="page-header">
     <h1>{{ .Title }}</h1>
     {{- with .Description }}<p class="post-description">{{ . }}</p>{{ end }}
@@ -14,5 +15,6 @@
         type="search" autocomplete="off" maxlength="64">
     <ul id="searchResults" class="searchResults" aria-live="polite"
         aria-label="{{ i18n "nf_search_results" | default "Search results" }}"></ul>
+</div>
 </div>
 {{- end }}

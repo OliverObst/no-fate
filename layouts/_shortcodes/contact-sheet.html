@@ -1,7 +1,75 @@
 {{- .Page.Store.Set "noFateHasGallery" true -}}
-<section class="nf-component nf-contact-sheet" data-nf-gallery>
+{{- $columns := int (.Get "columns" | default 3) -}}
+{{- $numbers := eq (lower (printf "%v" (.Get "numbers" | default false))) "true" -}}
+{{- $captions := lower (.Get "captions" | default "visible") -}}
+{{- $crop := lower (.Get "crop" | default "fit") -}}
+{{- $download := eq (lower (printf "%v" (.Get "download" | default false))) "true" -}}
+{{- if or (lt $columns 2) (gt $columns 6) -}}
+    {{- errorf "No Fate contact-sheet: columns must be between 2 and 6 at %s" .Position -}}
+{{- end -}}
+{{- if not (in (slice "visible" "alt" "none") $captions) -}}
+    {{- errorf "No Fate contact-sheet: captions must be visible, alt, or none at %s" .Position -}}
+{{- end -}}
+{{- if not (in (slice "fit" "fill") $crop) -}}
+    {{- errorf "No Fate contact-sheet: crop must be fit or fill at %s" .Position -}}
+{{- end -}}
+{{- $items := slice -}}
+{{- with .Get "glob" -}}
+    {{- range $.Page.Resources.Match . -}}
+        {{- $items = $items | append . -}}
+    {{- end -}}
+{{- end -}}
+{{- with .Get "resources" -}}
+    {{- range split . "," -}}
+        {{- $name := strings.TrimSpace . -}}
+        {{- with $.Page.Resources.GetMatch $name -}}
+            {{- $items = $items | append . -}}
+        {{- else -}}
+            {{- errorf "No Fate contact-sheet: resource %q was not found at %s" $name $.Position -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+{{- $items = $items | collections.Uniq -}}
+{{- if and (not $items) (not (strings.TrimSpace .Inner)) -}}
+    {{- errorf "No Fate contact-sheet: glob, resources, or fallback content is required at %s" .Position -}}
+{{- end -}}
+<section class="nf-component nf-contact-sheet" data-nf-gallery data-crop="{{ $crop }}"
+    style="--nf-contact-columns: {{ $columns }}">
     {{- with .Get "title" }}
     <h2>{{ . }}</h2>
     {{- end }}
-    {{- .Page.RenderString .Inner -}}
+    {{- with $items }}
+    <ol class="nf-contact-sheet__items{{ if not $numbers }} nf-contact-sheet__items--unnumbered{{ end }}">
+        {{- range . }}
+            {{- if ne .ResourceType "image" -}}
+                {{- errorf "No Fate contact-sheet: %q is not an image at %s" .Name $.Position -}}
+            {{- end -}}
+            {{- $alt := .Params.alt | default "" -}}
+            {{- if not $alt -}}
+                {{- errorf "No Fate contact-sheet: image resource %q requires params.alt at %s" .Name $.Position -}}
+            {{- end -}}
+            {{- $caption := .Params.caption | default "" -}}
+        <li class="nf-contact-sheet__item">
+            {{- partial "responsive-image.html" (dict
+                "page" $.Page "src" .Name "resource" . "alt" $alt
+                "class" "nf-contact-sheet__image"
+                "sizes" "(min-width: 64rem) 30vw, 50vw"
+            ) -}}
+            {{- if eq $captions "visible" -}}
+                {{- with $caption }}<p class="nf-contact-sheet__caption">{{ . | markdownify }}</p>{{ end -}}
+            {{- else if eq $captions "alt" -}}
+                <p class="nf-contact-sheet__caption">{{ $alt }}</p>
+            {{- end -}}
+            {{- if $download }}
+            <a class="nf-contact-sheet__download" href="{{ .RelPermalink }}" download>
+                {{- i18n "nf_download_original" | default "Download original" -}}
+            </a>
+            {{- end }}
+        </li>
+        {{- end }}
+    </ol>
+    {{- else }}
+    <div class="nf-contact-sheet__fallback">{{ .Page.RenderString .Inner }}</div>
+    {{- end }}
+    {{- with .Get "caption" }}<p class="nf-contact-sheet__shared-caption">{{ . | markdownify }}</p>{{ end }}
 </section>

@@ -21,5 +21,5 @@ questions without clean answers, and records of the work required after launch.
 It prefers a useful repair to a perfect replacement and a visible disagreement
 to a suspiciously tidy consensus.
 
-North Quay, its workshop, people, projects, publications, and events are made
-up. The tools and questions are yours.
+The kettle is load-bearing. The minutes are annotated in three incompatible
+colours. Somebody has labelled the emergency biscuits “infrastructure”.

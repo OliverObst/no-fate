@@ -1,9 +1,17 @@
 {{- $url := urls.Parse .Destination -}}
+{{- $scheme := lower $url.Scheme -}}
+{{- $isWeb := in (slice "http" "https") $scheme -}}
+{{- $isExternal := and $url.IsAbs $isWeb (ne $url.Host (urls.Parse site.BaseURL).Host) -}}
+{{- $target := index .Attributes "target" | default "" -}}
+{{- $rel := "" -}}
+{{- if $isExternal }}{{ $rel = "external" }}{{ end -}}
+{{- if eq $target "_blank" }}{{ $rel = strings.TrimSpace (printf "%s noopener noreferrer" $rel) }}{{ end -}}
 <a href="{{ .Destination | safeURL }}"
     {{- with .Title }} title="{{ . }}"{{ end -}}
-    {{- if $url.IsAbs }} rel="external"{{ end -}}>
+    {{- with $target }} target="{{ . }}"{{ end -}}
+    {{- with $rel }} rel="{{ . }}"{{ end -}}
+    {{- if $isExternal }} class="nf-external-link"{{ end -}}>
     {{- .Text -}}
-    {{- if $url.IsAbs }}<span class="nf-external-mark" aria-hidden="true"> ↗</span>{{ end -}}
-    {{- if $url.IsAbs }}<span class="nf-visually-hidden"> ({{ i18n "nf_external_link" | default "External link" }})</span>{{ end -}}
+    {{- if $isExternal }}<span class="nf-visually-hidden"> ({{ i18n "nf_external_link" | default "External link" }})</span>{{ end -}}
 </a>
 {{- /* Chomp trailing whitespace for adjacent inline elements. */ -}}

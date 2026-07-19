@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img">
+  <rect width="1600" height="900" fill="#151410"/>
+  <g transform="rotate(-2 800 450)">
+    <rect x="90" y="80" width="420" height="300" fill="#f3f0e8"/>
+    <rect x="590" y="60" width="380" height="360" fill="#c93623"/>
+    <rect x="1040" y="100" width="470" height="270" fill="#f3f0e8"/>
+    <rect x="130" y="480" width="520" height="300" fill="#c93623"/>
+    <rect x="720" y="500" width="330" height="250" fill="#f3f0e8"/>
+    <rect x="1120" y="450" width="350" height="340" fill="#c93623"/>
+  </g>
+  <g fill="#151410" font-family="monospace" font-size="48" font-weight="700">
+    <text x="120" y="160">01</text>
+    <text x="1080" y="180">03</text>
+    <text x="760" y="580">05</text>
+  </g>
+  <g fill="#f3f0e8" font-family="monospace" font-size="48" font-weight="700">
+    <text x="630" y="145">02</text>
+    <text x="180" y="570">04</text>
+    <text x="1160" y="540">06</text>
+  </g>
+</svg>

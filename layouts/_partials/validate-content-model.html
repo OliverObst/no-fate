@@ -104,6 +104,12 @@
         {{- if not $model.Archive.Locations -}}
             {{- warnf "No Fate content model: archive mode requires at least one archive.locations value on %s" $location -}}
         {{- end -}}
+        {{- if not $model.Archive.Source -}}
+            {{- warnf "No Fate content model: archive mode requires archive.source on %s" $location -}}
+        {{- end -}}
+        {{- if not $model.Archive.Rights -}}
+            {{- warnf "No Fate content model: archive mode requires archive.rights on %s" $location -}}
+        {{- end -}}
     {{- end -}}
 
     {{- $posterInterruptions := add

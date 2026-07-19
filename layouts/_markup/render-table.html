@@ -1,7 +1,9 @@
-<div class="nf-table-wrap">
-    <table
+{{- $sortable := or (eq (lower (printf "%v" (.Attributes.sortable | default false))) "true") (in (.Attributes.class | default "") "sortable") -}}
+{{- if $sortable }}{{ .PageInner.Store.Set "noFateHasSortableTable" true }}{{ end -}}
+<div class="nf-table-wrap" tabindex="0" role="region" aria-label="{{ i18n "nf_scrollable_table" | default "Scrollable table" }}">
+    <table{{ if $sortable }} data-nf-sortable data-nf-sort-label="{{ i18n "nf_sort_by" | default "Sort by" }}"{{ end }}
         {{- range $key, $value := .Attributes }}
-            {{- if $value }}{{ printf " %s=%q" $key $value | safeHTMLAttr }}{{ end }}
+            {{- if and $value (not (in (slice "sortable") $key)) }}{{ printf " %s=%q" $key $value | safeHTMLAttr }}{{ end }}
         {{- end }}>
         <thead>
             {{- range .THead }}

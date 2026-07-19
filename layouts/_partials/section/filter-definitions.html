@@ -1,0 +1,25 @@
+{{- $definitions := slice -}}
+{{- range .fields -}}
+    {{- $path := .param | default "" -}}
+    {{- if not $path -}}
+        {{- warnf "No Fate section filters: each filter_fields item requires param on %s" $.section.RelPermalink -}}
+    {{- else -}}
+        {{- $id := .id | default ($path | urlize) -}}
+        {{- $options := slice -}}
+        {{- range $.pages -}}
+            {{- range partial "param-values.html" (dict "page" . "path" $path) -}}
+                {{- $options = $options | append . -}}
+            {{- end -}}
+        {{- end -}}
+        {{- $options = $options | collections.Uniq | sort -}}
+        {{- if $options -}}
+            {{- $definitions = $definitions | append (dict
+                "id" $id
+                "label" (.label | default ($path | humanize))
+                "param" $path
+                "options" $options
+            ) -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+{{- return $definitions -}}

@@ -1,18 +1,29 @@
+body {
+    font-family: var(--nf-font-body);
+    font-size: var(--nf-body-size);
+    font-kerning: normal;
+    line-height: var(--nf-body-leading);
+    text-rendering: optimizeLegibility;
+}
+
 h1,
 h2,
 h3,
 h4,
 h5,
-h6 {
-    font-family: inherit;
-    font-weight: 800;
+h6,
+.nf-display {
+    font-family: var(--nf-font-display);
+    font-weight: 850;
+    hyphens: auto;
     letter-spacing: -0.035em;
+    overflow-wrap: anywhere;
     text-wrap: balance;
 }
 
 h1 {
-    font-size: clamp(2.3rem, 7vw, 5.75rem);
-    line-height: 0.95;
+    font-size: var(--nf-title-size);
+    line-height: var(--nf-display-leading);
 }
 
 h2 {
@@ -25,18 +36,33 @@ h3 {
     line-height: 1.1;
 }
 
+h4,
+h5,
+h6 {
+    line-height: 1.2;
+}
+
 .post-description,
 .nf-deck {
-    color: var(--nf-colour-muted);
+    color: var(--nf-muted);
+    font-family: var(--nf-font-body);
     font-size: clamp(1.1rem, 2vw, 1.45rem);
-    line-height: 1.35;
+    line-height: 1.4;
     max-width: 56ch;
+    text-wrap: pretty;
 }
 
 .md-content,
 .nf-prose {
-    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    font-family: var(--nf-font-body);
+    font-size: var(--nf-body-size);
     max-width: var(--nf-reading-measure);
+    overflow-wrap: break-word;
+}
+
+.md-content :is(p, li, dd, figcaption),
+.nf-prose :is(p, li, dd, figcaption) {
+    text-wrap: pretty;
 }
 
 .md-content p,
@@ -48,14 +74,72 @@ h3 {
     margin-block: 1.2em;
 }
 
+.nf-meta,
+.post-meta,
+.entry-footer,
+.breadcrumbs,
+.nf-component__label,
+.nf-article__facts,
+.nf-figure figcaption {
+    font-family: var(--nf-font-meta);
+    font-size: var(--nf-meta-size);
+    font-variant-numeric: tabular-nums;
+}
+
+code,
+kbd,
+samp,
+pre {
+    font-family: var(--nf-font-meta);
+}
+
 .nf-heading-anchor {
-    color: var(--nf-colour-muted);
+    align-items: center;
+    color: var(--nf-muted);
+    display: inline-flex;
+    font-family: var(--nf-font-meta);
     font-size: 0.7em;
+    justify-content: center;
     margin-inline-start: 0.35em;
+    min-height: 1.25em;
+    min-width: 1.25em;
     opacity: 0;
+    text-decoration: none;
+}
+
+.nf-heading-anchor::before {
+    content: "#";
 }
 
 :is(h2, h3, h4, h5, h6):hover .nf-heading-anchor,
-.nf-heading-anchor:focus {
+.nf-heading-anchor:focus-visible {
     opacity: 1;
+}
+
+:lang(de) {
+    hyphens: auto;
+}
+
+@media (max-width: 24rem) {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        letter-spacing: -0.025em;
+    }
+}
+
+@media print {
+    body,
+    .md-content,
+    .nf-prose {
+        font-size: 10.5pt;
+        line-height: 1.5;
+    }
+
+    a {
+        text-decoration-thickness: 0.5pt;
+    }
 }

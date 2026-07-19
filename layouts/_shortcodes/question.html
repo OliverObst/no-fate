@@ -1,6 +1,11 @@
 {{- $text := .Get "text" -}}
 {{- if not $text }}{{ $text = strings.TrimSpace .Inner }}{{ end -}}
-<aside class="nf-component nf-question">
-    <span class="nf-component__label">{{ i18n "nf_question" | default "Question" }}</span>
-    <p>{{ $text | markdownify }}</p>
-</aside>
+{{- $element := lower (.Get "as" | default "aside") -}}
+{{- if not (in (slice "aside" "section") $element) -}}
+    {{- errorf "No Fate question: as must be aside or section at %s" .Position -}}
+{{- end -}}
+{{- $id := printf "nf-question-%d" .Ordinal -}}
+{{- printf "<%s class=\"nf-component nf-question\" aria-labelledby=\"%s\">" $element $id | safeHTML -}}
+    <p class="nf-component__label" id="{{ $id }}">{{ .Get "label" | default (i18n "nf_question" | default "Question") }}</p>
+    <div class="nf-question__body">{{ $text | markdownify }}</div>
+{{- printf "</%s>" $element | safeHTML -}}

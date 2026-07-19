@@ -1,0 +1,14 @@
+{{- $path := strings.TrimSpace (printf "%v" .path) -}}
+{{- $context := .context | default "homepage selection" -}}
+{{- $selected := false -}}
+{{- if $path -}}
+    {{- with site.GetPage $path -}}
+        {{- $selected = . -}}
+    {{- else -}}
+        {{- $strict := site.Params.noFate.strictHomeSelections | default false -}}
+        {{- if and $strict hugo.IsProduction -}}
+            {{- errorf "No Fate homepage: %s references missing or unpublished path %q" $context $path -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+{{- return $selected -}}

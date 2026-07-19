@@ -21,6 +21,8 @@ content:
   format: "question"
   status: "published"
   original_date: null
+  media_type: ""
+  collection: ""
 
 editorial:
   proposition:
@@ -44,6 +46,8 @@ archive:
   end_year: null
   locations: []
   people: []
+  source: ""
+  rights: ""
 
 seo:
   description: ""
@@ -66,6 +70,10 @@ Every published regular page requires:
 - `visual.mode`, either on the page or its current section
 
 If `visual.hero` is set, `visual.hero_alt` is also required.
+
+Archive-mode pages also require a period, at least one location, a source and a
+rights statement. `content.media_type` and `content.collection` are optional
+generic values that sections may expose as filters.
 
 Draft pages may remain incomplete while they are being written. Branch pages,
 taxonomy pages, and generated pages are not treated as regular content records.
@@ -206,6 +214,7 @@ Warnings cover:
 - missing hero alternative text
 - unsupported hero treatments
 - missing archive period or location metadata
+- missing archive source or rights metadata
 - excessive poster interruptions or poster components in record mode
 - substantive content outside leaf bundles
 - malformed or unknown proposition references

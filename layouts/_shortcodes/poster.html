@@ -1,6 +1,23 @@
 {{- $title := .Get "title" -}}
-<section class="nf-component nf-poster">
-    <span class="nf-component__label">{{ i18n "nf_poster" | default "Poster" }}</span>
-    {{- with $title }}<h2>{{ . }}</h2>{{ end }}
-    <div>{{ .Page.RenderString .Inner }}</div>
-</section>
+{{- $tone := lower (.Get "tone" | default "signal") -}}
+{{- $size := lower (.Get "size" | default "medium") -}}
+{{- $level := printf "%v" (.Get "level" | default "2") -}}
+{{- if not (in (slice "signal" "alert" "inverse" "quiet") $tone) -}}
+    {{- errorf "No Fate poster: unsupported tone %q at %s" $tone .Position -}}
+{{- end -}}
+{{- if not (in (slice "small" "medium" "large") $size) -}}
+    {{- errorf "No Fate poster: unsupported size %q at %s" $size .Position -}}
+{{- end -}}
+{{- if not (in (slice "none" "2" "3" "4" "5" "6") $level) -}}
+    {{- errorf "No Fate poster: level must be none or 2–6 at %s" .Position -}}
+{{- end -}}
+<aside class="nf-component nf-poster nf-poster--{{ $tone }} nf-poster--{{ $size }}">
+    {{- with $title }}
+        {{- if eq $level "none" -}}
+        <p class="nf-poster__title">{{ . | markdownify }}</p>
+        {{- else -}}
+        {{- printf "<h%s class=\"nf-poster__title\">" $level | safeHTML }}{{ . | markdownify }}{{ printf "</h%s>" $level | safeHTML -}}
+        {{- end -}}
+    {{- end }}
+    <div class="nf-poster__body">{{ .Page.RenderString .Inner }}</div>
+</aside>

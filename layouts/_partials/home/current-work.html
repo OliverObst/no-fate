@@ -1,11 +1,15 @@
-{{- $pages := where site.RegularPages "Params.content.format" "project" -}}
-{{- with first 3 $pages.ByDate.Reverse }}
-<section class="nf-home-module" aria-labelledby="nf-work-heading">
+{{- $paths := partial "home/value.html" (dict "page" . "key" "current_projects" "default" slice) -}}
+{{- $pages := partial "home/selected-pages.html" (dict "paths" $paths "context" "current_projects") -}}
+{{- if not $paths -}}
+    {{- $pages = first 3 (where site.RegularPages "Params.content.format" "project").ByDate.Reverse -}}
+{{- end -}}
+{{- with $pages }}
+<section class="nf-home-module nf-home-module--work" aria-labelledby="nf-work-heading">
     <div class="nf-home-module__heading">
-        <h2 id="nf-work-heading">{{ i18n "nf_current_work" | default "Current work" }}</h2>
+        <h2 id="nf-work-heading">{{ i18n "nf_current_activity" | default "Current activity" }}</h2>
     </div>
     <div class="nf-home-module__items">
-        {{- range . }}{{ partial "record/entry.html" . }}{{ end }}
+        {{- range . }}{{ partial "record/entry.html" (dict "page" . "density" "compact" "headingLevel" 3) }}{{ end }}
     </div>
 </section>
 {{- end }}

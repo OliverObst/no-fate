@@ -40,6 +40,8 @@
         "Format" (index $content "format" | default "")
         "Status" (index $content "status" | default "")
         "OriginalDate" (index $content "original_date")
+        "MediaType" (index $content "media_type" | default "")
+        "Collection" (index $content "collection" | default "")
     )
     "Editorial" (dict
         "Propositions" $propositions
@@ -62,6 +64,8 @@
         "EndYear" (index $archive "end_year")
         "Locations" (index $archive "locations" | default slice)
         "People" (index $archive "people" | default slice)
+        "Source" (index $archive "source" | default "")
+        "Rights" (index $archive "rights" | default "")
     )
     "SEO" (dict
         "Description" $description

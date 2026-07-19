@@ -124,3 +124,81 @@
 
 - id: nf_return_home
   translation: "Return home"
+
+- id: nf_current_argument
+  translation: "Current argument"
+
+- id: nf_questions_worth_asking
+  translation: "Questions worth asking"
+
+- id: nf_selected_writing
+  translation: "Selected writing"
+
+- id: nf_current_activity
+  translation: "Current activity"
+
+- id: nf_figure
+  translation: "Figure"
+
+- id: nf_credit
+  translation: "Credit"
+
+- id: nf_source
+  translation: "Source"
+
+- id: nf_date
+  translation: "Date"
+
+- id: nf_location
+  translation: "Location"
+
+- id: nf_creator
+  translation: "Creator"
+
+- id: nf_rights
+  translation: "Rights"
+
+- id: nf_significance
+  translation: "Significance"
+
+- id: nf_transcription
+  translation: "Transcription"
+
+- id: nf_timeline
+  translation: "Timeline"
+
+- id: nf_download_original
+  translation: "Download original"
+
+- id: nf_scrollable_table
+  translation: "Scrollable table"
+
+- id: nf_sort_by
+  translation: "Sort by"
+
+- id: nf_browse_writing
+  translation: "Browse writing"
+
+- id: nf_all
+  translation: "All"
+
+- id: nf_clear_filters
+  translation: "Clear filters"
+
+- id: nf_item
+  translation: "item"
+
+- id: nf_items
+  translation: "items"
+
+- id: nf_type
+  translation: "Type"
+
+- id: nf_period
+  translation: "Period"
+
+- id: nf_status
+  translation: "Status"
+
+- id: nf_chronological_index
+  translation: "Chronological index"

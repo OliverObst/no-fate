@@ -1,8 +1,6 @@
 body {
     background: var(--nf-colour-paper);
     color: var(--nf-colour-ink);
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    line-height: 1.55;
 }
 
 ::selection {

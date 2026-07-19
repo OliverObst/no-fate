@@ -36,3 +36,12 @@ bundle_formats:
   - project
   - question
 minimum_proposition_items: 2
+home_modules:
+  - opening
+  - featured_argument
+  - questions
+  - featured_archive
+  - selected_writing
+  - visual_interruption
+  - current_work
+  - formal_record
