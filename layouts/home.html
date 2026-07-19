@@ -1,0 +1,21 @@
+{{- define "main" }}
+{{- $showRecentNotes := true -}}
+{{- $showFormalRecord := true -}}
+{{- with site.Params.noFate.home -}}
+    {{- if isset . "showrecentnotes" -}}
+        {{- $showRecentNotes = index . "showrecentnotes" -}}
+    {{- end -}}
+    {{- if isset . "showformalrecord" -}}
+        {{- $showFormalRecord = index . "showformalrecord" -}}
+    {{- end -}}
+{{- end -}}
+<div class="nf-home">
+    {{- partial "home/opening.html" . }}
+    {{- partial "home/featured-argument.html" . }}
+    {{- partial "home/questions.html" . }}
+    {{- partial "home/archive-feature.html" . }}
+    {{- if $showRecentNotes }}{{ partial "home/recent-notes.html" . }}{{ end }}
+    {{- partial "home/current-work.html" . }}
+    {{- if $showFormalRecord }}{{ partial "home/formal-record.html" . }}{{ end }}
+</div>
+{{- end }}

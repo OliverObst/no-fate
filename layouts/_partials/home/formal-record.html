@@ -1,0 +1,11 @@
+{{- $sections := where site.Sections "Params.content.format" "record" -}}
+{{- with first 1 $sections }}
+<section class="nf-home-module nf-record" aria-labelledby="nf-record-heading">
+    <div class="nf-home-module__heading">
+        <h2 id="nf-record-heading">{{ i18n "nf_formal_record" | default "Formal record" }}</h2>
+    </div>
+    <div class="nf-home-module__items">
+        {{- range . }}{{ partial "record/selected.html" . }}{{ end }}
+    </div>
+</section>
+{{- end }}

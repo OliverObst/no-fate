@@ -1,0 +1,52 @@
+body {
+    background: var(--nf-colour-paper);
+    color: var(--nf-colour-ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.55;
+}
+
+::selection {
+    background: var(--nf-colour-signal);
+    color: var(--nf-colour-surface);
+}
+
+a {
+    color: inherit;
+    text-decoration-color: var(--nf-colour-signal);
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.18em;
+}
+
+a:hover {
+    text-decoration-line: underline;
+}
+
+hr {
+    border: 0;
+    border-top: var(--nf-rule);
+    margin: var(--nf-space-7) 0;
+}
+
+.nf-skip-link {
+    background: var(--nf-colour-ink);
+    color: var(--nf-colour-paper);
+    left: var(--nf-space-4);
+    padding: var(--nf-space-3) var(--nf-space-4);
+    position: fixed;
+    top: var(--nf-space-4);
+    transform: translateY(-200%);
+    z-index: 1000;
+}
+
+.nf-skip-link:focus {
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}

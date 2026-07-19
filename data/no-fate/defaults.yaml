@@ -1,0 +1,17 @@
+default_mode: editorial
+default_accent: signal
+allowed_modes:
+  - record
+  - editorial
+  - poster
+  - archive
+allowed_accents:
+  - signal
+  - quiet
+headline_scales:
+  - small
+  - medium
+  - large
+opening_alignments:
+  - left
+  - centre

@@ -1,0 +1,6 @@
+{{- if or (not .Type) (transform.CanHighlight .Type) -}}
+    {{- $result := transform.HighlightCodeBlock . -}}
+    {{- $result.Wrapped -}}
+{{- else -}}
+<pre tabindex="0"><code{{ with .Type }} class="language-{{ . }}" data-lang="{{ . }}"{{ end }}>{{ .Inner | transform.HTMLEscape }}</code></pre>
+{{- end -}}

@@ -1,0 +1,30 @@
+[params.noFate]
+  defaultMode = "editorial"
+  defaultAccent = "signal"
+  showThemeToggle = true
+  showSearch = true
+  showReadingTime = true
+  showPropositions = true
+  enableImageProcessing = true
+
+[params.noFate.home]
+  showFormalRecord = true
+  showRecentNotes = true
+
+[params.noFate.archive]
+  showArtefactNumbers = true
+  showRights = true
+
+[params.noFate.record]
+  dataFile = "record"
+  enableClientFilters = true
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.parser]
+      [markup.goldmark.parser.attribute]
+        block = true
+        title = true
+  [markup.highlight]
+    codeFences = true
+    noClasses = false

@@ -1,0 +1,7 @@
+.nf-article[data-page-mode="archive"] {
+    --nf-reading-measure: 76ch;
+}
+
+.nf-article[data-page-mode="archive"] .nf-article__body {
+    max-width: 84rem;
+}

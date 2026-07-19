@@ -1,0 +1,30 @@
+html {
+    scroll-padding-top: 2rem;
+}
+
+body {
+    min-width: 20rem;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+:focus-visible {
+    outline: 3px solid var(--nf-colour-focus);
+    outline-offset: 3px;
+}
+
+button,
+input,
+select,
+textarea {
+    color: inherit;
+}
+
+img,
+picture,
+video {
+    height: auto;
+    max-width: 100%;
+}

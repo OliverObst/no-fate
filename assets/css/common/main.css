@@ -28,16 +28,6 @@
 }
 
 
-.social-icons a {
-    display: inline-flex;
-    padding: 10px;
-}
-
-.social-icons a svg {
-    height: 26px;
-    width: 26px;
-}
-
 code {
     direction: ltr;
 }

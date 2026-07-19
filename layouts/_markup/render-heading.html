@@ -1,0 +1,5 @@
+<h{{ .Level }} id="{{ .Anchor | safeURL }}"{{ with .Attributes.class }} class="{{ . }}"{{ end }}>
+    {{- .Text -}}
+    <a class="nf-heading-anchor" href="#{{ .Anchor | safeURL }}"
+        aria-label="{{ printf (i18n "nf_heading_link" | default "Link to section: %s") .PlainText }}">#</a>
+</h{{ .Level }}>

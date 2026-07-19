@@ -1,3 +1,4 @@
+{{- partial "hooks/head-start.html" . -}}
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -56,11 +57,32 @@
 
 {{- /* order is important */}}
 {{- $core := (slice $theme_vars $reset $common $chroma_styles $chroma_mod $includes_all $media) | resources.Concat "assets/css/core.css" | resources.Minify }}
+{{- $no_fate_paths := slice
+    "css/00-reset.css"
+    "css/10-tokens.css"
+    "css/20-foundations.css"
+    "css/30-shell.css"
+    "css/40-typography.css"
+    "css/50-components.css"
+    "css/60-article.css"
+    "css/70-home.css"
+    "css/80-record.css"
+    "css/modes/record.css"
+    "css/modes/editorial.css"
+    "css/modes/poster.css"
+    "css/modes/archive.css"
+    "css/99-utilities.css"
+}}
+{{- $no_fate_styles := slice }}
+{{- range $no_fate_paths }}
+    {{- $no_fate_styles = $no_fate_styles | append (resources.Get .) }}
+{{- end }}
+{{- $no_fate := $no_fate_styles | resources.Concat "assets/css/no-fate.css" | resources.Minify }}
 {{- $extended := (resources.Match "css/extended/*.css") | resources.Concat "assets/css/extended.css" | resources.Minify }}
 
 {{- /* bundle all required css */}}
 {{- /* Add extended css after theme style */ -}}
-{{- $stylesheet := (slice $license_css $core $extended) | resources.Concat "assets/css/stylesheet.css"  }}
+{{- $stylesheet := (slice $license_css $core $no_fate $extended) | resources.Concat "assets/css/stylesheet.css"  }}
 
 {{- if not site.Params.assets.disableFingerprinting }}
 {{- $stylesheet := $stylesheet | fingerprint }}
@@ -72,7 +94,7 @@
 {{- /* Search */}}
 {{- if (eq .Layout `search`) -}}
 <link crossorigin="anonymous" rel="preload" as="fetch" href="../index.json">
-{{- $fastsearch := resources.Get "js/fastsearch.js" | js.Build (dict "params" (dict "fuseOpts" site.Params.fuseOpts)) | resources.Minify }}
+{{- $fastsearch := resources.Get "js/search.js" | js.Build (dict "params" (dict "fuseOpts" site.Params.fuseOpts)) | resources.Minify }}
 {{- $fusejs := resources.Get "js/fuse.basic.min.js" }}
 {{- $license_js := resources.Get "js/license.js" }}
 {{- if not site.Params.assets.disableFingerprinting }}
@@ -107,35 +129,7 @@
         .top-link {
             display: none;
         }
-
     </style>
-    {{- if (and (ne site.Params.defaultTheme "light") (ne site.Params.defaultTheme "dark")) }}
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-                color-scheme: dark;
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .toc {
-                background: var(--entry);
-            }
-        }
-
-    </style>
-    {{- end }}
 </noscript>
 
 {{- /* theme-toggle is enabled */}}
@@ -184,6 +178,7 @@
 {{- end }}
 
 {{- partial "extend_head.html" . -}}
+{{- partial "hooks/head-end.html" . -}}
 
 {{- /* Misc */}}
 {{- if hugo.IsProduction | or (eq site.Params.env "production") }}

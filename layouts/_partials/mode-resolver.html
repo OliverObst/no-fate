@@ -1,0 +1,29 @@
+{{- $allowed := slice "record" "editorial" "poster" "archive" -}}
+{{- $default := site.Params.noFate.defaultMode | default "editorial" -}}
+{{- if not (in $allowed ($default | lower)) -}}
+    {{- warnf "No Fate: unsupported params.noFate.defaultMode %q; using %q" $default "editorial" -}}
+    {{- $default = "editorial" -}}
+{{- end -}}
+{{- $mode := "" -}}
+
+{{- with .Params.visual -}}
+    {{- with .mode -}}
+        {{- $mode = . -}}
+    {{- end -}}
+{{- end -}}
+
+{{- if and (not $mode) .Parent -}}
+    {{- with .Parent.Params.visual -}}
+        {{- with .mode -}}
+            {{- $mode = . -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
+{{- $mode = $mode | default $default | lower -}}
+{{- if not (in $allowed $mode) -}}
+    {{- warnf "No Fate: unsupported visual.mode %q on %s; using %q" $mode .RelPermalink $default -}}
+    {{- $mode = $default -}}
+{{- end -}}
+
+{{- return $mode -}}

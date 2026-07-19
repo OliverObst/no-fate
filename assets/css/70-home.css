@@ -1,0 +1,27 @@
+.nf-home {
+    display: grid;
+    gap: var(--nf-space-8);
+}
+
+.nf-home__opening {
+    border-bottom: var(--nf-rule-strong);
+    padding-bottom: var(--nf-space-7);
+}
+
+.nf-home-module {
+    display: grid;
+    gap: var(--nf-space-4);
+}
+
+.nf-home-module__heading {
+    align-items: baseline;
+    border-bottom: var(--nf-rule-strong);
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: var(--nf-space-3);
+}
+
+.nf-home-module__items {
+    display: grid;
+    gap: 0;
+}

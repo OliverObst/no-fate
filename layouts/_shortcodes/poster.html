@@ -1,0 +1,6 @@
+{{- $title := .Get "title" -}}
+<section class="nf-component nf-poster">
+    <span class="nf-component__label">{{ i18n "nf_poster" | default "Poster" }}</span>
+    {{- with $title }}<h2>{{ . }}</h2>{{ end }}
+    <div>{{ .Page.RenderString .Inner }}</div>
+</section>

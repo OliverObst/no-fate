@@ -31,3 +31,90 @@
 
 - id: code_copied
   translation: "copied!"
+
+- id: nf_skip_to_content
+  translation: "Skip to content"
+
+- id: nf_primary_navigation
+  translation: "Primary navigation"
+
+- id: nf_home_access_key
+  translation: "Alt + H"
+
+- id: nf_toggle_theme
+  translation: "Toggle colour theme"
+
+- id: nf_theme
+  translation: "Theme"
+
+- id: nf_external_link
+  translation: "External link"
+
+- id: nf_powered_by
+  translation: "Built with"
+
+- id: nf_back_to_top
+  translation: "Back to top"
+
+- id: nf_tags
+  translation: "Tags"
+
+- id: nf_proposition
+  translation: "Proposition"
+
+- id: nf_featured
+  translation: "Featured"
+
+- id: nf_questions
+  translation: "Questions"
+
+- id: nf_from_archive
+  translation: "From the archive"
+
+- id: nf_recent_notes
+  translation: "Recent notes"
+
+- id: nf_current_work
+  translation: "Current work"
+
+- id: nf_formal_record
+  translation: "Formal record"
+
+- id: nf_draft
+  translation: "Draft"
+
+- id: nf_record_filters
+  translation: "Record filters"
+
+- id: nf_rss_feed
+  translation: "RSS feed"
+
+- id: nf_pagination
+  translation: "Pagination"
+
+- id: nf_heading_link
+  translation: "Link to section: %s"
+
+- id: nf_poster
+  translation: "Poster"
+
+- id: nf_question
+  translation: "Question"
+
+- id: nf_artefact
+  translation: "Artefact"
+
+- id: nf_search
+  translation: "Search"
+
+- id: nf_search_placeholder
+  translation: "Search this site"
+
+- id: nf_search_results
+  translation: "Search results"
+
+- id: nf_not_found
+  translation: "Page not found"
+
+- id: nf_return_home
+  translation: "Return home"

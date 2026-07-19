@@ -4,28 +4,24 @@
 
 <!DOCTYPE html>
 {{- $theme := site.Params.defaultTheme | default "auto" }}
-{{- if eq $theme "dark" }}
-<html lang="{{ site.Language.Locale }}" dir="{{ .Language.Direction | default "auto" }}" data-theme="dark">
-{{- else if eq $theme "light" }}
-<html lang="{{ site.Language.Locale }}" dir="{{ .Language.Direction | default "auto" }}" data-theme="light">
-{{- else }}
-<html lang="{{ site.Language.Locale }}" dir="{{ .Language.Direction | default "auto" }}" data-theme="auto">
-{{- end }}
+<html lang="{{ site.Language.Locale }}" dir="{{ .Language.Direction | default "auto" }}" data-theme="{{ $theme }}">
 
 <head>
     {{- partial "head.html" . }}
 </head>
 
-{{- if (or (ne .Kind `page` ) (eq .Layout `archives`) (eq .Layout `search`)) }}
-<body class="list" id="top">
-{{- else }}
-<body id="top">
+{{- $bodyClass := printf "nf-page nf-kind-%s" .Kind -}}
+{{- if or (ne .Kind "page") (eq .Layout "archives") (eq .Layout "search") -}}
+    {{- $bodyClass = printf "%s list" $bodyClass -}}
 {{- end }}
-    {{ partialCached "header.html" . .Page -}}
-    <main class="main">
+<body class="{{ $bodyClass }}" id="top">
+    <a class="nf-skip-link" href="#nf-main">{{ i18n "nf_skip_to_content" | default "Skip to content" }}</a>
+    {{ partial "header.html" . -}}
+    <main class="main" id="nf-main" tabindex="-1">
         {{- block "main" . }}{{ end }}
     </main>
-    {{ partialCached "footer.html" . .Layout .Kind (.Param "hideFooter") (.Param "ShowCodeCopyButtons") -}}
+    {{ partial "footer.html" . -}}
+    {{ partial "hooks/body-end.html" . -}}
 </body>
 
 </html>

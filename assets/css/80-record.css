@@ -1,0 +1,33 @@
+.nf-record {
+    font-size: 0.95rem;
+}
+
+.nf-record table {
+    border-block: var(--nf-rule-strong);
+}
+
+.nf-record th,
+.nf-record td {
+    border-bottom: var(--nf-rule);
+    padding: var(--nf-space-3);
+    text-align: start;
+    vertical-align: top;
+}
+
+.nf-record th {
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.nf-record-filters {
+    border-block: var(--nf-rule-strong);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--nf-space-3);
+    padding-block: var(--nf-space-4);
+}
+
+.nf-list[data-page-mode="record"] {
+    max-width: 90ch;
+}

@@ -1,0 +1,11 @@
+{{- $pages := where site.RegularPages "Params.content.format" "note" -}}
+{{- with first 4 $pages.ByDate.Reverse }}
+<section class="nf-home-module" aria-labelledby="nf-notes-heading">
+    <div class="nf-home-module__heading">
+        <h2 id="nf-notes-heading">{{ i18n "nf_recent_notes" | default "Recent notes" }}</h2>
+    </div>
+    <div class="nf-home-module__items">
+        {{- range . }}{{ partial "record/entry.html" . }}{{ end }}
+    </div>
+</section>
+{{- end }}

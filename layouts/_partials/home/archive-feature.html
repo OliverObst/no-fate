@@ -1,0 +1,11 @@
+{{- $pages := where site.RegularPages "Params.content.format" "in" (slice "history" "artefact") -}}
+{{- with first 1 $pages.ByDate.Reverse }}
+<section class="nf-home-module" aria-labelledby="nf-archive-heading">
+    <div class="nf-home-module__heading">
+        <h2 id="nf-archive-heading">{{ i18n "nf_from_archive" | default "From the archive" }}</h2>
+    </div>
+    <div class="nf-home-module__items">
+        {{- range . }}{{ partial "record/selected.html" . }}{{ end }}
+    </div>
+</section>
+{{- end }}

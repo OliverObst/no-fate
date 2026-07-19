@@ -4,7 +4,14 @@
     {{- $scratch.Add "meta" (slice (printf "<span title='%s'>%s</span>" (.Date) (.Date | time.Format (default ":date_long" site.Params.DateFormat)))) }}
 {{- end }}
 
-{{- if (.Param "ShowReadingTime") -}}
+{{- $showReadingTime := .Param "ShowReadingTime" -}}
+{{- with site.Params.noFate -}}
+    {{- if isset . "showreadingtime" -}}
+        {{- $showReadingTime = index . "showreadingtime" -}}
+    {{- end -}}
+{{- end -}}
+
+{{- if $showReadingTime -}}
     {{- $scratch.Add "meta" (slice (printf "<span>%s</span>" (i18n "read_time" .ReadingTime | default (printf "%d min" .ReadingTime)))) }}
 {{- end }}
 

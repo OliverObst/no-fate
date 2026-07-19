@@ -1,0 +1,7 @@
+{{- .Page.Store.Set "noFateHasGallery" true -}}
+<section class="nf-component nf-contact-sheet" data-nf-gallery>
+    {{- with .Get "title" }}
+    <h2>{{ . }}</h2>
+    {{- end }}
+    {{- .Page.RenderString .Inner -}}
+</section>

@@ -1,0 +1,12 @@
+{{- $title := .Get "title" | default (i18n "nf_artefact" | default "Artefact") -}}
+{{- $href := .Get "href" -}}
+<aside class="nf-component nf-artefact">
+    <span class="nf-component__label">{{ i18n "nf_artefact" | default "Artefact" }}</span>
+    {{- if $href }}
+    <h3><a href="{{ $href | safeURL }}">{{ $title }}</a></h3>
+    {{- else }}
+    <h3>{{ $title }}</h3>
+    {{- end }}
+    {{- with .Get "meta" }}<p class="nf-muted">{{ . }}</p>{{ end }}
+    {{- with .Inner }}<div>{{ $.Page.RenderString . }}</div>{{ end }}
+</aside>

@@ -1,0 +1,28 @@
+components:
+  - id: poster
+    purpose: Declarative interruption or opening statement.
+    interactive: false
+  - id: question
+    purpose: A prominent editorial question.
+    interactive: false
+  - id: aside
+    purpose: Supporting context outside the main argument.
+    interactive: false
+  - id: pullquote
+    purpose: A selected quotation from the surrounding work.
+    interactive: false
+  - id: image-spread
+    purpose: A wide figure with caption and rights metadata.
+    interactive: false
+  - id: contact-sheet
+    purpose: A group of related figures with a stable reading order.
+    interactive: true
+  - id: artefact
+    purpose: A source object or downloadable record.
+    interactive: false
+  - id: timeline
+    purpose: A chronological sequence.
+    interactive: false
+  - id: proposition
+    purpose: A user-defined editorial proposition.
+    interactive: false

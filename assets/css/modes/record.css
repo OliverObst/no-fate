@@ -1,0 +1,7 @@
+.nf-article[data-page-mode="record"] {
+    --nf-reading-measure: 90ch;
+}
+
+.nf-article[data-page-mode="record"] .nf-article__title {
+    font-size: clamp(2rem, 5vw, 4rem);
+}

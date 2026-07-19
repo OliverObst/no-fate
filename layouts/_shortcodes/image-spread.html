@@ -1,0 +1,15 @@
+{{- $src := .Get "src" -}}
+{{- $alt := .Get "alt" -}}
+{{- if not $src -}}
+    {{- errorf "No Fate: the image-spread shortcode requires src at %s" .Position -}}
+{{- end -}}
+{{- if not $alt -}}
+    {{- errorf "No Fate: the image-spread shortcode requires alt at %s" .Position -}}
+{{- end -}}
+{{- partial "figure.html" (dict
+    "page" .Page
+    "src" $src
+    "alt" $alt
+    "caption" (.Get "caption")
+    "class" "nf-image-spread nf-wide"
+) -}}

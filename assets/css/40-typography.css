@@ -1,0 +1,61 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: inherit;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+}
+
+h1 {
+    font-size: clamp(2.3rem, 7vw, 5.75rem);
+    line-height: 0.95;
+}
+
+h2 {
+    font-size: clamp(1.7rem, 4vw, 3.25rem);
+    line-height: 1;
+}
+
+h3 {
+    font-size: clamp(1.25rem, 2.4vw, 2rem);
+    line-height: 1.1;
+}
+
+.post-description,
+.nf-deck {
+    color: var(--nf-colour-muted);
+    font-size: clamp(1.1rem, 2vw, 1.45rem);
+    line-height: 1.35;
+    max-width: 56ch;
+}
+
+.md-content,
+.nf-prose {
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    max-width: var(--nf-reading-measure);
+}
+
+.md-content p,
+.md-content ul,
+.md-content ol,
+.md-content blockquote,
+.md-content pre,
+.md-content table {
+    margin-block: 1.2em;
+}
+
+.nf-heading-anchor {
+    color: var(--nf-colour-muted);
+    font-size: 0.7em;
+    margin-inline-start: 0.35em;
+    opacity: 0;
+}
+
+:is(h2, h3, h4, h5, h6):hover .nf-heading-anchor,
+.nf-heading-anchor:focus {
+    opacity: 1;
+}

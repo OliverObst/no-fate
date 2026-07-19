@@ -1,0 +1,15 @@
+{{- $page := .page -}}
+{{- $mode := .mode -}}
+<div class="nf-article__body{{ if eq $mode "record" }} nf-record{{ end }}">
+    {{- $isHidden := ($page.Param "cover.hiddenInSingle") | default ($page.Param "cover.hidden") | default false }}
+    {{- partial "cover.html" (dict "cxt" $page "IsSingle" true "isHidden" $isHidden) }}
+    {{- if $page.Param "ShowToc" }}
+        {{- partial "toc.html" $page }}
+    {{- end }}
+    {{- with $page.Content }}
+    <div class="post-content md-content nf-prose">
+        {{- . -}}
+    </div>
+    {{- end }}
+    {{- partial "extend_post_content.html" $page }}
+</div>

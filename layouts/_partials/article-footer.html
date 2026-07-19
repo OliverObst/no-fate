@@ -1,0 +1,18 @@
+<footer class="post-footer nf-article__footer">
+    {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
+    {{- with $.GetTerms $tags }}
+    <ul class="post-tags" aria-label="{{ i18n "nf_tags" | default "Tags" }}">
+        {{- range . }}
+        <li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
+        {{- end }}
+    </ul>
+    {{- end }}
+
+    {{- if .Param "ShowPostNavLinks" }}
+        {{- partial "post_nav_links.html" . }}
+    {{- end }}
+</footer>
+
+{{- if .Param "comments" }}
+    {{- partial "comments.html" . }}
+{{- end }}

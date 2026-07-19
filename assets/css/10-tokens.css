@@ -1,0 +1,75 @@
+:root {
+    --nf-colour-paper: #f6f5f0;
+    --nf-colour-surface: #ffffff;
+    --nf-colour-ink: #171717;
+    --nf-colour-muted: #5c5c57;
+    --nf-colour-rule: #a7a69f;
+    --nf-colour-soft-rule: #d8d7d0;
+    --nf-colour-signal: #a72d1d;
+    --nf-colour-focus: #005fcc;
+    --nf-colour-code: #202124;
+    --nf-colour-code-ink: #f6f5f0;
+
+    --nf-space-1: 0.25rem;
+    --nf-space-2: 0.5rem;
+    --nf-space-3: 0.75rem;
+    --nf-space-4: 1rem;
+    --nf-space-5: 1.5rem;
+    --nf-space-6: 2rem;
+    --nf-space-7: 3rem;
+    --nf-space-8: 4.5rem;
+
+    --nf-shell-width: 90rem;
+    --nf-reading-measure: 70ch;
+    --nf-rule: 1px solid var(--nf-colour-rule);
+    --nf-rule-strong: 2px solid var(--nf-colour-ink);
+    --nf-transition: 160ms ease;
+
+    --gap: var(--nf-space-5);
+    --content-gap: var(--nf-space-5);
+    --nav-width: var(--nf-shell-width);
+    --main-width: 80rem;
+    --header-height: auto;
+    --footer-height: auto;
+    --radius: 0;
+    --theme: var(--nf-colour-paper);
+    --entry: var(--nf-colour-surface);
+    --primary: var(--nf-colour-ink);
+    --secondary: var(--nf-colour-muted);
+    --tertiary: var(--nf-colour-rule);
+    --content: var(--nf-colour-ink);
+    --code-block-bg: var(--nf-colour-code);
+    --code-bg: var(--nf-colour-surface);
+    --border: var(--nf-colour-soft-rule);
+    color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+    --nf-colour-paper: #151515;
+    --nf-colour-surface: #202020;
+    --nf-colour-ink: #f1f0ea;
+    --nf-colour-muted: #bab9b1;
+    --nf-colour-rule: #77766f;
+    --nf-colour-soft-rule: #3e3e3a;
+    --nf-colour-signal: #ff745f;
+    --nf-colour-focus: #7eb6ff;
+    --nf-colour-code: #0c0c0c;
+    --nf-colour-code-ink: #f1f0ea;
+    color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root[data-theme="auto"] {
+        --nf-colour-paper: #151515;
+        --nf-colour-surface: #202020;
+        --nf-colour-ink: #f1f0ea;
+        --nf-colour-muted: #bab9b1;
+        --nf-colour-rule: #77766f;
+        --nf-colour-soft-rule: #3e3e3a;
+        --nf-colour-signal: #ff745f;
+        --nf-colour-focus: #7eb6ff;
+        --nf-colour-code: #0c0c0c;
+        --nf-colour-code-ink: #f1f0ea;
+        color-scheme: dark;
+    }
+}

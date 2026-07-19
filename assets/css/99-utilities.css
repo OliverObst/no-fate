@@ -1,0 +1,39 @@
+.nf-visually-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+.nf-wide {
+    max-width: none;
+    width: 100%;
+}
+
+.nf-muted {
+    color: var(--nf-colour-muted);
+}
+
+@media (max-width: 48rem) {
+    .header-nav,
+    .nf-site-nav {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .menu {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .main {
+        padding-inline: var(--nf-space-4);
+    }
+
+    .nf-article[data-page-mode="poster"] .nf-article__opening {
+        min-height: auto;
+    }
+}

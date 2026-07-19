@@ -4,11 +4,6 @@
         --gap: 14px;
     }
 
-    /* profile-mode */
-    .profile img {
-        transform: scale(0.85);
-    }
-
     /* post-entry */
     .first-entry {
         min-height: 260px;
@@ -36,14 +31,8 @@
     }
 }
 
-@media screen and (max-width: 340px) {
-    .share-buttons {
-        justify-content: unset;
-    }
-}
-
 @media (prefers-reduced-motion) {
-    /* terms; profile-mode; post-single; post-entry; post-entry; search; search */
+    /* terms; post-entry; top-link; search */
     .terms-tags a:active,
     .button:active,
     .post-entry:active,

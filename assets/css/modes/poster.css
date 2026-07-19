@@ -1,0 +1,7 @@
+.nf-article[data-page-mode="poster"] {
+    --nf-reading-measure: 62ch;
+}
+
+.nf-article[data-page-mode="poster"] .nf-article__opening {
+    min-height: min(70vh, 48rem);
+}

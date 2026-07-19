@@ -1,0 +1,6 @@
+<aside class="nf-component nf-aside">
+    {{- with .Get "label" }}
+    <span class="nf-component__label">{{ . }}</span>
+    {{- end }}
+    <div>{{ .Page.RenderString .Inner }}</div>
+</aside>

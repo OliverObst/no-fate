@@ -1,0 +1,8 @@
+<figure class="nf-quotation">
+    <blockquote{{ with .Attributes.cite }} cite="{{ . }}"{{ end }}>
+        {{- .Text -}}
+    </blockquote>
+    {{- with .Attributes.caption }}
+    <figcaption>{{ . | safeHTML }}</figcaption>
+    {{- end }}
+</figure>

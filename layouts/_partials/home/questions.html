@@ -1,0 +1,11 @@
+{{- $pages := where site.RegularPages "Params.content.format" "question" -}}
+{{- with first 3 $pages.ByDate.Reverse }}
+<section class="nf-home-module" aria-labelledby="nf-questions-heading">
+    <div class="nf-home-module__heading">
+        <h2 id="nf-questions-heading">{{ i18n "nf_questions" | default "Questions" }}</h2>
+    </div>
+    <div class="nf-home-module__items">
+        {{- range . }}{{ partial "record/entry.html" . }}{{ end }}
+    </div>
+</section>
+{{- end }}

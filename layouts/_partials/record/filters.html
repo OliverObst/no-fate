@@ -1,0 +1,7 @@
+{{- with .terms }}
+<nav class="nf-record-filters" aria-label="{{ i18n "nf_record_filters" | default "Record filters" }}">
+    {{- range . }}
+    <a href="{{ .url }}">{{ .label }}</a>
+    {{- end }}
+</nav>
+{{- end }}

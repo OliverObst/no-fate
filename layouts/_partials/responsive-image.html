@@ -1,0 +1,26 @@
+{{- $page := .page -}}
+{{- $src := .src -}}
+{{- $alt := .alt | default "" -}}
+{{- $loading := .loading | default "lazy" -}}
+{{- $class := .class | default "" -}}
+{{- $resource := false -}}
+{{- $path := strings.TrimPrefix "./" $src -}}
+{{- with $page.Resources.GetMatch $path -}}
+    {{- $resource = . -}}
+{{- else -}}
+    {{- with resources.GetMatch $path -}}
+        {{- $resource = . -}}
+    {{- end -}}
+{{- end -}}
+
+{{- if $resource -}}
+{{- $processable := in (slice "jpeg" "jpg" "png" "gif" "tiff" "bmp" "webp") $resource.MediaType.SubType -}}
+{{- if $processable -}}
+<img src="{{ $resource.RelPermalink }}" width="{{ $resource.Width }}" height="{{ $resource.Height }}"
+    alt="{{ $alt }}" loading="{{ $loading }}"{{ with $class }} class="{{ . }}"{{ end }}>
+{{- else -}}
+<img src="{{ $resource.RelPermalink }}" alt="{{ $alt }}" loading="{{ $loading }}"{{ with $class }} class="{{ . }}"{{ end }}>
+{{- end -}}
+{{- else -}}
+<img src="{{ $src | safeURL }}" alt="{{ $alt }}" loading="{{ $loading }}"{{ with $class }} class="{{ . }}"{{ end }}>
+{{- end -}}

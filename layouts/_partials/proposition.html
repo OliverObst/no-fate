@@ -1,0 +1,21 @@
+{{- $id := .id -}}
+{{- $title := .title | default "" -}}
+{{- if and $id (not $title) -}}
+    {{- with index hugo.Data "no-fate" -}}
+        {{- with .propositions -}}
+            {{- with .propositions -}}
+                {{- with where . "id" $id -}}
+                    {{- range first 1 . -}}
+                        {{- $title = .title -}}
+                    {{- end -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+{{- with $title }}
+<aside class="nf-component nf-proposition" data-proposition="{{ $id }}">
+    <span class="nf-component__label">{{ i18n "nf_proposition" | default "Proposition" }}</span>
+    <p>{{ . }}</p>
+</aside>
+{{- end }}

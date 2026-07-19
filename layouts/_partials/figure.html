@@ -1,0 +1,12 @@
+<figure class="nf-figure{{ with .class }} {{ . }}{{ end }}">
+    {{- partial "responsive-image.html" (dict
+        "page" .page
+        "src" .src
+        "alt" (.alt | default "")
+        "loading" (.loading | default "lazy")
+        "class" "nf-figure__image"
+    ) }}
+    {{- with or .caption .title }}
+    <figcaption>{{ . | markdownify }}</figcaption>
+    {{- end }}
+</figure>

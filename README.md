@@ -114,8 +114,9 @@ front matter to large collections of one-off switches.
 ## Page modes
 
 Every substantive page selects one of four modes. These names form the public
-content contract while their distinct presentation is developed during the
-foundation release.
+content contract. The repository now includes a shared resolver, semantic
+article shell, and mode-specific opening and body partials. Full mode behaviour
+and final presentation remain later implementation work.
 
 | Mode | Intended use |
 | --- | --- |
@@ -144,6 +145,33 @@ visual:
 
 Resolution order is page `visual.mode`, then a section default, then
 `params.noFate.defaultMode`.
+
+## Repository architecture
+
+The theme follows Hugo's modern root-level lookup structure:
+
+```text
+archetypes/                 Generic content starters
+assets/css/                 Ordered No Fate foundations and mode layers
+assets/js/                  Progressive theme, navigation, search, and gallery scripts
+data/no-fate/               Generic defaults and component definitions
+layouts/_markup/            Markdown render hooks
+layouts/_partials/          Shared article, home, mode, record, and extension partials
+layouts/_shortcodes/        Semantic editorial components
+exampleSite/                Clearly fictional build and behaviour fixtures
+hugo.toml                   Theme defaults
+```
+
+The numbered stylesheets run from reset and semantic tokens through shell,
+typography, components, articles, homepage, record, mode, and utility layers.
+Downstream styles in `assets/css/extended/` continue to load last.
+
+`single.html` is shared by every page mode. Mode-specific partials control the
+opening and body boundary without duplicating the complete page template.
+
+The `hooks/head-start.html`, `hooks/head-end.html`, and `hooks/body-end.html`
+partials are stable downstream extension points. Override them from the
+downstream site instead of editing the theme.
 
 ## Content structure
 
@@ -198,6 +226,10 @@ hugo \
 ```
 
 The unpublished example uses `https://example.invalid/` as its base URL.
+
+The hidden `fixtures/structural-components/` page exercises the Section 5
+render hooks and baseline shortcodes without adding those fixtures to the
+demonstration navigation.
 
 ## Compatibility
 

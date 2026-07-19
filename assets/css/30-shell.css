@@ -1,0 +1,71 @@
+.header,
+.nf-site-header {
+    background: var(--nf-colour-paper);
+    border-bottom: var(--nf-rule-strong);
+}
+
+.header-nav,
+.nf-site-nav {
+    align-items: baseline;
+    line-height: 1.2;
+    max-width: var(--nf-shell-width);
+    padding: var(--nf-space-4) var(--nf-space-5);
+}
+
+.logo a,
+.nf-site-title {
+    font-size: clamp(1.1rem, 2vw, 1.45rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+}
+
+.menu {
+    gap: var(--nf-space-5);
+}
+
+.menu a {
+    border-bottom: 2px solid transparent;
+    font-size: 0.9rem;
+    padding: var(--nf-space-2) 0;
+}
+
+.menu .active {
+    border-bottom-color: var(--nf-colour-signal);
+    text-decoration: none;
+}
+
+.theme-toggle {
+    border: var(--nf-rule);
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+    padding: var(--nf-space-2) var(--nf-space-3);
+}
+
+.main {
+    max-width: var(--nf-shell-width);
+    min-height: 70vh;
+    padding: var(--nf-space-6) var(--nf-space-5) var(--nf-space-8);
+}
+
+.footer,
+.nf-site-footer {
+    border-top: var(--nf-rule-strong);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--nf-space-2) var(--nf-space-5);
+    max-width: var(--nf-shell-width);
+    padding: var(--nf-space-5);
+    text-align: left;
+}
+
+.top-link {
+    background: var(--nf-colour-ink);
+    border: var(--nf-rule-strong);
+    border-radius: 0;
+    bottom: var(--nf-space-5);
+    color: var(--nf-colour-paper);
+    height: auto;
+    padding: var(--nf-space-3) var(--nf-space-4);
+    right: var(--nf-space-5);
+    width: auto;
+}

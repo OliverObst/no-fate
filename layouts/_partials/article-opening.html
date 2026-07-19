@@ -1,0 +1,17 @@
+{{- $page := .page -}}
+{{- $mode := .mode -}}
+<header class="post-header nf-article__opening nf-article__opening--{{ $mode }}">
+    {{- partial "breadcrumbs.html" $page }}
+    <p class="nf-article__kicker">
+        {{- with $page.Params.content.format -}}
+            {{- . | humanize -}}
+        {{- else -}}
+            {{- $mode | humanize -}}
+        {{- end -}}
+    </p>
+    <h1 class="post-title nf-article__title">{{ $page.Title }}</h1>
+    {{- with or $page.Params.subtitle $page.Description }}
+    <p class="post-description nf-deck">{{ . | markdownify }}</p>
+    {{- end }}
+    {{- partial "article-meta.html" $page }}
+</header>

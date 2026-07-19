@@ -1,0 +1,6 @@
+{{- $text := .Get "text" -}}
+{{- if not $text }}{{ $text = strings.TrimSpace .Inner }}{{ end -}}
+<aside class="nf-component nf-question">
+    <span class="nf-component__label">{{ i18n "nf_question" | default "Question" }}</span>
+    <p>{{ $text | markdownify }}</p>
+</aside>

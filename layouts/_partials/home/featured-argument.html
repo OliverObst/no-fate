@@ -1,0 +1,11 @@
+{{- $pages := where site.RegularPages "Params.editorial.featured" true -}}
+{{- with first 1 $pages.ByDate.Reverse }}
+<section class="nf-home-module" aria-labelledby="nf-featured-heading">
+    <div class="nf-home-module__heading">
+        <h2 id="nf-featured-heading">{{ i18n "nf_featured" | default "Featured" }}</h2>
+    </div>
+    <div class="nf-home-module__items">
+        {{- range . }}{{ partial "record/selected.html" . }}{{ end }}
+    </div>
+</section>
+{{- end }}

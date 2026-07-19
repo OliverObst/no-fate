@@ -1,0 +1,9 @@
+<header class="nf-home__opening">
+    <h1>{{ .Title }}</h1>
+    {{- with .Description }}
+    <p class="post-description nf-deck">{{ . | markdownify }}</p>
+    {{- end }}
+    {{- with .Content }}
+    <div class="post-content md-content nf-prose">{{ . }}</div>
+    {{- end }}
+</header>

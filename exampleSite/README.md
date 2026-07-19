@@ -7,6 +7,10 @@ historical claims in it are fictional.
 The fixtures are demonstration material, not starter identity. A downstream
 site should delete them and provide its own content outside the theme.
 
+`content/fixtures/structural-components/` is intentionally absent from the
+main navigation. It verifies the generic render hooks and baseline shortcodes
+introduced by the Section 5 repository foundation.
+
 From the theme repository root, run:
 
 ```sh
