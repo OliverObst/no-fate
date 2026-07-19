@@ -11,7 +11,8 @@ and releases use [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Exact PaperMod provenance and maintenance policy in `UPSTREAM.md`.
 - A self-contained fictional demonstration site.
-- CI builds using the minimum and current supported Hugo Extended versions.
+- CI builds using the minimum and current standard Hugo versions, plus the
+  current Hugo Extended version.
 - Generic issue and pull-request templates.
 - Contribution and release documentation.
 - The Section 5 repository foundation, including generic archetypes, theme
@@ -31,11 +32,16 @@ and releases use [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - A complete fictional content-model fixture and portable page resource.
 - Configurable `clean` and `wild` visual styles, including a generated print
   texture and optional wild masthead and homepage display-title fields.
+- Hugo theme-gallery preview images in the required 3:2 formats.
 
 ### Changed
 
 - Renamed theme and Hugo Module metadata to No Fate.
-- Raised the minimum supported Hugo Extended version to 0.158.0.
+- Raised the minimum supported Hugo version to 0.158.0.
+- Confirmed that No Fate builds with standard Hugo and does not require Hugo
+  Extended.
+- Documented No Fate's substantial architectural, content-model and visual
+  differences from its PaperMod foundation.
 - Replaced upstream-facing documentation with reusable No Fate documentation.
 - Removed upstream screenshots and the PaperMod credit from the generated site footer.
 - Moved navigation and theme interactions from inline templates to progressive

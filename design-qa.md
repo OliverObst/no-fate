@@ -101,6 +101,6 @@ There are no actionable P0, P1 or P2 differences in the final comparison.
 - [x] Use an original generated paper asset rather than copied artwork.
 - [x] Verify desktop, 390 px mobile, dark mode and clean mode.
 - [x] Verify navigation, footer links, theme toggle and keyboard focus.
-- [x] Build with Hugo Extended 0.158.0 and 0.164.0.
+- [x] Build with standard Hugo 0.158.0 and 0.164.0, plus Hugo Extended 0.164.0.
 
 final result: passed

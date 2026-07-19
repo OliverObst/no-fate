@@ -8,6 +8,8 @@ research or project archives, and small editorial organisations. It does not
 assume a particular author, institution, subject area, domain, navigation
 structure, or editorial position.
 
+![No Fate wild style preview](https://raw.githubusercontent.com/OliverObst/no-fate/main/images/screenshot.png)
+
 > Development status: No Fate is in foundation development and has not yet
 > published its first tagged release. The repository currently establishes the
 > public theme contract and retains selected infrastructure from its pinned
@@ -23,14 +25,51 @@ structure, or editorial position.
 - Fictional, removable demonstration content
 - Site content and identity kept outside the theme
 
+## Relationship to PaperMod
+
+No Fate is an independent derivative of
+[Hugo PaperMod](https://github.com/adityatelange/hugo-PaperMod). It retains
+selected, proven infrastructure for search, RSS, social metadata, syntax
+highlighting, responsive cover images and theme-preference handling. The
+upstream MIT notices remain in [LICENSE](LICENSE), and [UPSTREAM.md](UPSTREAM.md)
+records the exact source revision and update policy.
+
+No Fate is not a colour variant or CSS reskin of PaperMod. Its public contract,
+content architecture and presentation have diverged in substantial ways:
+
+- PaperMod's Profile and Home-Info modes are removed from the active theme
+  architecture. No Fate instead provides `editorial`, `poster`, `archive` and
+  `record` page modes through a shared semantic article shell.
+- A namespaced content model covers editorial metadata, visual treatment,
+  archive records and SEO. Build-time validation catches invalid modes,
+  incomplete hero metadata, unsuitable bundle structures and broken
+  proposition references.
+- The homepage is modular and publication-oriented, with propositions,
+  questions, recent notes, current work and formal-record modules rather than
+  PaperMod's homepage models.
+- Section-independent mode inheritance, structured record views, archival
+  components and reusable editorial shortcodes support publications that are
+  not organised as conventional blogs.
+- The CSS architecture is an ordered semantic system with separate `clean` and
+  `wild` presentation layers. The wild layer adds its own editorial grid,
+  masthead, display typography, signal blocks and print surface; both layers
+  share the same accessible content behaviour.
+- Configuration lives under `params.noFate`, with No Fate data defaults and
+  stable downstream extension hooks. The demonstration site is a purpose-built
+  fictional publication and content-model fixture.
+
+These differences are documented for the
+[Hugo theme acceptance criteria](https://github.com/gohugoio/hugoThemesSiteBuilder#criteria-for-acceptance-of-a-theme),
+which require derivative themes to be notably different from their source.
+
 ## Requirements
 
-- Hugo Extended 0.158.0 or later
+- Hugo 0.158.0 or later, standard or Extended
 - Git
 - Go when installing the theme as a Hugo Module
 
-The build matrix checks Hugo Extended 0.158.0 and the current supported version
-recorded in CI.
+The build matrix checks standard Hugo at 0.158.0 and the current supported
+version recorded in CI, plus the current Hugo Extended release.
 
 ## Installation
 
@@ -199,11 +238,13 @@ archetypes/                 Generic content starters
 assets/css/                 Ordered No Fate foundations and mode layers
 assets/js/                  Progressive theme, navigation, search, and gallery scripts
 data/no-fate/               Generic defaults and component definitions
+images/                     Hugo theme-gallery screenshot and thumbnail
 layouts/_markup/            Markdown render hooks
 layouts/_partials/          Shared article, home, mode, record, and extension partials
 layouts/_shortcodes/        Semantic editorial components
 exampleSite/                Clearly fictional build and behaviour fixtures
 hugo.toml                   Theme defaults
+theme.toml                  Public theme metadata
 ```
 
 The numbered stylesheets run from reset and semantic tokens through shell,
@@ -286,14 +327,9 @@ demonstration navigation.
 
 ## Compatibility
 
-No Fate supports Hugo Extended 0.158.0 and later. Module installation requires
-Go. Ordinary theme development does not require Node.js or a JavaScript build
-tool.
-
-Search, RSS, taxonomies, archives, social metadata, syntax highlighting,
-responsive cover-image infrastructure, and theme preference handling originate
-from the pinned PaperMod foundation and will be retained or adapted as the
-independent design is implemented.
+No Fate supports standard and Extended Hugo 0.158.0 and later. Module
+installation requires Go. Ordinary theme development does not require Node.js
+or a JavaScript build tool.
 
 ## Contributing
 

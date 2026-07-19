@@ -43,7 +43,7 @@ body:
   - type: input
     id: hugo_version
     attributes:
-      label: Hugo Extended version
+      label: Hugo version
       description: Paste the output of `hugo version`.
     validations:
       required: true

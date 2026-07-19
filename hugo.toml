@@ -1,3 +1,8 @@
+[module]
+  [module.hugoVersion]
+    extended = false
+    min = "0.158.0"
+
 [params.noFate]
   style = "clean"
   defaultMode = "editorial"

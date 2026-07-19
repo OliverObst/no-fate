@@ -22,24 +22,32 @@ defaults:
 
 jobs:
   build:
-    name: Hugo Extended ${{ matrix.hugo-version }}
+    name: Hugo ${{ matrix.edition }} ${{ matrix.hugo-version }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        hugo-version:
-          - "0.158.0"
-          - "0.164.0"
+        include:
+          - hugo-version: "0.158.0"
+            edition: standard
+            package-prefix: hugo
+          - hugo-version: "0.164.0"
+            edition: standard
+            package-prefix: hugo
+          - hugo-version: "0.164.0"
+            edition: extended
+            package-prefix: hugo_extended
 
     steps:
       - name: Check out repository
         uses: actions/checkout@v6
 
-      - name: Install Hugo Extended
+      - name: Install Hugo
         env:
           HUGO_VERSION: ${{ matrix.hugo-version }}
+          HUGO_PACKAGE_PREFIX: ${{ matrix.package-prefix }}
         run: |
-          package="hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
+          package="${HUGO_PACKAGE_PREFIX}_${HUGO_VERSION}_linux-amd64.deb"
           url="https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${package}"
           wget --quiet --output-document="${RUNNER_TEMP}/${package}" "${url}"
           sudo dpkg --install "${RUNNER_TEMP}/${package}"

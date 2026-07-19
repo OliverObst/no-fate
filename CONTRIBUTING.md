@@ -17,7 +17,7 @@ records, private material, or proprietary assets.
 Install:
 
 - Git;
-- Hugo Extended 0.158.0 or later;
+- Hugo 0.158.0 or later, standard or Extended;
 - Go for Hugo Module checks.
 
 Build the demonstration site from the repository root:
