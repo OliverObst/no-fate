@@ -92,6 +92,39 @@
 - id: nf_record_filters
   translation: "Record filters"
 
+- id: nf_record_entry
+  translation: "record entry"
+
+- id: nf_record_entries
+  translation: "record entries"
+
+- id: nf_selected_record
+  translation: "Selected record"
+
+- id: nf_complete_record
+  translation: "Complete chronological record"
+
+- id: nf_record_links
+  translation: "Record links"
+
+- id: nf_creators
+  translation: "Creators"
+
+- id: nf_topics
+  translation: "Topics"
+
+- id: nf_catalogue
+  translation: "Catalogue"
+
+- id: nf_canonical
+  translation: "Canonical"
+
+- id: nf_download
+  translation: "Download"
+
+- id: nf_other
+  translation: "Other"
+
 - id: nf_rss_feed
   translation: "RSS feed"
 

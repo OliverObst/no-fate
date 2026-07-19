@@ -1,0 +1,13 @@
+{{- $value := hugo.Data -}}
+{{- $found := true -}}
+{{- $path := replace (printf "%v" .) "." "/" -}}
+{{- range split (strings.Trim $path "/") "/" -}}
+    {{- if and $found (reflect.IsMap $value) (isset $value .) -}}
+        {{- $value = index $value . -}}
+    {{- else -}}
+        {{- $found = false -}}
+    {{- end -}}
+{{- end -}}
+{{- $result := false -}}
+{{- if $found }}{{ $result = $value }}{{ end -}}
+{{- return $result -}}

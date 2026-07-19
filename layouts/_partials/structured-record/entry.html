@@ -1,0 +1,71 @@
+{{- $record := .Record -}}
+{{- $page := .Page -}}
+{{- $config := .Config -}}
+{{- $variant := .Variant | default "complete" -}}
+{{- $headingLevel := .HeadingLevel | default 3 -}}
+{{- $creators := $record.creators | default $record.authors | default slice -}}
+{{- $topics := $record.topics | default slice -}}
+{{- $recordID := anchorize (printf "%v" $record.id) -}}
+{{- $showAbstract := or $config.ShowAbstracts (eq $variant "selected") -}}
+<article
+    class="nf-record-entry nf-record-entry--{{ $variant }}"
+    itemscope
+    itemtype="https://schema.org/CreativeWork"
+    {{- if eq $variant "complete" }}
+    id="record-{{ $recordID }}"
+    data-nf-filter-entry
+    data-nf-record-complete
+    data-nf-record-id="{{ $record.id }}"
+    data-nf-filter-year="{{ $record.year }}"
+    data-nf-filter-type="{{ $record.type }}"
+    data-nf-filter-topic="{{ delimit $topics "|" }}"
+    {{- end }}>
+    <meta itemprop="identifier" content="{{ $record.id }}">
+    <meta itemprop="datePublished" content="{{ $record.year }}">
+    {{- with $record.abstract }}<meta itemprop="abstract" content="{{ . }}">{{ end }}
+    <header class="nf-record-entry__header">
+        <p class="nf-record-entry__kicker">
+            <time datetime="{{ $record.year }}">{{ $record.year }}</time>
+            {{- with $record.type }} · <span itemprop="genre">{{ . | humanize }}</span>{{ end }}
+        </p>
+        {{- printf "<h%d class=\"nf-record-entry__title\" itemprop=\"name\">" $headingLevel | safeHTML -}}
+            {{- $record.title -}}
+        {{- printf "</h%d>" $headingLevel | safeHTML -}}
+    </header>
+
+    {{- with $creators }}
+    <p class="nf-record-entry__creators">
+        <span class="nf-visually-hidden">{{ i18n "nf_creators" | default "Creators" }}: </span>
+        {{- range $index, $creator := . -}}
+            {{- if $index }}, {{ end -}}
+            {{- $highlighted := false -}}
+            {{- range $config.HighlightCreators -}}
+                {{- if eq (lower (printf "%v" .)) (lower (printf "%v" $creator)) -}}
+                    {{- $highlighted = true -}}
+                {{- end -}}
+            {{- end -}}
+            {{- if $highlighted -}}
+                <strong class="nf-record-entry__creator nf-record-entry__creator--highlighted" itemprop="author">{{ $creator }}</strong>
+            {{- else -}}
+                <span class="nf-record-entry__creator" itemprop="author">{{ $creator }}</span>
+            {{- end -}}
+        {{- end -}}
+    </p>
+    {{- end }}
+
+    {{- with $record.venue }}
+    <p class="nf-record-entry__venue" itemprop="isPartOf">{{ . }}</p>
+    {{- end }}
+
+    {{- with $topics }}
+    <ul class="nf-record-entry__topics" aria-label="{{ i18n "nf_topics" | default "Topics" }}">
+        {{- range . }}<li itemprop="keywords">{{ . }}</li>{{ end }}
+    </ul>
+    {{- end }}
+
+    {{- if and $showAbstract $record.abstract }}
+    <p class="nf-record-entry__abstract">{{ $record.abstract }}</p>
+    {{- end }}
+
+    {{- partial "structured-record/links.html" $record -}}
+</article>

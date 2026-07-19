@@ -1,0 +1,40 @@
+{{- $record := . -}}
+{{- $canonical := $record.canonical | default $record.url -}}
+{{- $doi := $record.doi | default "" -}}
+{{- $doiURL := $doi -}}
+{{- if and $doi (not (or (hasPrefix $doi "http://") (hasPrefix $doi "https://"))) -}}
+    {{- $doiURL = printf "https://doi.org/%s" $doi -}}
+{{- end -}}
+{{- $bibtex := $record.bibtex_url | default $record.bibtex -}}
+{{- $inlineBibtex := and $bibtex (hasPrefix (strings.TrimSpace $bibtex) "@") -}}
+{{- if or $canonical $record.source $doi $record.catalogue $record.pdf (and $bibtex (not $inlineBibtex)) $record.download -}}
+<ul class="nf-record-entry__links" aria-label="{{ i18n "nf_record_links" | default "Record links" }}">
+    {{- with $canonical }}
+    <li><a class="nf-record-link nf-record-link--canonical" href="{{ . }}" itemprop="url">{{ i18n "nf_canonical" | default "Canonical" }}</a></li>
+    {{- end }}
+    {{- with $record.source }}
+    <li><a class="nf-record-link nf-record-link--source" href="{{ . }}">{{ i18n "nf_source" | default "Source" }}</a></li>
+    {{- end }}
+    {{- with $doi }}
+    <li><a class="nf-record-link nf-record-link--doi" href="{{ $doiURL }}">DOI</a></li>
+    {{- end }}
+    {{- with $record.catalogue }}
+    <li><a class="nf-record-link nf-record-link--catalogue" href="{{ . }}">{{ i18n "nf_catalogue" | default "Catalogue" }}</a></li>
+    {{- end }}
+    {{- with $record.pdf }}
+    <li><a class="nf-record-link nf-record-link--pdf" href="{{ . }}">PDF</a></li>
+    {{- end }}
+    {{- if and $bibtex (not $inlineBibtex) }}
+    <li><a class="nf-record-link nf-record-link--bibtex" href="{{ $bibtex }}">BibTeX</a></li>
+    {{- end }}
+    {{- with $record.download }}
+    <li><a class="nf-record-link nf-record-link--download" href="{{ . }}">{{ i18n "nf_download" | default "Download" }}</a></li>
+    {{- end }}
+</ul>
+{{- end }}
+{{- if $inlineBibtex }}
+<details class="nf-record-entry__bibtex">
+    <summary>BibTeX</summary>
+    <pre><code>{{ $bibtex }}</code></pre>
+</details>
+{{- end }}

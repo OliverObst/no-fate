@@ -8,15 +8,22 @@ content:
 
 visual:
   mode: "record"
+
+record:
+  data_driven: true
+  selected_group_by: "collection"
+  enable_filters: true
+  filter_fields:
+    - "year"
+    - "type"
+    - "topic"
+  labels:
+    selected: "Selected disturbances"
+    complete: "Everything that made it into the ledger"
+    filter_year: "Year"
+    filter_type: "Kind"
+    filter_topic: "Topic"
 ---
 
-Four documents escaped the filing cabinet this year.
-
-| Year | Item | Type | Status |
-| --- | --- | --- | --- |
-| 2026 | *Methods for an Open Ledger* | Working paper | In circulation |
-| 2025 | *The Lantern Index: Field Specification* | Project report | Held together |
-| 2024 | *Intervals and Exceptions* | Conference paper | Misfiled |
-| 2023 | *Notes from a Tide Room* | Archive guide | Ongoing |
-
-The record is partial. The margins are not.
+Two hundred entirely invented dispatches from workshops, field stations and
+machines with terrible filing habits.

@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "No Fate structured record",
+  "description": "A complete No Fate record sequence or a map containing that sequence under entries.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/records"
+    },
+    {
+      "type": "object",
+      "required": [
+        "entries"
+      ],
+      "properties": {
+        "entries": {
+          "$ref": "#/$defs/records"
+        }
+      },
+      "additionalProperties": true
+    }
+  ],
+  "$defs": {
+    "records": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/record"
+      }
+    },
+    "link": {
+      "type": "string"
+    },
+    "record": {
+      "type": "object",
+      "required": [
+        "id",
+        "title",
+        "year",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "demo": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "year": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "authors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "creators": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "venue": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "topics": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "collection": {
+          "type": "string"
+        },
+        "selected": {
+          "type": "boolean"
+        },
+        "doi": {
+          "type": "string"
+        },
+        "url": {
+          "$ref": "#/$defs/link"
+        },
+        "canonical": {
+          "$ref": "#/$defs/link"
+        },
+        "source": {
+          "$ref": "#/$defs/link"
+        },
+        "catalogue": {
+          "$ref": "#/$defs/link"
+        },
+        "pdf": {
+          "$ref": "#/$defs/link"
+        },
+        "bibtex": {
+          "type": "string"
+        },
+        "bibtex_url": {
+          "$ref": "#/$defs/link"
+        },
+        "download": {
+          "$ref": "#/$defs/link"
+        },
+        "abstract": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

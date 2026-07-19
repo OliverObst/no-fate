@@ -26,6 +26,10 @@
 [params.noFate.record]
   dataFile = "record"
   enableClientFilters = true
+  selectedGroupBy = "collection"
+  filterFields = ["year", "type", "topic"]
+  highlightCreators = []
+  showAbstracts = false
 
 [markup]
   [markup.goldmark]

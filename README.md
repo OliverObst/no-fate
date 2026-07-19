@@ -148,6 +148,10 @@ title = "Example publication"
 [params.noFate.record]
   dataFile = "record"
   enableClientFilters = true
+  selectedGroupBy = "collection"
+  filterFields = ["year", "type", "topic"]
+  highlightCreators = []
+  showAbstracts = false
 ```
 
 The namespace is deliberately compact. Prefer consistent defaults and page
@@ -249,6 +253,7 @@ images/                     Hugo theme-gallery screenshot and thumbnail
 layouts/_markup/            Markdown render hooks
 layouts/_partials/          Shared article, home, mode, record, and extension partials
 layouts/_shortcodes/        Semantic editorial components
+schemas/                    Machine-readable downstream data contracts
 exampleSite/                Clearly fictional build and behaviour fixtures
 hugo.toml                   Theme defaults
 theme.toml                  Public theme metadata
@@ -311,6 +316,13 @@ implemented as Markdown render hooks or progressive enhancements.
 Homepage order, selected-content validation, section densities and generic
 front matter-driven filters are documented in
 [Homepage and sections](docs/homepage-and-sections.md).
+
+The optional data-driven publications, talks, exhibitions, releases, datasets,
+and other outputs system is documented in
+[Structured records](docs/structured-records.md). It provides selected groups,
+a complete chronological list, progressive year/type/topic filters, creator
+highlighting, source and export links, machine-readable entries, and
+print-specific behaviour without requiring JavaScript.
 
 ## Demonstration site
 

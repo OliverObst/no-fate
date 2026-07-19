@@ -9,6 +9,11 @@ and releases use [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- A complete optional structured-record subsystem with a documented JSON
+  Schema, data-driven selected and chronological renderers, progressive
+  year/type/topic filters, creator highlighting, bibliographic and download
+  links, CreativeWork microdata, print styles, and a generated 200-entry
+  fictional fixture enforced by CI.
 - Canonical design tokens, explicit warm dark-mode roles and display, body and
   metadata typography roles.
 - Complete editorial shortcodes and Markdown hooks with responsive image

@@ -1,0 +1,77 @@
+{{- $page := . -}}
+{{- $config := partial "structured-record/config.html" . -}}
+{{- $data := partial "structured-record/data.html" $config.DataFile -}}
+{{- if not $data -}}
+    {{- errorf "No Fate structured record: data file %q was not found for %s" $config.DataFile .RelPermalink -}}
+{{- end -}}
+{{- $records := $data -}}
+{{- if reflect.IsMap $data -}}
+    {{- $records = $data.entries | default slice -}}
+{{- end -}}
+{{- if not (reflect.IsSlice $records) -}}
+    {{- errorf "No Fate structured record: %q must contain a sequence or an entries sequence" $config.DataFile -}}
+{{- end -}}
+
+{{- $ids := slice -}}
+{{- range $index, $record := $records -}}
+    {{- if not (reflect.IsMap $record) -}}
+        {{- errorf "No Fate structured record: entry %d in %q must be a map" $index $config.DataFile -}}
+    {{- end -}}
+    {{- range slice "id" "title" "year" "type" -}}
+        {{- if not (index $record .) -}}
+            {{- errorf "No Fate structured record: entry %d in %q is missing required field %q" $index $config.DataFile . -}}
+        {{- end -}}
+    {{- end -}}
+    {{- $id := printf "%v" $record.id -}}
+    {{- if in $ids $id -}}
+        {{- errorf "No Fate structured record: duplicate id %q in %q" $id $config.DataFile -}}
+    {{- end -}}
+    {{- $ids = $ids | append $id -}}
+{{- end -}}
+
+{{- $records = sort (sort $records "title") "year" "desc" -}}
+{{- $labels := $config.Labels -}}
+<div class="nf-list nf-record nf-structured-record" data-page-mode="record" data-nf-record-count="{{ len $records }}">
+    <header class="page-header">
+        {{- partial "breadcrumbs.html" . }}
+        <h1>{{ .Title }}</h1>
+        {{- with .Description }}
+        <p class="post-description">{{ . | markdownify }}</p>
+        {{- end }}
+    </header>
+
+    {{- with .Content }}
+    <div class="post-content md-content nf-prose nf-section-introduction">{{ . }}</div>
+    {{- end }}
+
+    {{- partial "structured-record/selected.html" (dict "Page" $page "Records" $records "Config" $config) -}}
+
+    <section class="nf-structured-record__complete" aria-labelledby="nf-record-complete-heading">
+        <header class="nf-structured-record__complete-header">
+            <h2 id="nf-record-complete-heading">{{ $labels.complete | default (i18n "nf_complete_record" | default "Complete chronological record") }}</h2>
+            <p>{{ len $records }} {{ i18n "nf_record_entries" | default "record entries" }}</p>
+        </header>
+
+        {{- if $config.EnableFilters }}
+            {{- partial "structured-record/filters.html" (dict
+                "Records" $records
+                "Fields" $config.FilterFields
+                "Labels" $labels
+            ) -}}
+        {{- end }}
+
+        <ol class="nf-record-list nf-record-list--complete">
+            {{- range $records }}
+            <li>
+                {{- partial "structured-record/entry.html" (dict
+                    "Record" .
+                    "Page" $page
+                    "Config" $config
+                    "Variant" "complete"
+                    "HeadingLevel" 3
+                ) -}}
+            </li>
+            {{- end }}
+        </ol>
+    </section>
+</div>

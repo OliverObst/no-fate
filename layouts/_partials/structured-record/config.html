@@ -1,0 +1,40 @@
+{{- $pageConfig := .Params.record | default dict -}}
+{{- $siteConfig := site.Params.noFate.record | default dict -}}
+
+{{- $dataFile := $siteConfig.dataFile | default "record" -}}
+{{- with $pageConfig.data_file }}{{ $dataFile = . }}{{ end -}}
+
+{{- $groupBy := $siteConfig.selectedGroupBy | default "collection" -}}
+{{- with $pageConfig.selected_group_by }}{{ $groupBy = . }}{{ end -}}
+
+{{- $highlightCreators := $siteConfig.highlightCreators | default slice -}}
+{{- with $pageConfig.highlight_creators }}{{ $highlightCreators = . }}{{ end -}}
+
+{{- $filterFields := $siteConfig.filterFields | default (slice "year" "type" "topic") -}}
+{{- with $pageConfig.filter_fields }}{{ $filterFields = . }}{{ end -}}
+
+{{- $enableFilters := true -}}
+{{- if isset $siteConfig "enableclientfilters" -}}
+    {{- $enableFilters = index $siteConfig "enableclientfilters" -}}
+{{- end -}}
+{{- if isset $pageConfig "enable_filters" -}}
+    {{- $enableFilters = index $pageConfig "enable_filters" -}}
+{{- end -}}
+
+{{- $showAbstracts := false -}}
+{{- if isset $siteConfig "showabstracts" -}}
+    {{- $showAbstracts = index $siteConfig "showabstracts" -}}
+{{- end -}}
+{{- if isset $pageConfig "show_abstracts" -}}
+    {{- $showAbstracts = index $pageConfig "show_abstracts" -}}
+{{- end -}}
+
+{{- return (dict
+    "DataFile" $dataFile
+    "GroupBy" $groupBy
+    "HighlightCreators" $highlightCreators
+    "FilterFields" $filterFields
+    "EnableFilters" $enableFilters
+    "ShowAbstracts" $showAbstracts
+    "Labels" ($pageConfig.labels | default dict)
+) -}}

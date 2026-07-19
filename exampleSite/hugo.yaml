@@ -91,6 +91,14 @@ params:
     record:
       dataFile: record
       enableClientFilters: true
+      selectedGroupBy: collection
+      filterFields:
+        - year
+        - type
+        - topic
+      highlightCreators:
+        - Iona Bramble
+      showAbstracts: false
 
 markup:
   goldmark:

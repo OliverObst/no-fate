@@ -4,6 +4,11 @@ This directory is a self-contained Hugo site used to exercise the public theme.
 All people, organisations, projects, publications, events, propositions, and
 historical claims in it are fictional.
 
+The same boundary applies to `data/record.yaml`: its 200 people, venues,
+titles, outputs, identifiers, and links are generated inventions. The rendered
+site keeps that fact in character by describing them as invented dispatches;
+this maintainer note records the formal boundary.
+
 The rendered publication is titled *What we make for ourselves*. Its public
 copy stays in character; this README carries the maintainer-facing explanation.
 It selects the `wild` visual style so both the bolder presentation and its

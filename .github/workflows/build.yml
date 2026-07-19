@@ -81,3 +81,6 @@ jobs:
 
       - name: Check editorial framework
         run: bash .github/scripts/check-editorial-framework.sh exampleSite/public
+
+      - name: Check structured records
+        run: bash .github/scripts/check-structured-records.sh exampleSite/public

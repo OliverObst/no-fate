@@ -1,0 +1,177 @@
+#!/usr/bin/env node
+
+import fs from "node:fs";
+import path from "node:path";
+import process from "node:process";
+
+const subjects = [
+  "Borrowed Antennas",
+  "Unlicensed Barometers",
+  "Cooperative Spanners",
+  "Noisy Almanacs",
+  "Pocket-Sized Weather",
+  "Municipal Kites",
+  "Disobedient Indexes",
+  "Temporary Lighthouses",
+  "Public Screwdrivers",
+  "Impossible Receipts",
+  "After-Hours Instruments",
+  "Neighbourhood Satellites",
+  "Unfinished Sirens",
+  "Contraband Measuring Tapes",
+  "Portable Bureaucracies",
+  "Misplaced Switchboards",
+  "Collective Umbrellas",
+  "Repaired Thunder",
+  "Open-Source Fog",
+  "Unscheduled Bells"
+];
+
+const situations = [
+  "for Uncooperative Rooms",
+  "after the Last Tram",
+  "against Sensible Advice",
+  "under Improvised Conditions",
+  "with Nothing Up Their Sleeves",
+  "for the Department of Loose Ends",
+  "beside a Suspiciously Quiet Motor",
+  "during the Annual Power Cut",
+  "without a Proper Permit",
+  "from the Wrong Side of the Map"
+];
+
+const givenNames = [
+  "Iona", "Miro", "Tavi", "Nell", "Orla", "Bram", "Suki", "Edda", "Pax", "Rafi",
+  "Lumi", "Ansel", "Zora", "Kit", "Mara", "Oren", "Tess", "Niko", "Veda", "Jory"
+];
+
+const surnames = [
+  "Bramble", "Quill", "Vale", "Morrow", "Pike", "Wren", "Moss", "Kestrel", "Dusk", "Rook",
+  "Fable", "Voss", "Mallow", "North", "Fenn", "Drift", "Lark", "Slate", "Thorn", "Bell"
+];
+
+const venues = [
+  "Journal of Unlicensed Calibration",
+  "Proceedings of the Lantern Repair Assembly",
+  "North Quay Field Circulars",
+  "Transactions of the Loose Parts Society",
+  "The Municipal Kite Review",
+  "Annals of Inconvenient Weather",
+  "Open Workshop Dispatches",
+  "Catalogue of Productive Misunderstandings",
+  "Reports from the Department of Loose Ends",
+  "The After-Hours Instrument Bulletin"
+];
+
+const types = [
+  "article",
+  "talk",
+  "exhibition",
+  "release",
+  "dataset",
+  "catalogue",
+  "software",
+  "performance"
+];
+
+const topics = [
+  "maintenance",
+  "systems",
+  "public tools",
+  "weather",
+  "archives",
+  "repair",
+  "infrastructure",
+  "collective work",
+  "field methods",
+  "useful mistakes"
+];
+
+const collections = [
+  "Tools That Argue Back",
+  "Weather with Administrative Problems",
+  "Public Machinery",
+  "Unfinished Instructions",
+  "Signals from the Wrong Room"
+];
+
+const quote = (value) => JSON.stringify(value);
+
+function emitRecord(record) {
+  const lines = [
+    `- id: ${quote(record.id)}`,
+    "  demo: true",
+    `  title: ${quote(record.title)}`,
+    `  year: ${record.year}`,
+    "  authors:",
+    ...record.authors.map((author) => `    - ${quote(author)}`),
+    `  venue: ${quote(record.venue)}`,
+    `  type: ${quote(record.type)}`,
+    "  topics:",
+    ...record.topics.map((topic) => `    - ${quote(topic)}`),
+    `  collection: ${quote(record.collection)}`,
+    `  selected: ${record.selected}`,
+    `  doi: ${quote(record.doi)}`,
+    `  url: ${quote(record.url)}`,
+    `  source: ${quote(record.source)}`,
+    `  catalogue: ${quote(record.catalogue)}`,
+    `  pdf: ${quote(record.pdf)}`,
+    `  bibtex: ${quote(record.bibtex)}`,
+    `  download: ${quote(record.download)}`,
+    `  abstract: ${quote(record.abstract)}`
+  ];
+  return lines.join("\n");
+}
+
+const records = Array.from({ length: 200 }, (_, index) => {
+  const number = String(index + 1).padStart(3, "0");
+  const year = 2026 - Math.floor(index / 5);
+  const id = `dispatch-${year}-${number}`;
+  const firstAuthor = `${givenNames[index % givenNames.length]} ${surnames[(index * 3) % surnames.length]}`;
+  const secondAuthor = `${givenNames[(index + 7) % givenNames.length]} ${surnames[(index * 3 + 11) % surnames.length]}`;
+  const title = `${subjects[index % subjects.length]} ${situations[Math.floor(index / subjects.length)]}`;
+  const type = types[index % types.length];
+  const recordTopics = [
+    topics[index % topics.length],
+    topics[(index + 3) % topics.length]
+  ];
+
+  return {
+    id,
+    title,
+    year,
+    authors: index % 4 === 0 ? [firstAuthor] : [firstAuthor, secondAuthor],
+    venue: venues[index % venues.length],
+    type,
+    topics: recordTopics,
+    collection: collections[index % collections.length],
+    selected: index < 15,
+    doi: index % 10 === 0 ? `10.0000/no-fate.${year}.${number}` : "",
+    url: `https://example.invalid/record/${id}/`,
+    source: index % 2 === 0 ? `https://example.invalid/sources/${id}/` : "",
+    catalogue: index % 3 === 0 ? `https://example.invalid/catalogue/${id}/` : "",
+    pdf: index % 4 === 0 ? `https://example.invalid/files/${id}.pdf` : "",
+    bibtex: index % 5 === 0 ? `https://example.invalid/citations/${id}.bib` : "",
+    download: index % 7 === 0 ? `https://example.invalid/downloads/${id}.zip` : "",
+    abstract: `A dispatch concerning ${title.toLowerCase()}, assembled from invented observations and several confidently labelled drawers.`
+  };
+});
+
+const output = [
+  "# Generated by .github/scripts/generate-record-fixture.mjs.",
+  "# Every person, venue and record in this demonstration data set is invented.",
+  ...records.map(emitRecord)
+].join("\n\n") + "\n";
+
+const target = path.join(process.cwd(), "exampleSite", "data", "record.yaml");
+if (process.argv.includes("--check")) {
+  const current = fs.existsSync(target) ? fs.readFileSync(target, "utf8") : "";
+  if (current !== output) {
+    process.stderr.write(`${path.relative(process.cwd(), target)} is not the generated 200-entry fixture.\n`);
+    process.exit(1);
+  }
+  process.stdout.write("Structured-record fixture is current (200 entries).\n");
+} else {
+  fs.writeFileSync(target, output);
+  process.stdout.write(`Wrote ${records.length} entries to ${path.relative(process.cwd(), target)}.\n`);
+}

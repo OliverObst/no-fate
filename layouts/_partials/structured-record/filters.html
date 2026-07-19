@@ -1,0 +1,49 @@
+{{- $records := .Records -}}
+{{- $fields := .Fields -}}
+{{- $labels := .Labels -}}
+{{- $definitions := slice -}}
+
+{{- range $fields -}}
+    {{- $field := lower (printf "%v" .) -}}
+    {{- $id := $field -}}
+    {{- if eq $field "topics" }}{{ $id = "topic" }}{{ end -}}
+    {{- $options := slice -}}
+    {{- range $records -}}
+        {{- if eq $id "year" -}}
+            {{- with .year }}{{ $options = $options | append (printf "%v" .) }}{{ end -}}
+        {{- else if eq $id "type" -}}
+            {{- with .type }}{{ $options = $options | append (printf "%v" .) }}{{ end -}}
+        {{- else if eq $id "topic" -}}
+            {{- range .topics | default slice }}{{ $options = $options | append (printf "%v" .) }}{{ end -}}
+        {{- end -}}
+    {{- end -}}
+    {{- $options = sort (uniq $options) -}}
+    {{- if eq $id "year" }}{{ $options = collections.Reverse $options }}{{ end -}}
+    {{- if and (in (slice "year" "type" "topic") $id) (gt (len $options) 1) -}}
+        {{- $label := humanize $id -}}
+        {{- with index $labels (printf "filter_%s" $id) }}{{ $label = . }}{{ end -}}
+        {{- $definitions = $definitions | append (dict "id" $id "label" $label "options" $options) -}}
+    {{- end -}}
+{{- end -}}
+
+{{- with $definitions -}}
+<form class="nf-section-filters nf-structured-record__filters" data-nf-section-filters
+    data-label-one="{{ i18n "nf_record_entry" | default "record entry" }}"
+    data-label-many="{{ i18n "nf_record_entries" | default "record entries" }}" hidden>
+    <div class="nf-section-filters__fields">
+        {{- range . }}
+        <label>
+            <span>{{ .label }}</span>
+            <select data-nf-filter-field="{{ .id }}">
+                <option value="">{{ i18n "nf_all" | default "All" }}</option>
+                {{- range .options }}
+                <option value="{{ . }}">{{ . }}</option>
+                {{- end }}
+            </select>
+        </label>
+        {{- end }}
+    </div>
+    <button type="reset">{{ i18n "nf_clear_filters" | default "Clear filters" }}</button>
+    <p class="nf-section-filters__status" aria-live="polite"></p>
+</form>
+{{- end -}}

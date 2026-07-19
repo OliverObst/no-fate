@@ -1,0 +1,37 @@
+{{- $records := where .Records "selected" true -}}
+{{- $config := .Config -}}
+{{- $labels := $config.Labels -}}
+{{- $groupBy := $config.GroupBy -}}
+{{- $groupNames := slice -}}
+{{- range $records -}}
+    {{- $group := index . $groupBy | default (i18n "nf_other" | default "Other") -}}
+    {{- $groupNames = $groupNames | append (printf "%v" $group) -}}
+{{- end -}}
+{{- $groupNames = sort (uniq $groupNames) -}}
+{{- with $records }}
+<section class="nf-structured-record__selected" aria-labelledby="nf-record-selected-heading">
+    <h2 id="nf-record-selected-heading">{{ $labels.selected | default (i18n "nf_selected_record" | default "Selected record") }}</h2>
+    {{- range $groupNames }}
+        {{- $groupName := . -}}
+        <section class="nf-record-group" aria-labelledby="nf-record-group-{{ anchorize $groupName }}">
+            <h3 id="nf-record-group-{{ anchorize $groupName }}">{{ $groupName }}</h3>
+            <ol class="nf-record-list nf-record-list--selected">
+                {{- range $records }}
+                    {{- $entryGroup := index . $groupBy | default (i18n "nf_other" | default "Other") -}}
+                    {{- if eq (printf "%v" $entryGroup) $groupName }}
+                    <li>
+                        {{- partial "structured-record/entry.html" (dict
+                            "Record" .
+                            "Page" $.Page
+                            "Config" $config
+                            "Variant" "selected"
+                            "HeadingLevel" 4
+                        ) -}}
+                    </li>
+                    {{- end }}
+                {{- end }}
+            </ol>
+        </section>
+    {{- end }}
+</section>
+{{- end }}

@@ -1,4 +1,8 @@
 {{- define "main" }}
+{{- $recordConfig := .Params.record | default dict -}}
+{{- if $recordConfig.data_driven -}}
+    {{- partial "structured-record/page.html" . -}}
+{{- else -}}
 {{- $model := partial "content-model.html" . -}}
 {{- $mode := $model.Visual.Mode -}}
 {{- $listing := .Params.listing | default dict -}}
@@ -77,4 +81,5 @@
 </nav>
 {{- end }}
 </div>
+{{- end }}
 {{- end }}
