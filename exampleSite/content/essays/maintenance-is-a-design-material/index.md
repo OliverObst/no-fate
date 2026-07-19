@@ -2,7 +2,8 @@
 title: "Maintenance Is a Design Material"
 subtitle: "A system reveals its values in the work required to keep it useful."
 date: 2026-05-14
-summary: "A fictional essay about treating maintenance as part of design."
+lastmod: 2026-06-02
+summary: "A repair queue is a design document written in real time."
 tags:
   - maintenance
   - systems
@@ -11,10 +12,13 @@ demo: true
 content:
   format: "essay"
   status: "published"
+  original_date: null
 
 editorial:
   proposition:
     - "example-maintenance-is-design"
+  series: null
+  issue: null
   featured: true
 
 visual:
@@ -22,12 +26,26 @@ visual:
   accent: "signal"
   headline_scale: "medium"
   opening_alignment: "left"
+  hero: ""
+  hero_alt: ""
+  hero_treatment: "raw"
+  invert_opening: false
+
+archive:
+  start_year: null
+  end_year: null
+  locations: []
+  people: []
+
+seo:
+  description: "A repair queue is a design document written in real time."
+  image: ""
+  canonical: ""
 ---
 
-The fictional North Quay Workshop kept two ledgers. One recorded new
-instruments. The other recorded every adjustment, repair, disagreement, and
-discarded part. Visitors usually asked to see the first ledger. The technicians
-read the second.
+North Quay Workshop kept two ledgers. One recorded new instruments. The other
+recorded every adjustment, repair, disagreement, and discarded part. Visitors
+usually asked to see the first ledger. The technicians read the second.
 
 ## The work after launch
 
@@ -51,5 +69,3 @@ later readers distinguish accumulated knowledge from habit.
 
 > A system is designed not only by what it permits today, but by what it makes
 > possible to repair tomorrow.
-
-This account, workshop, and quotation are fictional demonstration material.

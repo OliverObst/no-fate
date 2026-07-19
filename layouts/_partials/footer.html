@@ -12,10 +12,12 @@
         <span>{{ . | markdownify }}</span>
     {{- end }}
 
+    {{- if not site.Params.footer.hidePoweredBy }}
     <span>
         {{ i18n "nf_powered_by" | default "Built with" }}
         <a href="https://gohugo.io/" rel="external">Hugo</a>
     </span>
+    {{- end }}
 </footer>
 {{- end }}
 

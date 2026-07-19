@@ -1,0 +1,7 @@
+{{- $style := site.Params.noFate.style | default "clean" | lower -}}
+{{- $allowed := slice "clean" "wild" -}}
+{{- if not (in $allowed $style) -}}
+    {{- warnf "No Fate: unknown params.noFate.style %q; using clean" $style -}}
+    {{- $style = "clean" -}}
+{{- end -}}
+{{- return $style -}}

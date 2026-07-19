@@ -1,4 +1,15 @@
 <footer class="post-footer nf-article__footer">
+    {{- $showPropositions := true -}}
+    {{- with site.Params.noFate -}}
+        {{- if isset . "showpropositions" -}}
+            {{- $showPropositions = index . "showpropositions" -}}
+        {{- end -}}
+    {{- end -}}
+    {{- if $showPropositions -}}
+        {{- partial "propositions.html" . -}}
+        {{- partial "related-propositions.html" . -}}
+    {{- end -}}
+
     {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
     {{- with $.GetTerms $tags }}
     <ul class="post-tags" aria-label="{{ i18n "nf_tags" | default "Tags" }}">

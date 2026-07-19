@@ -5,8 +5,16 @@
         {{- $showThemeToggle = index . "showthemetoggle" -}}
     {{- end -}}
 {{- end -}}
+{{- $wildMasthead := site.Params.noFate.wild.masthead | default "" -}}
+{{- $wildIssue := site.Params.noFate.wild.issue | default "" -}}
 <header class="header nf-site-header">
     <nav class="header-nav nf-site-nav" aria-label="{{ i18n "nf_primary_navigation" | default "Primary navigation" }}">
+        {{- with $wildMasthead }}
+        <p class="nf-wild-masthead nf-wild-only">
+            {{ . }}
+            {{- with $wildIssue }}<strong>{{ . }}</strong>{{ end }}
+        </p>
+        {{- end }}
         <div class="logo">
             <a class="nf-site-title" href="{{ site.Home.RelPermalink }}" accesskey="h"
                 title="{{ printf "%s (%s)" $label (i18n "nf_home_access_key" | default "Alt + H") }}">

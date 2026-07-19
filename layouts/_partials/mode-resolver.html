@@ -1,6 +1,14 @@
 {{- $allowed := slice "record" "editorial" "poster" "archive" -}}
+{{- with index hugo.Data "no-fate" -}}
+    {{- with .defaults -}}
+        {{- with .allowed_modes -}}
+            {{- $allowed = . -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
 {{- $default := site.Params.noFate.defaultMode | default "editorial" -}}
-{{- if not (in $allowed ($default | lower)) -}}
+{{- $default = printf "%v" $default | lower -}}
+{{- if not (in $allowed $default) -}}
     {{- warnf "No Fate: unsupported params.noFate.defaultMode %q; using %q" $default "editorial" -}}
     {{- $default = "editorial" -}}
 {{- end -}}
@@ -12,15 +20,17 @@
     {{- end -}}
 {{- end -}}
 
-{{- if and (not $mode) .Parent -}}
-    {{- with .Parent.Params.visual -}}
+{{- if not $mode -}}
+    {{- with .CurrentSection -}}
+        {{- with .Params.visual -}}
         {{- with .mode -}}
             {{- $mode = . -}}
+        {{- end -}}
         {{- end -}}
     {{- end -}}
 {{- end -}}
 
-{{- $mode = $mode | default $default | lower -}}
+{{- $mode = printf "%v" ($mode | default $default) | lower -}}
 {{- if not (in $allowed $mode) -}}
     {{- warnf "No Fate: unsupported visual.mode %q on %s; using %q" $mode .RelPermalink $default -}}
     {{- $mode = $default -}}

@@ -1,5 +1,6 @@
 {{- define "main" }}
-{{- $mode := partial "mode-resolver.html" . -}}
+{{- $model := partial "content-model.html" . -}}
+{{- $mode := $model.Visual.Mode -}}
 <div class="nf-list{{ if eq $mode "record" }} nf-record{{ end }}" data-page-mode="{{ $mode }}">
 <header class="page-header">
     {{- partial "breadcrumbs.html" . }}

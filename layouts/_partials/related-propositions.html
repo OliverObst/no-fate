@@ -1,0 +1,23 @@
+{{- $page := . -}}
+{{- $model := partial "content-model.html" $page -}}
+{{- $related := slice -}}
+{{- range $model.Editorial.Propositions -}}
+    {{- $matches := partial "proposition-pages.html" . -}}
+    {{- $related = union $related $matches -}}
+{{- end -}}
+{{- $related = where $related "RelPermalink" "ne" $page.RelPermalink -}}
+{{- $related = where $related "Params.hiddenInHomeList" "ne" true -}}
+{{- $related = first 3 (sort $related "Date" "desc") -}}
+{{- with $related -}}
+<aside class="nf-related" aria-labelledby="nf-related-heading">
+    <h2 id="nf-related-heading">{{ i18n "nf_related_by_proposition" | default "Related by proposition" }}</h2>
+    <ul>
+        {{- range . -}}
+        <li>
+            <a href="{{ .RelPermalink }}" rel="related">{{ .LinkTitle }}</a>
+            {{- with .Params.summary }}<span>{{ . }}</span>{{ end -}}
+        </li>
+        {{- end -}}
+    </ul>
+</aside>
+{{- end -}}

@@ -1,0 +1,68 @@
+{{- $page := . -}}
+{{- $content := $page.Params.content | default dict -}}
+{{- $editorial := $page.Params.editorial | default dict -}}
+{{- $visual := $page.Params.visual | default dict -}}
+{{- $archive := $page.Params.archive | default dict -}}
+{{- $seo := $page.Params.seo | default dict -}}
+
+{{- $propositions := slice -}}
+{{- with index $editorial "proposition" -}}
+    {{- if reflect.IsSlice . -}}
+        {{- range . -}}
+            {{- $propositions = $propositions | append (printf "%v" .) -}}
+        {{- end -}}
+    {{- else -}}
+        {{- $propositions = $propositions | append (printf "%v" .) -}}
+    {{- end -}}
+{{- end -}}
+
+{{- $defaultAccent := "signal" -}}
+{{- with index hugo.Data "no-fate" -}}
+    {{- with .defaults -}}
+        {{- with .default_accent -}}
+            {{- $defaultAccent = . -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+{{- with site.Params.noFate.defaultAccent -}}
+    {{- $defaultAccent = . -}}
+{{- end -}}
+
+{{- $description := index $seo "description" | default "" -}}
+{{- $canonical := index $seo "canonical" | default $page.Params.canonicalURL | default "" -}}
+{{- $socialImage := index $seo "image" | default "" -}}
+
+{{- return (dict
+    "Content" (dict
+        "Format" (index $content "format" | default "")
+        "Status" (index $content "status" | default "")
+        "OriginalDate" (index $content "original_date")
+    )
+    "Editorial" (dict
+        "Propositions" $propositions
+        "Series" (index $editorial "series")
+        "Issue" (index $editorial "issue")
+        "Featured" (index $editorial "featured" | default false)
+    )
+    "Visual" (dict
+        "Mode" (partial "mode-resolver.html" $page)
+        "Accent" (index $visual "accent" | default $defaultAccent)
+        "HeadlineScale" (index $visual "headline_scale" | default "medium")
+        "OpeningAlignment" (index $visual "opening_alignment" | default "left")
+        "Hero" (index $visual "hero" | default "")
+        "HeroAlt" (index $visual "hero_alt" | default "")
+        "HeroTreatment" (index $visual "hero_treatment" | default "raw")
+        "InvertOpening" (index $visual "invert_opening" | default false)
+    )
+    "Archive" (dict
+        "StartYear" (index $archive "start_year")
+        "EndYear" (index $archive "end_year")
+        "Locations" (index $archive "locations" | default slice)
+        "People" (index $archive "people" | default slice)
+    )
+    "SEO" (dict
+        "Description" $description
+        "Image" $socialImage
+        "Canonical" $canonical
+    )
+) -}}

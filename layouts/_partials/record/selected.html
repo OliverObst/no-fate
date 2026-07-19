@@ -1,6 +1,7 @@
+{{- $model := partial "content-model.html" . -}}
 <article class="post-entry nf-entry nf-entry--selected">
     <p class="nf-component__label">
-        {{- with .Params.content.format }}{{ . | humanize }}{{ else }}{{ .Kind | humanize }}{{ end -}}
+        {{- with $model.Content.Format }}{{ . | humanize }}{{ else }}{{ .Kind | humanize }}{{ end -}}
     </p>
     <h3 class="nf-entry__title"><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h3>
     {{- with .Params.subtitle }}

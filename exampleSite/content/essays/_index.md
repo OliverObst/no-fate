@@ -1,6 +1,6 @@
 ---
 title: "Essays"
-description: "Fictional long-form arguments and reflective histories."
+description: "Long arguments for people who have already tried the short answer."
 demo: true
 
 content:
@@ -10,5 +10,4 @@ visual:
   mode: "editorial"
 ---
 
-These fictional essays demonstrate the default editorial mode. Section names
-are examples only and may be changed by a downstream site.
+Ideas with mud on their boots and revision marks in the margin.

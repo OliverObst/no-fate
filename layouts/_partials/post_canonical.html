@@ -1,9 +1,11 @@
-{{ if and (.Params.canonicalURL) (.Params.ShowCanonicalLink ) -}}
-{{ $url := urls.Parse .Params.canonicalURL }}
+{{- $model := partial "content-model.html" . -}}
+{{- $canonical := $model.SEO.Canonical -}}
+{{ if and $canonical (.Params.ShowCanonicalLink ) -}}
+{{ $url := urls.Parse $canonical }}
 
 {{- if or .Params.author site.Params.author (.Param "ShowReadingTime") (not .Date.IsZero) .IsTranslated (or .Params.editPost.URL site.Params.editPost.URL) }}&nbsp;|&nbsp;{{- end -}}
 <span>
     {{- (site.Params.CanonicalLinkText | default .Params.CanonicalLinkText) | default "Originally published at" -}}
-    &nbsp;<a href="{{ trim .Params.canonicalURL " " }}" title="{{ trim .Params.canonicalURL " " }}" target="_blank" rel="noopener noreferrer">{{ $url.Host }}</a>
+    &nbsp;<a href="{{ trim $canonical " " }}" title="{{ trim $canonical " " }}" target="_blank" rel="noopener noreferrer">{{ $url.Host }}</a>
 </span>
 {{- end }}

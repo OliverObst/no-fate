@@ -1,5 +1,16 @@
 <header class="nf-home__opening">
-    <h1>{{ .Title }}</h1>
+    {{- $wildTitleLines := .Params.visual.wild_title_lines | default (slice .Title) -}}
+    <h1>
+        <span class="nf-home__title-standard">{{ .Title }}</span>
+        <span class="nf-home__title-wild nf-wild-only" aria-hidden="true">
+            {{- range $wildTitleLines }}
+            <span class="nf-home__title-line">{{ . }}</span>
+            {{- end }}
+        </span>
+    </h1>
+    {{- with .Params.visual.wild_reference }}
+    <p class="nf-wild-reference nf-wild-only">{{ . }}</p>
+    {{- end }}
     {{- with .Description }}
     <p class="post-description nf-deck">{{ . | markdownify }}</p>
     {{- end }}

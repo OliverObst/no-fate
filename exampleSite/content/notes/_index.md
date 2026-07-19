@@ -1,6 +1,6 @@
 ---
 title: "Notes"
-description: "Brief fictional observations and working fragments."
+description: "Brief observations, loose ends, and measurements taken at the wrong moment."
 demo: true
 
 content:
@@ -10,4 +10,4 @@ visual:
   mode: "editorial"
 ---
 
-Notes show how shorter material can share the normal editorial shell.
+Small enough to finish before the kettle boils.

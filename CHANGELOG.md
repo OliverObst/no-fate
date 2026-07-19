@@ -21,6 +21,16 @@ and releases use [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - A shared article shell, page-mode resolver, modular homepage, render hooks,
   baseline editorial shortcodes, and downstream extension hooks.
 - A fictional structural fixture covering Markdown hooks and shortcodes.
+- Content model version 1 with central accessors for the `content`,
+  `editorial`, `visual`, `archive`, and `seo` namespaces.
+- Build-time content validation for required fields, page modes, hero
+  accessibility, image treatments, leaf bundles, and proposition references.
+- Section-independent mode inheritance through Hugo's current-section model.
+- User-defined proposition rendering, related-content discovery, homepage
+  selection, and a two-item landing-link threshold.
+- A complete fictional content-model fixture and portable page resource.
+- Configurable `clean` and `wild` visual styles, including a generated print
+  texture and optional wild masthead and homepage display-title fields.
 
 ### Changed
 
@@ -32,5 +42,9 @@ and releases use [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   Hugo-managed assets.
 - Removed the inherited Profile and Home-Info modes from the active theme
   architecture.
+- Reframed the rendered example as *What we make for ourselves*, replacing
+  repetitive demonstration disclaimers with a playful editorial voice.
+- Replaced the example footer boilerplate with linked No Fate, author, and Hugo
+  credits.
 
 [Unreleased]: https://github.com/OliverObst/no-fate/commits/main

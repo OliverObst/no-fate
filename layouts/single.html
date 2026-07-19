@@ -1,5 +1,6 @@
 {{- define "main" }}
-{{- $mode := partial "mode-resolver.html" . -}}
+{{- $model := partial "content-model.html" . -}}
+{{- $mode := $model.Visual.Mode -}}
 <article class="nf-article post-single" data-page-mode="{{ $mode }}">
     {{- partial (printf "modes/%s/opening.html" $mode) . -}}
     {{- partial (printf "modes/%s/body.html" $mode) . -}}

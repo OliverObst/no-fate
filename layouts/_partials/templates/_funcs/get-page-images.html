@@ -1,5 +1,16 @@
 {{- $imgs := slice }}
-{{- $imgParams := .Params.images }}
+{{- $imgParams := slice }}
+{{- with .Params.seo.image }}
+  {{- $imgParams = slice . }}
+{{- else }}
+  {{- with .Params.visual.hero }}
+    {{- $imgParams = slice . }}
+  {{- else }}
+    {{- with .Params.images }}
+      {{- $imgParams = . }}
+    {{- end }}
+  {{- end }}
+{{- end }}
 {{- $resources := .Resources.ByType "image" -}}
 {{/* Find featured image resources if the images parameter is empty. */}}
 {{- if not $imgParams }}

@@ -1,0 +1,12 @@
+{{- $id := printf "%v" . -}}
+{{- $formats := slice "artefact" "essay" "history" "note" "project" "question" -}}
+{{- with index hugo.Data "no-fate" -}}
+    {{- with .defaults -}}
+        {{- with .bundle_formats -}}
+            {{- $formats = . -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+{{- $pages := where site.RegularPages "Params.editorial.proposition" "intersect" (slice $id) -}}
+{{- $pages = where $pages "Params.content.format" "in" $formats -}}
+{{- return $pages -}}

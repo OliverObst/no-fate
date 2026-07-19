@@ -1,6 +1,6 @@
 ---
-title: "About this demonstration"
-description: "What the example site contains and how it should be used."
+title: "Why make anything?"
+description: "Because the ready-made version keeps asking for a password."
 demo: true
 
 content:
@@ -10,14 +10,16 @@ visual:
   mode: "record"
 ---
 
-The Unfixed Record is not a real publication. North Quay Workshop, the Lantern
-Index, the Tide-Room Ledgers, and every associated event and record are
-fictional.
+Some things arrive polished, sealed, and impossible to repair. Other things
+arrive with a loose handle and a person nearby who remembers why it was built
+that way.
 
-This site demonstrates a reusable theme without supplying an identity for
-downstream sites. Replace its title, navigation, propositions, content, and
-metadata. Ordinary installation must not require editing files inside the No
-Fate theme directory.
+We are interested in the second kind.
 
-No third-party photographs, logos, screenshots, biographies, or branded
-examples are included.
+*What we make for ourselves* collects arguments, workshop notes, odd projects,
+questions without clean answers, and records of the work required after launch.
+It prefers a useful repair to a perfect replacement and a visible disagreement
+to a suspiciously tidy consensus.
+
+North Quay, its workshop, people, projects, publications, and events are made
+up. The tools and questions are yours.

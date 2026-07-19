@@ -95,3 +95,36 @@ details.toc {
 .nf-external-mark {
     font-size: 0.8em;
 }
+
+.nf-article__propositions {
+    display: grid;
+    gap: var(--nf-space-4);
+}
+
+.nf-article__propositions .nf-proposition {
+    margin-block: 0;
+}
+
+.nf-related {
+    border-top: var(--nf-rule);
+    margin-top: var(--nf-space-6);
+    padding-top: var(--nf-space-5);
+}
+
+.nf-related h2 {
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+.nf-related ul {
+    display: grid;
+    gap: var(--nf-space-3);
+    list-style: none;
+    padding: 0;
+}
+
+.nf-related li span {
+    color: var(--nf-colour-muted);
+    display: block;
+    font-size: 0.9rem;
+}

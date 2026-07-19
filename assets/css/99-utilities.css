@@ -17,6 +17,10 @@
     color: var(--nf-colour-muted);
 }
 
+.nf-wild-only {
+    display: none;
+}
+
 @media (max-width: 48rem) {
     .header-nav,
     .nf-site-nav {

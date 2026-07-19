@@ -1,6 +1,6 @@
 ---
 title: "Projects"
-description: "Fictional project records combining outcomes with working history."
+description: "Things built because the available version was almost, but not quite, useful."
 demo: true
 
 content:
@@ -10,4 +10,4 @@ visual:
   mode: "editorial"
 ---
 
-Projects are optional demonstration content, not a required theme taxonomy.
+Outcomes, detours, spare parts, and the occasional dignified failure.

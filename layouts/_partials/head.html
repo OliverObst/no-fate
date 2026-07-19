@@ -1,3 +1,4 @@
+{{- $model := partial "content-model.html" . -}}
 {{- partial "hooks/head-start.html" . -}}
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,11 +20,14 @@
     {{- range $i, $e := .Params.keywords }}{{ if $i }}, {{ end }}{{ $e }}{{ end }} {{- else }}
     {{- range $i, $e := .Params.tags }}{{ if $i }}, {{ end }}{{ $e }}{{ end }} {{- end -}}">
 {{- end }}
-<meta name="description" content="{{- with .Description }}{{ . }}{{- else }}{{- if or .IsPage .IsSection}}
-    {{- .Summary | default (printf "%s - %s" .Title  site.Title) }}{{- else }}
-    {{- with site.Params.description }}{{ . }}{{- end }}{{- end }}{{- end -}}">
+{{- $description := $model.SEO.Description | default .Description -}}
+{{- if and (not $description) (or .IsPage .IsSection) -}}
+    {{- $description = .Summary | default (printf "%s - %s" .Title site.Title) -}}
+{{- end -}}
+{{- $description = $description | default site.Params.description -}}
+<meta name="description" content="{{ $description | plainify }}">
 <meta name="author" content="{{ (partial "author.html" . ) }}">
-<link rel="canonical" href="{{ if .Params.canonicalURL -}} {{ trim .Params.canonicalURL " " }} {{- else -}} {{ .Permalink }} {{- end }}">
+<link rel="canonical" href="{{ $model.SEO.Canonical | default .Permalink }}">
 {{- if site.Params.analytics.google.SiteVerificationTag }}
 <meta name="google-site-verification" content="{{ site.Params.analytics.google.SiteVerificationTag }}">
 {{- end }}
@@ -77,6 +81,16 @@
 {{- range $no_fate_paths }}
     {{- $no_fate_styles = $no_fate_styles | append (resources.Get .) }}
 {{- end }}
+{{- $style := .Store.Get "noFateStyle" | default (partial "style-resolver.html" .) }}
+{{- $style_resource := resources.Get (printf "css/styles/%s.css" $style) }}
+{{- if eq $style "wild" }}
+    {{- $paper_texture := resources.Get "images/wild-paper-grain.webp" | fingerprint }}
+    {{- $style_resource = $style_resource | resources.ExecuteAsTemplate
+        "assets/css/styles/wild.css"
+        (dict "PaperTexture" $paper_texture.RelPermalink)
+    }}
+{{- end }}
+{{- $no_fate_styles = $no_fate_styles | append $style_resource }}
 {{- $no_fate := $no_fate_styles | resources.Concat "assets/css/no-fate.css" | resources.Minify }}
 {{- $extended := (resources.Match "css/extended/*.css") | resources.Concat "assets/css/extended.css" | resources.Minify }}
 

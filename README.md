@@ -87,6 +87,7 @@ baseURL = "https://example.invalid/"
 title = "Example publication"
 
 [params.noFate]
+  style = "clean"
   defaultMode = "editorial"
   defaultAccent = "signal"
   showThemeToggle = true
@@ -94,10 +95,12 @@ title = "Example publication"
   showReadingTime = true
   showPropositions = true
   enableImageProcessing = true
+  validateContentModel = true
 
 [params.noFate.home]
   showFormalRecord = true
   showRecentNotes = true
+  featuredProposition = ""
 
 [params.noFate.archive]
   showArtefactNumbers = true
@@ -110,6 +113,46 @@ title = "Example publication"
 
 The namespace is deliberately compact. Prefer consistent defaults and page
 front matter to large collections of one-off switches.
+
+## Visual styles
+
+No Fate ships with two presentation layers:
+
+| Style | Character |
+| --- | --- |
+| `clean` | Quiet, spacious and typographically direct. This is the default. |
+| `wild` | Dense editorial grids, black-and-signal colour blocks, oversized type and a lightly worn print surface. |
+
+Choose one site-wide:
+
+```toml
+[params.noFate]
+  style = "wild"
+```
+
+The style setting changes presentation only. Content types, page modes,
+accessibility behaviour and downstream extension points remain the same.
+Unrecognised values fall back to `clean` with a build warning.
+
+The optional wild masthead labels are ordinary site configuration:
+
+```toml
+[params.noFate.wild]
+  masthead = "Independent notes / practical disturbances"
+  issue = "Issue 01"
+```
+
+Homepage authors may provide deliberate display-line breaks without changing
+the accessible page title:
+
+```yaml
+visual:
+  wild_title_lines:
+    - "What we"
+    - "make"
+    - "for ourselves"
+  wild_reference: "Ref. 01 / Built by hand"
+```
 
 ## Page modes
 
@@ -143,8 +186,9 @@ visual:
 ---
 ```
 
-Resolution order is page `visual.mode`, then a section default, then
-`params.noFate.defaultMode`.
+Resolution order is page `visual.mode`, then the current section's
+`visual.mode`, then `params.noFate.defaultMode`. The current section may have
+any name and may be nested.
 
 ## Repository architecture
 
@@ -179,7 +223,9 @@ Section names are not fixed. The demonstration site uses Essays, Questions,
 Notes, Archives, Projects, Record, and About only as examples. A downstream
 site may rename or remove all of them without changing the theme.
 
-Use leaf bundles for substantive pages and their media:
+Use leaf bundles for substantive pages and their media. The content validator
+checks this convention for essays, questions, notes, histories, projects, and
+artefacts:
 
 ```text
 content/
@@ -198,14 +244,21 @@ visual:
   mode: "archive"
   hero: "feature.jpg"
   hero_alt: "Fictional ledger pages arranged beside a tide gauge"
+  hero_treatment: "raw"
 ```
+
+The stable front matter contract uses the `content`, `editorial`, `visual`,
+`archive`, and `seo` namespaces. Published pages are checked for required
+fields, recognised modes and image treatments, hero alternative text, bundle
+structure, and proposition references. See
+[Content model](docs/content-model.md) for the complete schema, inheritance
+rules, supported values, proposition behaviour, and migration fallbacks.
 
 ## Demonstration site
 
-Every name, organisation, project, publication, event, and proposition in
-`exampleSite/` is invented. The notice is displayed throughout the example
-site. The fixtures are safe to remove and must never be treated as starter
-identity or downstream content.
+The material in `exampleSite/` is a removable publication fixture rather than
+starter identity. The rendered copy stays in character; maintainer notes about
+the fixture live in `exampleSite/README.md`.
 
 Run the development site from the theme repository root:
 

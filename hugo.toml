@@ -1,4 +1,5 @@
 [params.noFate]
+  style = "clean"
   defaultMode = "editorial"
   defaultAccent = "signal"
   showThemeToggle = true
@@ -6,10 +7,12 @@
   showReadingTime = true
   showPropositions = true
   enableImageProcessing = true
+  validateContentModel = true
 
 [params.noFate.home]
   showFormalRecord = true
   showRecentNotes = true
+  featuredProposition = ""
 
 [params.noFate.archive]
   showArtefactNumbers = true

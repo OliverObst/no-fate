@@ -1,9 +1,10 @@
 {{- $page := .page -}}
 {{- $mode := .mode -}}
+{{- $model := partial "content-model.html" $page -}}
 <header class="post-header nf-article__opening nf-article__opening--{{ $mode }}">
     {{- partial "breadcrumbs.html" $page }}
     <p class="nf-article__kicker">
-        {{- with $page.Params.content.format -}}
+        {{- with $model.Content.Format -}}
             {{- . | humanize -}}
         {{- else -}}
             {{- $mode | humanize -}}

@@ -1,6 +1,6 @@
 ---
-title: "Foundation fixtures"
-description: "Fictional pages used to exercise the reusable theme structure."
+title: "Back room"
+description: "Cupboards, switches, test benches, and one drawer that refuses to close."
 demo: true
 
 content:
@@ -10,5 +10,4 @@ visual:
   mode: "record"
 ---
 
-These fixtures verify generic theme infrastructure. They are not part of the
-demonstration publication's editorial navigation.
+Things kept out of the front window but too useful to throw away.

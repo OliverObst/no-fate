@@ -1,8 +1,9 @@
 ---
 title: "The Tide-Room Ledgers, 1978–1986"
-subtitle: "An invented collection of maintenance notes from a station that never existed."
+subtitle: "Maintenance notes from a station built too close to the weather."
 date: 2025-11-03
-summary: "A fictional archive fixture demonstrating chronology, captions, and source notes."
+lastmod: 2026-06-01
+summary: "Nine years of calibration, corrosion, weather, and increasingly emphatic handwriting."
 tags:
   - archives
   - maintenance
@@ -13,6 +14,13 @@ content:
   status: "published"
   original_date: null
 
+editorial:
+  proposition:
+    - "example-tools-reveal-assumptions"
+  series: null
+  issue: null
+  featured: false
+
 visual:
   mode: "archive"
   accent: "signal"
@@ -20,32 +28,40 @@ visual:
   opening_alignment: "left"
   hero: ""
   hero_alt: ""
+  hero_treatment: "raw"
+  invert_opening: false
 
 archive:
   start_year: 1978
   end_year: 1986
   locations:
-    - "North Quay, fictional location"
+    - "North Quay"
   people: []
+
+seo:
+  description: "Nine years of calibration, corrosion, weather, and increasingly emphatic handwriting."
+  image: ""
+  canonical: ""
 ---
 
-The Tide-Room Ledgers are invented documents attributed to the fictional North
-Quay Workshop. They demonstrate how a collection can combine a chronological
-record with editorial context.
+The Tide-Room Ledgers began as a place to record instrument readings. Within
+three months they had also become a weather diary, repair manual, argument
+between shifts, and running inventory of spoons.
 
 ## 1978: the first register
 
-The earliest invented entries list calibration intervals, weather conditions,
-and the names of instruments. Blank columns suggest that the recording system
-was still being negotiated.
+The earliest entries list calibration intervals, weather conditions, and the
+names of instruments. Blank columns suggest that the recording system was still
+being negotiated, or that somebody had gone to lunch.
 
 ## 1982: a revised method
 
-A second fictional register separates observation from interpretation. The
-change makes disagreement visible instead of compressing it into a single
-number.
+A second register separates observation from interpretation. The change makes
+disagreement visible instead of compressing it into a single number.
 
 ## Source note
 
-No original ledgers, station, workshop, dates, or events exist. This page is a
-safe-to-delete demonstration fixture and contains no third-party assets.
+The surviving note is concise, water-stained in spirit, and surprisingly firm
+on the matter of teaspoons.
+
+[Read the plain-text source note](source-note.txt).

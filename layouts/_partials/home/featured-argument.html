@@ -1,4 +1,7 @@
 {{- $pages := where site.RegularPages "Params.editorial.featured" true -}}
+{{- with site.Params.noFate.home.featuredProposition -}}
+    {{- $pages = where site.RegularPages "Params.editorial.proposition" "intersect" (slice .) -}}
+{{- end -}}
 {{- with first 1 $pages.ByDate.Reverse }}
 <section class="nf-home-module" aria-labelledby="nf-featured-heading">
     <div class="nf-home-module__heading">

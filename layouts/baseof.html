@@ -1,10 +1,14 @@
 {{- if lt hugo.Version "0.158.0" }}
 {{- errorf "No Fate requires Hugo Extended v0.158.0 or later" }}
 {{- end -}}
+{{- partial "validate-content-model.html" . -}}
+{{- $style := partial "style-resolver.html" . -}}
+{{- .Store.Set "noFateStyle" $style -}}
 
 <!DOCTYPE html>
 {{- $theme := site.Params.defaultTheme | default "auto" }}
-<html lang="{{ site.Language.Locale }}" dir="{{ .Language.Direction | default "auto" }}" data-theme="{{ $theme }}">
+<html lang="{{ site.Language.Locale }}" dir="{{ .Language.Direction | default "auto" }}"
+    data-theme="{{ $theme }}" data-nf-style="{{ $style }}">
 
 <head>
     {{- partial "head.html" . }}

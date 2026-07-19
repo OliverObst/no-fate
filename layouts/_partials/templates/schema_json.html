@@ -66,7 +66,8 @@
   "@type": "BlogPosting",
   "headline": {{ .Title | plainify}},
   "name": "{{ .Title | plainify }}",
-  "description": {{ with .Description | plainify }}{{ . }}{{ else }}{{ .Summary | plainify  }}{{ end -}},
+  {{- $model := partial "content-model.html" . -}}
+  "description": {{ with or $model.SEO.Description .Description .Summary | plainify }}{{ . }}{{ end -}},
   "keywords": [
     {{- if .Params.keywords }}
     {{ range $i, $e := .Params.keywords }}{{ if $i }}, {{ end }}{{ $e }}{{ end }}

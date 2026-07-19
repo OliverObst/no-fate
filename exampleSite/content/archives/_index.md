@@ -1,6 +1,6 @@
 ---
 title: "Archives"
-description: "Fictional collections arranged around evidence, sequence, and source notes."
+description: "Ledgers, instruments, weather, errors, and things found in the wrong drawer."
 demo: true
 
 content:
@@ -10,4 +10,4 @@ visual:
   mode: "archive"
 ---
 
-These demonstration archives contain no real records or artefacts.
+Receipts from impossible institutions, filed with unreasonable care.

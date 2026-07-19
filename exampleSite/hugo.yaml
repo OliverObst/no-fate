@@ -1,9 +1,9 @@
 baseURL: https://example.invalid/
-title: The Unfixed Record
+title: What we make for ourselves
 locale: en-AU
 defaultContentLanguage: en
 theme: no-fate
-copyright: Fictional demonstration content for No Fate
+copyright: What we make for ourselves
 enableRobotsTXT: true
 
 pagination:
@@ -47,7 +47,7 @@ menu:
       weight: 60
 
 params:
-  description: A wholly fictional publication used to demonstrate the No Fate Hugo theme.
+  description: Notes on tools, rituals, records, and the beautiful trouble of doing it ourselves.
   defaultTheme: auto
   disableThemeToggle: false
   disableSpecial1stPost: true
@@ -64,10 +64,13 @@ params:
   ShowShareButtons: false
   hideAuthor: true
   footer:
-    text: "All demonstration content is fictional and should be replaced or removed."
+    hideCopyright: true
+    hidePoweredBy: true
+    text: "Made with [No Fate](https://github.com/OliverObst/no-fate) by [Oliver Obst](https://oliver.obst.eu/) and [Hugo](https://gohugo.io/)."
   label:
-    text: The Unfixed Record
+    text: What we make for ourselves
   noFate:
+    style: wild
     defaultMode: editorial
     defaultAccent: signal
     showThemeToggle: true
@@ -75,9 +78,14 @@ params:
     showReadingTime: true
     showPropositions: true
     enableImageProcessing: true
+    validateContentModel: true
+    wild:
+      masthead: "Independent notes / practical disturbances"
+      issue: "Issue 01 / keep the receipt"
     home:
       showFormalRecord: true
       showRecentNotes: true
+      featuredProposition: example-maintenance-is-design
     archive:
       showArtefactNumbers: true
       showRights: true

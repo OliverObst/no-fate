@@ -51,6 +51,7 @@ jobs:
             --source exampleSite \
             --themesDir ../.. \
             --buildDrafts \
+            --panicOnWarning \
             --gc \
             --cleanDestinationDir
 
@@ -60,11 +61,12 @@ jobs:
             --source exampleSite \
             --themesDir ../.. \
             --minify \
+            --panicOnWarning \
             --gc \
             --cleanDestinationDir
 
-      - name: Check demonstration notice
+      - name: Check fictional boundary
         run: |
           tr '\n' ' ' < exampleSite/public/index.html |
             grep --fixed-strings \
-              "All people, organisations, projects, publications, and events shown here are fictional."
+              "North Quay does not exist. Neither do its people, projects, publications, events, or magnificent administrative crises."

@@ -1,21 +1,31 @@
 {{- $id := .id -}}
 {{- $title := .title | default "" -}}
+{{- $data := partial "proposition-get.html" $id -}}
 {{- if and $id (not $title) -}}
-    {{- with index hugo.Data "no-fate" -}}
-        {{- with .propositions -}}
-            {{- with .propositions -}}
-                {{- with where . "id" $id -}}
-                    {{- range first 1 . -}}
-                        {{- $title = .title -}}
-                    {{- end -}}
-                {{- end -}}
-            {{- end -}}
+    {{- with $data.title -}}
+        {{- $title = . -}}
+    {{- end -}}
+{{- end -}}
+{{- $minimumItems := 2 -}}
+{{- with index hugo.Data "no-fate" -}}
+    {{- with .defaults -}}
+        {{- with .minimum_proposition_items -}}
+            {{- $minimumItems = . -}}
         {{- end -}}
     {{- end -}}
 {{- end -}}
+{{- $pages := partial "proposition-pages.html" $id -}}
+{{- $landingURL := $data.url | default "" -}}
+{{- $canLink := and $landingURL (ge (len $pages) $minimumItems) -}}
 {{- with $title }}
-<aside class="nf-component nf-proposition" data-proposition="{{ $id }}">
+<aside class="nf-component nf-proposition" data-proposition="{{ $id }}"{{ if $data.demo }} data-demo="true"{{ end }}>
     <span class="nf-component__label">{{ i18n "nf_proposition" | default "Proposition" }}</span>
-    <p>{{ . }}</p>
+    <p>
+        {{- if $canLink -}}
+            <a href="{{ $landingURL }}">{{ . }}</a>
+        {{- else -}}
+            {{- . -}}
+        {{- end -}}
+    </p>
 </aside>
 {{- end }}

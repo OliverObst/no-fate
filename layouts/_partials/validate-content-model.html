@@ -1,0 +1,98 @@
+{{- $enabled := true -}}
+{{- with site.Params.noFate -}}
+    {{- if isset . "validatecontentmodel" -}}
+        {{- $enabled = index . "validatecontentmodel" -}}
+    {{- end -}}
+{{- end -}}
+
+{{- if and $enabled .IsPage (not .Draft) -}}
+    {{- $page := . -}}
+    {{- $model := partial "content-model.html" $page -}}
+    {{- $location := $page.RelPermalink -}}
+
+    {{- if not $page.Title -}}
+        {{- warnf "No Fate content model: title is required on %s" $location -}}
+    {{- end -}}
+    {{- if $page.Date.IsZero -}}
+        {{- warnf "No Fate content model: date is required on %s" $location -}}
+    {{- end -}}
+    {{- if and (not $page.Params.summary) (not $page.Params.subtitle) -}}
+        {{- warnf "No Fate content model: summary or subtitle is required on %s" $location -}}
+    {{- end -}}
+    {{- if not $model.Content.Format -}}
+        {{- warnf "No Fate content model: content.format is required on %s" $location -}}
+    {{- end -}}
+
+    {{- $declaredMode := "" -}}
+    {{- with $page.Params.visual -}}
+        {{- with .mode -}}
+            {{- $declaredMode = . -}}
+        {{- end -}}
+    {{- end -}}
+    {{- if not $declaredMode -}}
+        {{- with $page.CurrentSection -}}
+            {{- with .Params.visual -}}
+                {{- with .mode -}}
+                    {{- $declaredMode = . -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+    {{- if not $declaredMode -}}
+        {{- warnf "No Fate content model: visual.mode is required on %s or its current section" $location -}}
+    {{- end -}}
+
+    {{- $allowedTreatments := slice "raw" "monochrome" "high-contrast" "halftone" "photocopy" "technical" "duotone" -}}
+    {{- $bundleFormats := slice "artefact" "essay" "history" "note" "project" "question" -}}
+    {{- with index hugo.Data "no-fate" -}}
+        {{- with .defaults -}}
+            {{- with .allowed_hero_treatments -}}
+                {{- $allowedTreatments = . -}}
+            {{- end -}}
+            {{- with .bundle_formats -}}
+                {{- $bundleFormats = . -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- with $page.Params.visual -}}
+        {{- if and .hero (not .hero_alt) -}}
+            {{- warnf "No Fate content model: visual.hero_alt is required when visual.hero is set on %s" $location -}}
+        {{- end -}}
+        {{- with .hero_treatment -}}
+            {{- $treatment := printf "%v" . | lower -}}
+            {{- if not (in $allowedTreatments $treatment) -}}
+                {{- warnf "No Fate content model: unsupported visual.hero_treatment %q on %s" $treatment $location -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- if in $bundleFormats $model.Content.Format -}}
+        {{- if ne $page.BundleType "leaf" -}}
+            {{- warnf "No Fate content model: %s content should use a leaf page bundle with index.md on %s" $model.Content.Format $location -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- $knownPropositions := slice -}}
+    {{- with index hugo.Data "no-fate" -}}
+        {{- with .propositions -}}
+            {{- with .propositions -}}
+                {{- range . -}}
+                    {{- with .id -}}
+                        {{- $knownPropositions = $knownPropositions | append . -}}
+                    {{- end -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+    {{- with $page.Params.editorial.proposition -}}
+        {{- if not (reflect.IsSlice .) -}}
+            {{- warnf "No Fate content model: editorial.proposition must be a list on %s" $location -}}
+        {{- end -}}
+    {{- end -}}
+    {{- range $model.Editorial.Propositions -}}
+        {{- if not (in $knownPropositions .) -}}
+            {{- warnf "No Fate content model: unknown editorial proposition %q on %s" . $location -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}

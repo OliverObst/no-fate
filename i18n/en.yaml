@@ -62,6 +62,12 @@
 - id: nf_proposition
   translation: "Proposition"
 
+- id: nf_propositions
+  translation: "Editorial propositions"
+
+- id: nf_related_by_proposition
+  translation: "Related by proposition"
+
 - id: nf_featured
   translation: "Featured"
 

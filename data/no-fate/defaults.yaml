@@ -1,10 +1,23 @@
+schema_version: 1
 default_mode: editorial
 default_accent: signal
+default_style: clean
+allowed_styles:
+  - clean
+  - wild
 allowed_modes:
   - record
   - editorial
   - poster
   - archive
+allowed_hero_treatments:
+  - raw
+  - monochrome
+  - high-contrast
+  - halftone
+  - photocopy
+  - technical
+  - duotone
 allowed_accents:
   - signal
   - quiet
@@ -15,3 +28,11 @@ headline_scales:
 opening_alignments:
   - left
   - centre
+bundle_formats:
+  - artefact
+  - essay
+  - history
+  - note
+  - project
+  - question
+minimum_proposition_items: 2

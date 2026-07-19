@@ -1,0 +1,12 @@
+{{- $id := printf "%v" . -}}
+{{- $result := dict -}}
+{{- with index hugo.Data "no-fate" -}}
+    {{- with .propositions -}}
+        {{- with .propositions -}}
+            {{- range where . "id" $id -}}
+                {{- $result = . -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+{{- return $result -}}
