@@ -92,7 +92,7 @@ Add the import to the downstream site's `hugo.toml`:
     path = "github.com/OliverObst/no-fate"
 ```
 
-After the first No Fate release, pin it in the downstream site's module graph:
+Pin the release in the downstream site's module graph:
 
 ```sh
 hugo mod get github.com/OliverObst/no-fate@v0.1.0

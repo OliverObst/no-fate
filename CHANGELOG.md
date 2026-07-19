@@ -7,6 +7,8 @@ and releases use [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-07-19
+
 ### Added
 
 - Automated rendered-site quality testing for local links and fragments, HTML
@@ -102,4 +104,5 @@ and releases use [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Replaced the example footer boilerplate with linked No Fate, author, and Hugo
   credits.
 
-[Unreleased]: https://github.com/OliverObst/no-fate/commits/main
+[Unreleased]: https://github.com/OliverObst/no-fate/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/OliverObst/no-fate/releases/tag/v0.1.0

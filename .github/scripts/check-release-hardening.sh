@@ -28,7 +28,7 @@ require_text "$fixture" "width=900 height=600"
 require_text "$fixture" "duotone"
 require_text "$fixture" "Creator: North Quay duplication room"
 require_text "$fixture" "Licence: Open workshop copy licence"
-if grep -RiqE 'clearance note|accession note|administrative note' "$public_dir"; then
+if grep -RiqE 'cupboard seven|blue pencil|do not publish' "$public_dir"; then
   echo "Private image permission metadata leaked into rendered output." >&2
   exit 1
 fi
