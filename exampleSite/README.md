@@ -40,6 +40,19 @@ boundary between public attribution and private permission notes. The search
 index omits utility fixtures and duplicate record abstracts; the Essays and
 Archives sections exercise configurable RSS output and the topic taxonomy.
 
+The Section 27.2 stress set is also hidden from navigation and home lists. It
+contains a 20-image archive contact sheet, a 60-row sortable record table, an
+article combining native MathML, fenced code and footnotes, a genuine local PDF
+artefact download, and separate long English and German titles. CI checks their
+rendered structure and the browser suite covers their accessibility, narrow
+reflow and visual composition.
+
+The archive SVGs and artefact PDF are deterministic generated fixtures. Their
+maintainer sources are
+`.github/scripts/generate-archive-fixture-images.mjs` and
+`.github/scripts/generate-fixture-pdf.py`; ordinary Hugo users do not need
+Node.js or Python to build the committed files.
+
 From the theme repository root, run:
 
 ```sh

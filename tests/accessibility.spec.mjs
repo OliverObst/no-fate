@@ -9,6 +9,12 @@ const routes = [
   ["/record/register-of-useful-misplacements/", "record mode"],
   ["/record/", "structured record"],
   ["/fixtures/structural-components/", "editorial components"],
+  ["/fixtures/archive-contact-sheet-20/", "20-image archive"],
+  ["/fixtures/long-record-table/", "long record table"],
+  ["/fixtures/maths-code-and-footnotes/", "maths, code and footnotes"],
+  ["/fixtures/artefact-pdf-download/", "PDF artefact download"],
+  ["/fixtures/long-english-title/", "long English title"],
+  ["/fixtures/long-german-title/", "long German title"],
   ["/search/", "search"]
 ];
 
@@ -62,3 +68,18 @@ test("mobile reflow remains accessible at 200 per cent equivalent width", async 
   );
   expect(overflow).toBeLessThanOrEqual(1);
 });
+
+for (const [route, label] of [
+  ["/fixtures/long-english-title/", "long English title"],
+  ["/fixtures/long-german-title/", "long German title"],
+  ["/fixtures/long-record-table/", "long record table"]
+]) {
+  test(`${label} does not force page-level horizontal scrolling`, async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 720 });
+    await visit(page, route);
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth
+    );
+    expect(overflow).toBeLessThanOrEqual(1);
+  });
+}

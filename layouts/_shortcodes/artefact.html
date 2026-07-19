@@ -3,6 +3,7 @@
 {{- .Page.Store.Set "noFateArtefactNumber" $sequence -}}
 {{- $number := .Get "number" | default (printf "%02d" $sequence) -}}
 {{- $href := .Get "href" | default (.Get "file") -}}
+{{- $download := eq (lower (printf "%v" (.Get "download" | default false))) "true" -}}
 {{- $image := .Get "image" -}}
 {{- $imageAlt := .Get "image_alt" -}}
 {{- if and $image (not $imageAlt) -}}
@@ -15,7 +16,7 @@
             <span class="nf-artefact__number">{{ $number }}</span>
         </p>
         {{- if $href }}
-        <h3><a href="{{ $href | safeURL }}">{{ $title }}</a></h3>
+        <h3><a href="{{ $href | safeURL }}"{{ if $download }} download{{ end }}>{{ $title }}</a></h3>
         {{- else }}
         <h3>{{ $title }}</h3>
         {{- end }}

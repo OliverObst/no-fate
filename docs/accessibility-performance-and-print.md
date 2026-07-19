@@ -25,9 +25,10 @@ The theme provides:
 The automated rendered-HTML audit checks image alternatives, duplicate IDs,
 heading jumps, JSON-LD validity, private rights leakage and representative
 form labels. The repository quality suite additionally runs axe across every
-page mode, the structured record, search, dark mode, active filters and narrow
-reflow. Lighthouse enforces a 95 accessibility minimum on the home, poster,
-search and full record pages. See
+page mode, the structured record, all Section 27.2 stress fixtures, search,
+dark mode, active filters and narrow reflow. Lighthouse enforces a 95
+accessibility minimum on the home, poster, search, full record and 20-image
+archive pages. See
 [Automated quality testing](testing.md) for commands and coverage.
 
 Automation supplements that audit with keyboard traversal, an
@@ -55,10 +56,17 @@ lazy, genuine heroes are eager with high fetch priority, and audio/video use
 metadata preload without autoplay. No Fate performs no speculative search
 index or absent-favicon preload.
 
-Representative release pages target Lighthouse performance and accessibility
-scores of at least 95. Production hosting should enable Brotli or gzip
-compression; the deliberately extreme 200-entry record fixture is intended to
-exercise this deployment assumption as well as the template.
+Representative release pages are automatically required to reach Lighthouse
+performance and accessibility scores of at least 95. Their cumulative layout
+shift must be no greater than 0.1, matching
+[Chrome's “good” CLS boundary](https://web.dev/articles/cls). The full reports
+and threshold summary are retained as CI diagnostics. This automated gate uses
+a fixed desktop viewport and the local machine's provided conditions; production
+network and compression testing remains part of the release checklist.
+
+Production hosting should enable Brotli or gzip compression; the deliberately
+extreme 200-entry record and 20-image archive fixtures are intended to exercise
+this deployment assumption as well as the templates.
 
 ## A4 print output
 

@@ -1,0 +1,20 @@
+baseURL = "https://module-install.example.invalid/"
+title = "Temporary module installation"
+locale = "en-AU"
+
+[module]
+  [[module.imports]]
+    path = "github.com/OliverObst/no-fate"
+
+[params]
+  mainSections = ["essays"]
+
+[params.noFate]
+  style = "clean"
+  defaultMode = "editorial"
+  defaultAccent = "signal"
+  validateContentModel = true
+  strictHomeSelections = false
+
+[params.noFate.home]
+  modules = ["opening", "selected_writing"]

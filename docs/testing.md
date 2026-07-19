@@ -8,9 +8,12 @@ The automated suite covers:
 
 - local page, fragment, image, stylesheet, script and generated-resource links;
 - standards-based validation of every rendered HTML document;
+- structural enforcement of the Section 27.2 stress fixtures;
+- disposable downstream builds installed through both Hugo Modules and a real
+  Git submodule;
 - axe WCAG A and AA checks on representative pages and interactive states;
-- Lighthouse accessibility scores on the home, poster, search and full record
-  pages;
+- Lighthouse accessibility and performance scores, plus cumulative layout
+  shift, on the home, poster, search, full record and 20-image archive pages;
 - Linux Chromium screenshot comparison for desktop, mobile, light, dark,
   interactive and print-media states.
 
@@ -25,6 +28,7 @@ require:
 
 - Node.js 22.19 or later;
 - npm;
+- Git and Go for the temporary installation tests;
 - Chromium installed through Playwright for local axe and Lighthouse tests;
 - Docker when running visual tests from macOS or Windows.
 
@@ -51,10 +55,18 @@ This command:
 1. builds the example with the reserved `https://no-fate.test/` origin;
 2. checks rendered local links and fragments;
 3. validates every generated HTML file;
-4. runs axe across representative pages and states;
-5. compares the visual baselines;
-6. requires a Lighthouse accessibility score of at least 95 on four release
-   pages.
+4. proves that the 20-image archive, 60-row table, maths/code/footnotes article,
+   PDF download and long English/German titles are complete;
+5. runs axe across representative pages and states;
+6. compares the visual baselines;
+7. requires Lighthouse accessibility and performance scores of at least 95,
+   with cumulative layout shift no greater than 0.1, on five release pages.
+
+Lighthouse uses a 1440 × 900 desktop viewport and `provided` throttling against
+the local minified Hugo server. This makes the gate a repeatable theme/build
+regression baseline and avoids treating simulated network conditions as
+template work. Production compression and field performance remain separate
+release checks.
 
 The generated theme still builds without Node.js. The existing Hugo-only
 release checks remain available independently.
@@ -65,6 +77,8 @@ release checks remain available independently.
 npm run build:test
 npm run test:links
 npm run test:html
+npm run test:fixtures
+npm run test:installation
 npm run test:accessibility
 npm run test:visual
 npm run test:lighthouse
@@ -81,16 +95,45 @@ scrollable-table regions and change-driven filter forms without submit
 buttons. Semantic, ARIA, duplicate class and document-structure rules remain
 active.
 
+## Temporary downstream installation
+
+Run:
+
+```sh
+npm run test:installation
+```
+
+The command creates two empty sites below the operating system’s temporary
+directory and removes them on exit. Both receive the same minimal downstream
+home page, section, article, alias and `head-end` override.
+
+The Hugo Module site imports `github.com/OliverObst/no-fate` and uses a temporary
+Go `replace` directive pointing at the current checkout. The Git submodule site
+installs a temporary Git snapshot of the current working tree at
+`themes/no-fate`; this deliberately includes uncommitted tracked and untracked
+work that is not ignored. The test therefore exercises the changes under
+review, not merely the last commit.
+
+Each path must produce a minified production build with content-model
+validation enabled. Explicit downstream-override checks require the consumer's
+`head-end` marker in the rendered article. Explicit demo-removal checks reject
+the demonstration title, people, fixture titles and routes. They prove that
+`exampleSite/` may remain in the theme repository without becoming downstream
+content. The test performs no remote fetch, so release-tag resolution remains
+an explicit release-checklist step.
+
 `test:accessibility` runs axe on:
 
 - the homepage;
 - all four page modes;
 - the full 200-entry structured record;
 - the editorial-component fixture;
+- all six Section 27.2 stress fixtures;
 - search;
 - dark mode;
 - an active record filter;
-- a 320-pixel reflow viewport.
+- 320-pixel reflow viewports for structural components, both long titles and
+  the long record table.
 
 It also rejects document-level horizontal overflow in the narrow reflow case.
 
@@ -109,6 +152,8 @@ The suite records:
 - wide and narrow navigation;
 - an active structured-record filter;
 - the contact sheet;
+- the 20-image archive, 60-row table, maths article and PDF artefact;
+- long English and German titles at mobile width;
 - print-media rendering of an editorial article.
 
 No Fate’s narrow navigation is a visible wrapping menu, not a collapsible
@@ -130,9 +175,9 @@ demonstration content.
 ## Failure diagnostics
 
 Playwright writes screenshots, diffs, traces and its HTML report below
-`test-results/`. Lighthouse writes JSON reports below
-`test-results/lighthouse/`. These paths are ignored locally. GitHub Actions
-uploads them for 14 days when the quality job fails.
+`test-results/`. Lighthouse writes one full JSON report per route plus a compact
+threshold summary below `test-results/lighthouse/`. These paths are ignored
+locally. GitHub Actions uploads them for 14 days when the quality job fails.
 
 The visual comparison permits a 0.2 per cent pixel difference to absorb minor
 anti-aliasing noise. Layout shifts, type reflow, colour changes and missing
@@ -141,6 +186,7 @@ content exceed that threshold and fail the build.
 ## CI structure
 
 The existing Hugo matrix verifies minimum/current Standard Hugo and current
-Extended Hugo. A separate quality job runs once in the pinned browser container
-because browser behaviour does not need to be repeated for every Hugo edition.
-Both jobs must pass for a release.
+Extended Hugo. Both Standard members also run both disposable downstream
+installation paths. A separate quality job runs once in the pinned browser
+container because browser behaviour does not need to be repeated for every Hugo
+edition. Both jobs must pass for a release.

@@ -121,6 +121,15 @@ params:
 
 markup:
   goldmark:
+    extensions:
+      passthrough:
+        delimiters:
+          block:
+            - ['\[', '\]']
+            - ['$$', '$$']
+          inline:
+            - ['\(', '\)']
+        enable: true
     parser:
       wrapStandAloneImageWithinParagraph: false
       attribute:

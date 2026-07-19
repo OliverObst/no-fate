@@ -133,6 +133,26 @@
     width: 100%;
 }
 
+.nf-math {
+    color: inherit;
+}
+
+.nf-math--inline {
+    white-space: nowrap;
+}
+
+.nf-math--block {
+    max-width: 100%;
+    margin-block: var(--nf-space-6);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+}
+
+.nf-math math {
+    color: inherit;
+    font-size: 1.08em;
+}
+
 .nf-article__footer {
     border-top: var(--nf-rule-strong);
     margin-top: var(--nf-section-gap);
@@ -225,6 +245,10 @@
     table,
     pre {
         break-inside: avoid;
+    }
+
+    .nf-math--block {
+        overflow: visible;
     }
 
     .nf-article__hero {

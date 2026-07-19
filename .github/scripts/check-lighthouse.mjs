@@ -14,9 +14,12 @@ const routes = [
   ["/", "home"],
   ["/questions/what-are-we-optimising/", "poster"],
   ["/search/", "search"],
-  ["/record/", "record"]
+  ["/record/", "record"],
+  ["/fixtures/archive-contact-sheet-20/", "archive-20"]
 ];
-const threshold = 0.95;
+const accessibilityThreshold = 0.95;
+const performanceThreshold = 0.95;
+const cumulativeLayoutShiftThreshold = 0.1;
 let serverOutput = "";
 
 fs.mkdirSync(reportDir, { recursive: true });
@@ -30,6 +33,7 @@ const server = spawn("hugo", [
   "--port", "4174",
   "--appendPort=false",
   "--disableFastRender",
+  "--minify",
   "--panicOnWarning"
 ], {
   stdio: ["ignore", "pipe", "pipe"]
@@ -74,24 +78,75 @@ try {
   });
 
   const failures = [];
+  const summary = [];
   for (const [route, name] of routes) {
     const result = await lighthouse(`${baseURL}${route}`, {
       port: chrome.port,
       output: "json",
       logLevel: "error",
-      onlyCategories: ["accessibility"]
+      onlyCategories: ["accessibility", "performance"],
+      formFactor: "desktop",
+      throttlingMethod: "provided",
+      screenEmulation: {
+        mobile: false,
+        width: 1440,
+        height: 900,
+        deviceScaleFactor: 1,
+        disabled: false
+      }
     });
-    const score = result.lhr.categories.accessibility.score;
-    const percentage = Math.round(score * 100);
+    const accessibility = result.lhr.categories.accessibility.score;
+    const performance = result.lhr.categories.performance.score;
+    const cumulativeLayoutShift =
+      result.lhr.audits["cumulative-layout-shift"].numericValue;
+    const accessibilityPercentage = Math.round(accessibility * 100);
+    const performancePercentage = Math.round(performance * 100);
     fs.writeFileSync(
       path.join(reportDir, `${name}.json`),
       JSON.stringify(result.lhr, null, 2)
     );
-    process.stdout.write(`Lighthouse accessibility: ${name} ${percentage}\n`);
-    if (score < threshold) {
-      failures.push(`${name}: ${percentage} is below ${threshold * 100}`);
+    summary.push({
+      name,
+      route,
+      accessibility,
+      performance,
+      cumulativeLayoutShift
+    });
+    process.stdout.write(
+      `Lighthouse: ${name} accessibility ${accessibilityPercentage}, `
+      + `performance ${performancePercentage}, `
+      + `CLS ${cumulativeLayoutShift.toFixed(3)}\n`
+    );
+    if (accessibility < accessibilityThreshold) {
+      failures.push(
+        `${name}: accessibility ${accessibilityPercentage} is below `
+        + `${accessibilityThreshold * 100}`
+      );
+    }
+    if (performance < performanceThreshold) {
+      failures.push(
+        `${name}: performance ${performancePercentage} is below `
+        + `${performanceThreshold * 100}`
+      );
+    }
+    if (cumulativeLayoutShift > cumulativeLayoutShiftThreshold) {
+      failures.push(
+        `${name}: CLS ${cumulativeLayoutShift.toFixed(3)} exceeds `
+        + cumulativeLayoutShiftThreshold
+      );
     }
   }
+  fs.writeFileSync(
+    path.join(reportDir, "summary.json"),
+    JSON.stringify({
+      thresholds: {
+        accessibility: accessibilityThreshold,
+        performance: performanceThreshold,
+        cumulativeLayoutShift: cumulativeLayoutShiftThreshold
+      },
+      results: summary
+    }, null, 2)
+  );
 
   if (failures.length) {
     failures.forEach((failure) => process.stderr.write(`${failure}\n`));

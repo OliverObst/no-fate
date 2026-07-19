@@ -66,6 +66,46 @@ test("contact sheet spacing and numbering remain stable", async ({ page }) => {
   await expect(contactSheet).toHaveScreenshot("contact-sheet.png");
 });
 
+test("20-image archive remains dense, numbered and legible", async ({ page }) => {
+  await visit(page, "/fixtures/archive-contact-sheet-20/");
+  const contactSheet = page.locator(".nf-contact-sheet");
+  await contactSheet.scrollIntoViewIfNeeded();
+  await expect(contactSheet).toHaveScreenshot("archive-contact-sheet-20.png");
+});
+
+test("genuinely long record table preserves its scanning rhythm", async ({ page }) => {
+  await visit(page, "/fixtures/long-record-table/");
+  const table = page.locator(".nf-table-wrap");
+  await table.scrollIntoViewIfNeeded();
+  await expect(table).toHaveScreenshot("long-record-table.png");
+});
+
+test("maths, code and footnotes remain composed as one article", async ({ page }) => {
+  await visit(page, "/fixtures/maths-code-and-footnotes/");
+  await expect(page).toHaveScreenshot("maths-code-footnotes.png", { fullPage: true });
+});
+
+test("PDF artefact presents an explicit download", async ({ page }) => {
+  await visit(page, "/fixtures/artefact-pdf-download/");
+  const artefact = page.locator(".nf-artefact");
+  await artefact.scrollIntoViewIfNeeded();
+  await expect(artefact).toHaveScreenshot("artefact-pdf-download.png");
+});
+
+test("long English and German titles wrap on narrow screens", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+
+  await visit(page, "/fixtures/long-english-title/");
+  await expect(page.locator(".nf-article__opening")).toHaveScreenshot(
+    "long-title-english-mobile.png"
+  );
+
+  await visit(page, "/fixtures/long-german-title/");
+  await expect(page.locator(".nf-article__opening")).toHaveScreenshot(
+    "long-title-german-mobile.png"
+  );
+});
+
 test("print media keeps the editorial article legible", async ({ page }) => {
   await page.emulateMedia({ media: "print" });
   await visit(page, "/essays/maintenance-is-a-design-material/");

@@ -107,21 +107,26 @@ Then run the repository checks:
 bash .github/scripts/check-demo-boundary.sh
 bash .github/scripts/check-page-modes.sh exampleSite/public
 bash .github/scripts/check-editorial-framework.sh exampleSite/public
+node .github/scripts/check-section-27-fixtures.mjs exampleSite/public
 bash .github/scripts/check-structured-records.sh exampleSite/public
 bash .github/scripts/check-release-hardening.sh exampleSite/public
 bash .github/scripts/check-release-docs.sh
 npm ci
 npx playwright install chromium
 npm run test:quality
+npm run test:installation
 ```
 
 - [ ] All local commands pass.
 - [ ] Rendered local links and fragments pass.
 - [ ] Every generated HTML document passes the configured standards validator.
 - [ ] Axe passes representative light, dark, filtered and narrow states.
-- [ ] Lighthouse accessibility scores are at least 95 on all configured pages.
+- [ ] Lighthouse accessibility and performance scores are at least 95 on all
+  configured pages, with cumulative layout shift no greater than 0.1.
 - [ ] Linux Chromium visual baselines pass without an unexplained update.
 - [ ] The generated 200-entry fixture is current.
+- [ ] The Section 27.2 fixtures still contain 20 images, 60 record rows, native
+  maths, code, three footnotes, a valid PDF download and both long titles.
 - [ ] The GitHub Actions matrix passes for the release commit.
 - [ ] Generated HTML contains no duplicate IDs, malformed JSON-LD or missing
   image alternatives.
@@ -133,7 +138,7 @@ npm run test:quality
 ## 6. Perform manual accessibility checks
 
 Test the home page, search, one page in each mode, the structural component
-fixture and the 200-entry record.
+fixture, the 200-entry record and the Section 27.2 stress fixtures.
 
 - [ ] Complete a keyboard-only pass, beginning with the skip link.
 - [ ] Confirm focus remains visible in light, dark and inverse surfaces.
@@ -155,8 +160,8 @@ with a passing automated score.
 
 ## 7. Verify performance and media
 
-- [ ] Run Lighthouse on the home, poster, search and full structured-record
-  pages.
+- [ ] Run the automated Lighthouse gate on the home, poster, search, full
+  structured-record and 20-image archive pages.
 - [ ] Performance and accessibility scores are at least 95 on representative
   production pages.
 - [ ] Test production compression; the 200-entry fixture should not be measured
@@ -166,7 +171,8 @@ with a passing automated score.
   images remain lazy.
 - [ ] Confirm video and audio never autoplay.
 - [ ] Confirm no speculative preload exists for an absent asset.
-- [ ] Confirm cumulative layout shift remains acceptably low.
+- [ ] Confirm cumulative layout shift is no greater than 0.1 on every
+  configured page.
 
 ## 8. Verify print output
 
@@ -199,6 +205,10 @@ with a passing automated score.
 
 Use temporary, empty Hugo sites rather than the theme's own example.
 
+- [ ] Run `npm run test:installation` against the release worktree.
+- [ ] Confirm its Hugo Module and Git submodule production builds both pass.
+- [ ] Confirm the demo-removal and downstream-override smoke tests pass for
+  both installation methods.
 - [ ] Install the tag as a Hugo Module and run a production build.
 - [ ] Confirm `go.mod` and `go.sum` resolve the intended tag.
 - [ ] Install the same tag as a Git submodule and run a production build.

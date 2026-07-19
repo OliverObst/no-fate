@@ -1,0 +1,7 @@
+{{- if eq .Type "block" -}}
+<div class="nf-math nf-math--block" tabindex="0">
+    {{- transform.ToMath .Inner (dict "displayMode" true) -}}
+</div>
+{{- else -}}
+<span class="nf-math nf-math--inline">{{ transform.ToMath .Inner }}</span>
+{{- end -}}

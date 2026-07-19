@@ -10,9 +10,16 @@ and releases use [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Added
 
 - Automated rendered-site quality testing for local links and fragments, HTML
-  validity, axe WCAG A/AA rules, Lighthouse accessibility scores and pinned
-  Linux Chromium visual baselines across page modes, viewports, themes,
-  interactive record filtering, contact sheets and print media.
+  validity, axe WCAG A/AA rules, Lighthouse accessibility and performance
+  scores, cumulative layout shift thresholds and pinned Linux Chromium visual
+  baselines across page modes, viewports, themes, interactive record filtering,
+  stress fixtures, contact sheets and print media.
+- Section 27.2 stress fixtures: a 20-image archive contact sheet, 60-row
+  sortable record, native MathML/code/footnotes article, downloadable PDF
+  artefact and long English and German titles.
+- Disposable downstream installation tests for Hugo Modules and Git
+  submodules, including minimal content, an alias and a downstream template
+  override.
 - Public release documentation with a staged migration and redirect guide, an
   operational maintainer checklist, and expanded decision, authoring,
   accessibility, print and extension guidance for all four page modes.

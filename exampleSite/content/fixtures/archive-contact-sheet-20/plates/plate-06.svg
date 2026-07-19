@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600" role="img" aria-labelledby="title desc">
+  <title id="title">Kettle Observatory plate 06</title>
+  <desc id="desc">Abstract red and black archival diagram numbered 06 on a cream field.</desc>
+  <rect width="900" height="600" fill="#f3eddb"/>
+  <path d="M0 156 L900 478" stroke="#171512" stroke-width="12"/>
+  <circle cx="568" cy="367" r="123" fill="none" stroke="#d92d20" stroke-width="28"/>
+  <g transform="translate(450 300) rotate(17) translate(-450 -300)">
+    <rect x="170" y="265" width="560" height="70" fill="#d92d20"/>
+    <rect x="392" y="118" width="116" height="364" fill="#171512"/>
+  </g>
+  <rect x="36" y="36" width="828" height="528" fill="none" stroke="#171512" stroke-width="5"/>
+  <text x="58" y="86" fill="#171512" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" letter-spacing="2">KETTLE OBSERVATORY / PLATE 06</text>
+  <text x="830" y="535" fill="#171512" font-family="Arial, Helvetica, sans-serif" font-size="92" font-weight="900" text-anchor="end">06</text>
+</svg>

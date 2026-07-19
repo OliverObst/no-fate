@@ -1,0 +1,17 @@
+baseURL = "https://submodule-install.example.invalid/"
+title = "Temporary submodule installation"
+locale = "en-AU"
+theme = "no-fate"
+
+[params]
+  mainSections = ["essays"]
+
+[params.noFate]
+  style = "clean"
+  defaultMode = "editorial"
+  defaultAccent = "signal"
+  validateContentModel = true
+  strictHomeSelections = false
+
+[params.noFate.home]
+  modules = ["opening", "selected_writing"]

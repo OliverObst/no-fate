@@ -73,6 +73,10 @@ jobs:
             --gc \
             --cleanDestinationDir
 
+      - name: Check temporary downstream installation
+        if: matrix.edition == 'standard'
+        run: npm run test:installation
+
       - name: Check demonstration boundary
         run: bash .github/scripts/check-demo-boundary.sh
 
@@ -81,6 +85,9 @@ jobs:
 
       - name: Check editorial framework
         run: bash .github/scripts/check-editorial-framework.sh exampleSite/public
+
+      - name: Check Section 27 fixtures
+        run: node .github/scripts/check-section-27-fixtures.mjs exampleSite/public
 
       - name: Check structured records
         run: bash .github/scripts/check-structured-records.sh exampleSite/public
@@ -92,7 +99,7 @@ jobs:
         run: bash .github/scripts/check-release-docs.sh
 
   quality:
-    name: Links, HTML, accessibility and visual regression
+    name: Links, HTML, accessibility, performance and visual regression
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.61.1-noble@sha256:5b8f294aff9041b7191c34a4bab3ac270157a28774d4b0660e9743297b697e48

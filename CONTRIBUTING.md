@@ -81,6 +81,8 @@ installation, provenance and public-content checks required for a tag.
 Run the link, HTML, axe, Lighthouse and visual-regression layers described in
 [Automated quality testing](docs/testing.md) whenever rendered structure,
 interaction or presentation changes.
+Run `npm run test:installation` whenever module metadata, repository structure,
+theme configuration or downstream extension hooks change.
 
 ## Upstream changes
 

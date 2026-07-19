@@ -33,6 +33,8 @@ require_text RELEASE.md "extended = false"
 require_text RELEASE.md "check-release-docs.sh"
 require_text RELEASE.md "VoiceOver"
 require_text RELEASE.md "Lighthouse"
+require_text RELEASE.md "check-section-27-fixtures.mjs"
+require_text RELEASE.md "cumulative layout shift"
 require_text RELEASE.md "images/screenshot.png"
 require_text RELEASE.md "images/tn.png"
 require_text RELEASE.md 'git tag -s "$version"'
@@ -57,7 +59,11 @@ require_text CONTRIBUTING.md "docs/migration.md"
 require_text CONTRIBUTING.md "RELEASE.md"
 require_text CONTRIBUTING.md "docs/testing.md"
 require_text RELEASE.md "npm run test:quality"
+require_text RELEASE.md "npm run test:installation"
 require_text docs/testing.md "npm run test:update-snapshots"
+require_text docs/testing.md "npm run test:installation"
+require_text docs/testing.md "npm run test:fixtures"
+require_text docs/testing.md "provided"
 
 node .github/scripts/check-markdown-links.mjs
 
