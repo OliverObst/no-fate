@@ -87,3 +87,6 @@ jobs:
 
       - name: Check release hardening
         run: bash .github/scripts/check-release-hardening.sh exampleSite/public
+
+      - name: Check release documentation
+        run: bash .github/scripts/check-release-docs.sh

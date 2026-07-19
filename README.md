@@ -339,6 +339,11 @@ The release standards for keyboard and assistive-technology use, static-first
 asset delivery, Lighthouse budgets and A4 output are documented in
 [Accessibility, performance and print](docs/accessibility-performance-and-print.md).
 
+Sites moving from another theme or publishing system should follow the
+[migration guide](docs/migration.md). It covers content inventory, page-mode
+mapping, leaf bundles, redirects, public-content review, staged cut-over and
+rollback.
+
 ## Demonstration site
 
 The material in `exampleSite/` is a removable publication fixture rather than
@@ -383,6 +388,8 @@ accessibility and publishing behaviour, and include the relevant build checks.
 
 Changes are developed through reviewed pull requests. Breaking front matter,
 template, and CSS changes must be recorded in [CHANGELOG.md](CHANGELOG.md).
+Maintainers preparing a tag must complete the
+[release checklist](RELEASE.md).
 
 ## Licence and provenance
 

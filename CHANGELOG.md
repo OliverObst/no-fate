@@ -9,6 +9,9 @@ and releases use [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Public release documentation with a staged migration and redirect guide, an
+  operational maintainer checklist, and expanded decision, authoring,
+  accessibility, print and extension guidance for all four page modes.
 - A responsive image pipeline with configurable widths and WebP quality,
   intrinsic dimensions, deliberate hero priority, seven documented treatment
   intents, prepared derivative support and structured public rights metadata

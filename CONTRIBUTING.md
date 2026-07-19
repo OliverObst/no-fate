@@ -54,6 +54,8 @@ hugo \
   studio, or commercial brand.
 - Preserve image source and rights metadata.
 - Record breaking front matter, template, or CSS changes in `CHANGELOG.md`.
+- Document the downstream migration path in
+  [the migration guide](docs/migration.md) when compatibility changes.
 
 ## Pull requests
 
@@ -71,6 +73,10 @@ Include:
 
 Maintainers may ask for a change to be split when its concerns cannot be
 reviewed or reverted independently.
+
+Release preparation follows [RELEASE.md](RELEASE.md). A passing pull request is
+necessary but does not replace the manual accessibility, performance, print,
+installation, provenance and public-content checks required for a tag.
 
 ## Upstream changes
 
