@@ -44,7 +44,8 @@ hugo \
   motion behaviour.
 - Keep JavaScript progressive and page-specific.
 - Do not introduce Node.js, Tailwind, React, Vue, or another application
-  framework.
+  framework into the published theme. Pinned Node.js development dependencies
+  may be used only for the automated quality suite.
 - Put theme settings below `params.noFate`.
 - Add or update fictional fixtures for changed behaviour.
 - Mark demonstration pages with `demo: true` where practical.
@@ -77,6 +78,9 @@ reviewed or reverted independently.
 Release preparation follows [RELEASE.md](RELEASE.md). A passing pull request is
 necessary but does not replace the manual accessibility, performance, print,
 installation, provenance and public-content checks required for a tag.
+Run the link, HTML, axe, Lighthouse and visual-regression layers described in
+[Automated quality testing](docs/testing.md) whenever rendered structure,
+interaction or presentation changes.
 
 ## Upstream changes
 

@@ -90,3 +90,40 @@ jobs:
 
       - name: Check release documentation
         run: bash .github/scripts/check-release-docs.sh
+
+  quality:
+    name: Links, HTML, accessibility and visual regression
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.61.1-noble@sha256:5b8f294aff9041b7191c34a4bab3ac270157a28774d4b0660e9743297b697e48
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Install Hugo
+        env:
+          HUGO_VERSION: "0.164.0"
+        run: |
+          package="hugo_${HUGO_VERSION}_linux-amd64.deb"
+          url="https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${package}"
+          curl --fail --silent --show-error --location \
+            --output="${RUNNER_TEMP}/${package}" \
+            "${url}"
+          dpkg --install "${RUNNER_TEMP}/${package}"
+          hugo version
+
+      - name: Install test dependencies
+        run: npm ci
+
+      - name: Run quality suite
+        run: npm run test:quality
+
+      - name: Upload browser diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quality-test-diagnostics
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 14

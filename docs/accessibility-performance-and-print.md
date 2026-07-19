@@ -24,8 +24,15 @@ The theme provides:
 
 The automated rendered-HTML audit checks image alternatives, duplicate IDs,
 heading jumps, JSON-LD validity, private rights leakage and representative
-form labels. Release testing supplements that audit with keyboard traversal,
-an accessibility-tree spot check, 200 per cent zoom and axe/Lighthouse runs.
+form labels. The repository quality suite additionally runs axe across every
+page mode, the structured record, search, dark mode, active filters and narrow
+reflow. Lighthouse enforces a 95 accessibility minimum on the home, poster,
+search and full record pages. See
+[Automated quality testing](testing.md) for commands and coverage.
+
+Automation supplements that audit with keyboard traversal, an
+accessibility-tree spot check, 200 per cent zoom and assistive-technology
+testing; it cannot certify the manual interaction experience.
 
 ## Static-first performance
 

@@ -52,8 +52,12 @@ require_text docs/page-modes.md "## Downstream extension"
 
 require_text README.md "docs/migration.md"
 require_text README.md "RELEASE.md"
+require_text README.md "docs/testing.md"
 require_text CONTRIBUTING.md "docs/migration.md"
 require_text CONTRIBUTING.md "RELEASE.md"
+require_text CONTRIBUTING.md "docs/testing.md"
+require_text RELEASE.md "npm run test:quality"
+require_text docs/testing.md "npm run test:update-snapshots"
 
 node .github/scripts/check-markdown-links.mjs
 

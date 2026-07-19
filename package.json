@@ -1,0 +1,27 @@
+{
+  "name": "no-fate-quality-tests",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.19"
+  },
+  "scripts": {
+    "build:test": "hugo --source exampleSite --themesDir ../.. --baseURL https://no-fate.test/ --minify --panicOnWarning --gc --cleanDestinationDir",
+    "test:links": "node .github/scripts/check-rendered-links.mjs exampleSite/public",
+    "test:html": "html-validate --config .htmlvalidate.json \"exampleSite/public/**/*.html\"",
+    "test:static": "npm run test:links && npm run test:html",
+    "test:accessibility": "playwright test --project=accessibility",
+    "test:visual": "node .github/scripts/run-visual-tests.mjs",
+    "test:update-snapshots": "node .github/scripts/run-visual-tests.mjs --update-snapshots",
+    "test:lighthouse": "node .github/scripts/check-lighthouse.mjs",
+    "test:browser": "npm run test:accessibility && npm run test:visual",
+    "test:quality": "npm run build:test && npm run test:static && npm run test:browser && npm run test:lighthouse"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.12.1",
+    "@playwright/test": "1.61.1",
+    "chrome-launcher": "1.2.1",
+    "html-validate": "11.5.6",
+    "lighthouse": "12.6.1"
+  }
+}

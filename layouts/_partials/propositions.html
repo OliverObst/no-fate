@@ -1,6 +1,6 @@
 {{- $model := partial "content-model.html" . -}}
 {{- with $model.Editorial.Propositions -}}
-<div class="nf-article__propositions" aria-label="{{ i18n "nf_propositions" | default "Editorial propositions" }}">
+<div class="nf-article__propositions">
     {{- range . -}}
         {{- partial "proposition.html" (dict "id" .) -}}
     {{- end -}}

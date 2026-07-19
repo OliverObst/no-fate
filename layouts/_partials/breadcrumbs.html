@@ -1,5 +1,5 @@
 {{- if (.Param "ShowBreadCrumbs") -}}
-<nav class="breadcrumbs" role="navigation" aria-label="Breadcrumb">
+<nav class="breadcrumbs" aria-label="Breadcrumb">
     {{- $ancestors := .Ancestors.Reverse -}}
     {{- range $i, $bc := $ancestors }}
         {{- if eq $i 0 }}

@@ -11,7 +11,7 @@
 {{- if not (in (slice "none" "2" "3" "4" "5" "6") $level) -}}
     {{- errorf "No Fate poster: level must be none or 2–6 at %s" .Position -}}
 {{- end -}}
-<aside class="nf-component nf-poster nf-poster--{{ $tone }} nf-poster--{{ $size }}">
+<aside class="nf-component nf-poster nf-poster--{{ $tone }} nf-poster--{{ $size }}" role="note">
     {{- with $title }}
         {{- if eq $level "none" -}}
         <p class="nf-poster__title">{{ . | markdownify }}</p>

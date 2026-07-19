@@ -18,7 +18,7 @@
 {{- $landingURL := $data.url | default "" -}}
 {{- $canLink := and $landingURL (ge (len $pages) $minimumItems) -}}
 {{- with $title }}
-<aside class="nf-component nf-proposition" data-proposition="{{ $id }}"{{ if $data.demo }} data-demo="true"{{ end }}>
+<aside class="nf-component nf-proposition" role="note" data-proposition="{{ $id }}"{{ if $data.demo }} data-demo="true"{{ end }}>
     <span class="nf-component__label">{{ i18n "nf_proposition" | default "Proposition" }}</span>
     <p>
         {{- if $canLink -}}

@@ -110,9 +110,17 @@ bash .github/scripts/check-editorial-framework.sh exampleSite/public
 bash .github/scripts/check-structured-records.sh exampleSite/public
 bash .github/scripts/check-release-hardening.sh exampleSite/public
 bash .github/scripts/check-release-docs.sh
+npm ci
+npx playwright install chromium
+npm run test:quality
 ```
 
 - [ ] All local commands pass.
+- [ ] Rendered local links and fragments pass.
+- [ ] Every generated HTML document passes the configured standards validator.
+- [ ] Axe passes representative light, dark, filtered and narrow states.
+- [ ] Lighthouse accessibility scores are at least 95 on all configured pages.
+- [ ] Linux Chromium visual baselines pass without an unexplained update.
 - [ ] The generated 200-entry fixture is current.
 - [ ] The GitHub Actions matrix passes for the release commit.
 - [ ] Generated HTML contains no duplicate IDs, malformed JSON-LD or missing
@@ -140,6 +148,10 @@ fixture and the 200-entry record.
 - [ ] Run axe or an equivalent WCAG 2.2 AA audit in light and dark modes.
 - [ ] Confirm posters remain selectable, zoomable text rather than images of
   text.
+
+The automated coverage and visual-baseline update policy are documented in
+[Automated quality testing](docs/testing.md). Do not replace these manual checks
+with a passing automated score.
 
 ## 7. Verify performance and media
 

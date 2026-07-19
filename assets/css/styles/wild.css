@@ -5,7 +5,7 @@
     --nf-muted: #4f4a40;
     --nf-rule-colour: #11100e;
     --nf-soft-rule-colour: #827b6d;
-    --nf-signal: #c8321e;
+    --nf-signal: #b02518;
     --nf-focus: #075dcc;
     --nf-page: 100rem;
     --nf-reading: 66ch;
@@ -13,7 +13,7 @@
     --nf-border-strong: 2px solid var(--nf-ink);
     --nf-wild-paper: #f3efe4;
     --nf-wild-ink: #11100e;
-    --nf-wild-signal: #c8321e;
+    --nf-wild-signal: #b02518;
 }
 
 :root[data-nf-style="wild"][data-theme="dark"] {

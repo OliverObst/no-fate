@@ -9,6 +9,10 @@ and releases use [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Automated rendered-site quality testing for local links and fragments, HTML
+  validity, axe WCAG A/AA rules, Lighthouse accessibility scores and pinned
+  Linux Chromium visual baselines across page modes, viewports, themes,
+  interactive record filtering, contact sheets and print media.
 - Public release documentation with a staged migration and redirect guide, an
   operational maintainer checklist, and expanded decision, authoring,
   accessibility, print and extension guidance for all four page modes.

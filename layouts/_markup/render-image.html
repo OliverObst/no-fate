@@ -52,7 +52,8 @@
 {{- end -}}
 {{- $treatment = lower ($treatment | default "raw") -}}
 {{- if in $treatments $treatment }}{{ $classes = $classes | append $treatment }}{{ end -}}
-{{- $className := delimit ($classes | collections.Uniq) " " -}}
+{{- $classes = $classes | collections.Uniq -}}
+{{- $className := delimit $classes " " -}}
 {{- $publicRights := partial "image-rights-data.html" (dict
     "rights" $rights "credit" $credit "source" $source "sourceURL" $sourceURL "licence" $licence
 ) -}}

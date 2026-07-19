@@ -374,11 +374,31 @@ The hidden `fixtures/structural-components/` page exercises the Sections 10–11
 render hooks and baseline shortcodes without adding those fixtures to the
 demonstration navigation.
 
+## Automated quality tests
+
+The repository includes test-only tooling for rendered links, HTML validation,
+axe, Lighthouse and Linux Chromium visual regression. Install it and run the
+complete suite with:
+
+```sh
+npm ci
+npx playwright install chromium
+npm run test:quality
+```
+
+Visual checks automatically use the pinned Playwright Linux container on
+macOS or Windows. The committed baselines cover desktop and mobile homepages,
+all page modes, both colour themes, wide and narrow navigation, record
+filtering, the contact sheet and print-media output. See
+[Automated quality testing](docs/testing.md) for individual commands, baseline
+updates, deliberate validator exceptions and CI behaviour.
+
 ## Compatibility
 
 No Fate supports standard and Extended Hugo 0.158.0 and later. Module
-installation requires Go. Ordinary theme development does not require Node.js
-or a JavaScript build tool.
+installation requires Go. Installing and building the theme does not require
+Node.js or a JavaScript build tool; Node.js is used only by the optional
+repository quality suite.
 
 ## Contributing
 
