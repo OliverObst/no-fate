@@ -108,7 +108,7 @@ jobs:
           package="hugo_${HUGO_VERSION}_linux-amd64.deb"
           url="https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${package}"
           curl --fail --silent --show-error --location \
-            --output="${RUNNER_TEMP}/${package}" \
+            --output "${RUNNER_TEMP}/${package}" \
             "${url}"
           dpkg --install "${RUNNER_TEMP}/${package}"
           hugo version
