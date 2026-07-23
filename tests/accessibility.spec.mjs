@@ -49,6 +49,48 @@ test("dark mode remains accessible after client-side theme selection", async ({ 
   expect(results.violations, formatViolations(results.violations)).toEqual([]);
 });
 
+test("wild entry hover and keyboard focus invert every text layer", async ({ page }) => {
+  await visit(page, "/");
+  const entry = page.locator(".nf-home-module--questions .post-entry");
+  const link = entry.locator(".nf-entry__title a");
+  const textSelectors = [
+    ".nf-entry__title",
+    ".nf-entry__title a",
+    ".entry-content",
+    ".nf-entry__facts dt",
+    ".nf-entry__facts dd",
+    ".entry-footer"
+  ];
+  const colours = () => entry.evaluate((element, selectors) => {
+    const style = getComputedStyle(element);
+    return {
+      background: style.backgroundColor,
+      foreground: style.color,
+      descendants: selectors.map((selector) => getComputedStyle(
+        element.querySelector(selector)
+      ).color)
+    };
+  }, textSelectors);
+  const expectInvertedText = async () => {
+    const current = await colours();
+    expect(current.foreground).not.toBe(current.background);
+    expect(new Set(current.descendants)).toEqual(new Set([current.foreground]));
+    const results = await new AxeBuilder({ page })
+      .include(".nf-home-module--questions .post-entry")
+      .withTags(axeTags)
+      .analyze();
+    expect(results.violations, formatViolations(results.violations)).toEqual([]);
+  };
+
+  await entry.hover();
+  await expectInvertedText();
+
+  await page.mouse.move(0, 0);
+  await link.focus();
+  await expect(link).toBeFocused();
+  await expectInvertedText();
+});
+
 test("structured-record filters remain labelled and accessible after use", async ({ page }) => {
   await visit(page, "/record/");
   const year = page.locator('[data-nf-filter-field="year"]');

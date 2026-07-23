@@ -7,6 +7,12 @@ and releases use [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Fixed
+
+- Inverted every text layer in wild-style entries on hover and keyboard focus
+  so linked titles, summaries and metadata remain legible against the dark
+  selection background.
+
 ## [0.1.0] - 2026-07-19
 
 ### Added

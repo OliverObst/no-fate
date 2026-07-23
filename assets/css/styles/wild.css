@@ -420,8 +420,7 @@
     color: var(--nf-colour-paper);
 }
 
-:root[data-nf-style="wild"] .post-entry:hover :is(.entry-content, .entry-footer, .post-meta, .nf-component__label),
-:root[data-nf-style="wild"] .post-entry:focus-within :is(.entry-content, .entry-footer, .post-meta, .nf-component__label) {
+:root[data-nf-style="wild"] :is(.post-entry, .nf-entry):is(:hover, :focus-within) * {
     color: inherit;
 }
 
